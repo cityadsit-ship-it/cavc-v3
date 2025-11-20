@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Download } from 'lucide-react';
 import { serviceData } from './ServicesData';
 import ServiceGalleryModal from './ServiceGalleryModal';
+import SearchFilter from './SearchFilter';
 
 const ImageSkeleton = ({ className }) => (
 	<div
@@ -76,6 +77,7 @@ const ServiceCard = ({ service, index, onClick }) => {
 const Services = () => {
 	const [selectedService, setSelectedService] = useState(null);
 	const [downloading, setDownloading] = useState(false);
+	const [filters, setFilters] = useState({ location: 'all', service: 'all' });
 
 	const openGallery = (service) => setSelectedService(service);
 	const closeGallery = () => setSelectedService(null);
@@ -92,6 +94,24 @@ const Services = () => {
 			document.body.removeChild(link);
 		}, 1200);
 	};
+
+	const handleFilterChange = (newFilters) => {
+		setFilters(newFilters);
+		// You can add actual filtering logic here when you have location data in serviceData
+		console.log('Filters applied:', newFilters);
+	};
+
+	// Filter services based on selected filters
+	const filteredServices = serviceData.filter(service => {
+		if (filters.service !== 'all' && service.id !== filters.service) {
+			return false;
+		}
+		// Add location filtering logic here when location data is available in serviceData
+		// if (filters.location !== 'all' && !service.locations?.includes(filters.location)) {
+		//   return false;
+		// }
+		return true;
+	});
 
 	return (
 		<section
@@ -116,7 +136,7 @@ const Services = () => {
 				</motion.div>
 
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-					{serviceData.map((service, index) => (
+					{filteredServices.map((service, index) => (
 						<ServiceCard
 							key={service.id}
 							service={service}
@@ -125,6 +145,22 @@ const Services = () => {
 						/>
 					))}
 				</div>
+
+				{/* Show message when no results */}
+				{filteredServices.length === 0 && (
+					<motion.div
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						className="text-center py-12"
+					>
+						<p className="text-gray-600 text-lg">
+							No services found matching your filters. Try adjusting your search criteria.
+						</p>
+					</motion.div>
+				)}
+
+				{/* Search Filter Component */}
+				<SearchFilter onFilterChange={handleFilterChange} />
 
 				{/* CTA Section */}
 				<motion.div
