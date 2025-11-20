@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Use Tailwind's recommended directives for best lint/build compatibility */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-orange-accent text-white font-semibold py-3 px-6 rounded-lg transition-all duration-500 shadow-lg;
+    @apply hover:bg-orange-600 hover:shadow-2xl hover:shadow-orange-500/25;
+    @apply transform hover:-translate-y-1 hover:scale-105;
+    @apply active:translate-y-0 active:scale-100 active:shadow-lg active:duration-75;
+    @apply focus:outline-none focus:ring-4 focus:ring-orange-accent focus:ring-opacity-30;
+    transition-timing-function: cubic-bezier(0.175,0.885,0.32,1.275);
+  }
+  
+  .btn-secondary {
+    @apply bg-transparent border-2 border-white text-white font-semibold py-3 px-6 rounded-lg transition-all duration-500;
+    @apply hover:bg-white hover:text-primary-dark hover:shadow-xl hover:shadow-white/20 hover:border-white;
+    @apply transform hover:-translate-y-1 hover:scale-105;
+    @apply active:translate-y-0 active:scale-100 active:duration-75;
+    @apply focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-30;
+    backdrop-filter: blur(10px);
+    transition-timing-function: cubic-bezier(0.175,0.885,0.32,1.275);
+  }
+  
+  .btn-nav {
+    @apply text-white font-medium transition-all duration-300;
+    @apply hover:text-yellow-highlight hover:scale-110;
+    @apply focus:outline-none focus:ring-2 focus:ring-yellow-highlight focus:ring-opacity-50 rounded-md px-2 py-1;
+    @apply active:scale-105 active:duration-75;
+    transition-timing-function: cubic-bezier(0.175,0.885,0.32,1.275);
+  }
+  
+  .btn-service {
+    @apply font-medium py-2 px-4 rounded-lg transition-all duration-500 text-sm shadow-md;
+    @apply transform hover:-translate-y-0.5 hover:scale-105 hover:shadow-lg;
+    @apply active:translate-y-0 active:scale-100 active:duration-75;
+    @apply focus:outline-none focus:ring focus:ring-opacity-50;
+    transition-timing-function: cubic-bezier(0.175,0.885,0.32,1.275);
+  }
+  
+  .btn-service-primary {
+    @apply btn-service bg-accent-green text-white;
+    @apply hover:bg-primary-dark hover:shadow-lg hover:shadow-accent-green/25;
+    @apply focus:ring-accent-green;
+  }
+  
+  .btn-service-secondary {
+    @apply btn-service bg-orange-accent text-white;
+    @apply hover:bg-orange-600 hover:shadow-lg hover:shadow-orange-500/25;
+    @apply focus:ring-orange-accent;
+  }
+  
+  .btn-modal-close {
+    @apply bg-gray-200 text-gray-800 font-semibold py-3 px-6 rounded-lg transition-all duration-500;
+    @apply hover:bg-gray-300 hover:shadow-md hover:shadow-gray-400/20;
+    @apply transform hover:-translate-y-0.5 hover:scale-105;
+    @apply active:translate-y-0 active:scale-100 active:duration-75;
+    @apply focus:outline-none focus:ring focus:ring-gray-400 focus:ring-opacity-50;
+    transition-timing-function: cubic-bezier(0.175,0.885,0.32,1.275);
+  }
+  
+  .btn-modal-primary {
+    @apply bg-orange-accent text-white font-semibold py-3 px-6 rounded-lg transition-all duration-500 shadow-lg;
+    @apply hover:bg-orange-600 hover:shadow-xl hover:shadow-orange-500/25;
+    @apply transform hover:-translate-y-0.5 hover:scale-105;
+    @apply active:translate-y-0 active:scale-100 active:shadow-lg active:duration-75;
+    @apply focus:outline-none focus:ring focus:ring-orange-accent focus:ring-opacity-50;
+    transition-timing-function: cubic-bezier(0.175,0.885,0.32,1.275);
+  }
+  
+  .btn-form-submit {
+    @apply w-full bg-white text-orange-accent font-semibold py-3 px-6 rounded-lg transition-all duration-500 shadow-md;
+    @apply hover:bg-gray-50 hover:shadow-lg hover:shadow-orange-500/10 hover:text-orange-600;
+    @apply transform hover:-translate-y-0.5 hover:scale-105;
+    @apply active:translate-y-0 active:scale-100 active:shadow-md active:duration-75;
+    @apply focus:outline-none focus:ring focus:ring-orange-accent focus:ring-opacity-30;
+    @apply flex items-center justify-center;
+    transition-timing-function: cubic-bezier(0.175,0.885,0.32,1.275);
+  }
+  
+  .btn-social {
+    @apply w-10 h-10 bg-accent-green rounded-lg flex items-center justify-center transition-all duration-500;
+    @apply hover:bg-lime-green hover:shadow-lg hover:shadow-accent-green/25;
+    @apply transform hover:scale-110 hover:-translate-y-0.5;
+    @apply active:scale-105 active:translate-y-0 active:duration-75;
+    @apply focus:outline-none focus:ring focus:ring-accent-green focus:ring-opacity-50;
+    transition-timing-function: cubic-bezier(0.175,0.885,0.32,1.275);
+  }
+  
+  .btn-newsletter {
+    @apply bg-orange-accent px-4 py-2 rounded-r-lg transition-all duration-500;
+    @apply hover:bg-orange-600 hover:shadow-lg hover:shadow-orange-500/25;
+    @apply transform hover:-translate-y-0.5 hover:scale-105;
+    @apply active:translate-y-0 active:scale-100 active:duration-75;
+    @apply focus:outline-none focus:ring focus:ring-orange-accent focus:ring-opacity-50;
+    transition-timing-function: cubic-bezier(0.175,0.885,0.32,1.275);
+  }
+  
+  .btn-mobile-menu {
+    @apply md:hidden text-white p-2 rounded-lg transition-all duration-500;
+    @apply hover:bg-white hover:bg-opacity-20 hover:shadow-md hover:shadow-white/10;
+    @apply transform hover:scale-110 hover:-translate-y-0.5;
+    @apply active:scale-105 active:translate-y-0 active:duration-75;
+    @apply focus:outline-none focus:ring focus:ring-white focus:ring-opacity-30;
+    transition-timing-function: cubic-bezier(0.175,0.885,0.32,1.275);
+  }
+  
+  .section-padding {
+    @apply py-16 px-4 sm:px-6 lg:px-8;
+  }
+  
+  .container-custom {
+    @apply max-w-7xl mx-auto;
+  }
+
+  /* Custom scrollbar for gallery thumbnails */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: #d1d5db #f9fafb;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar {
+    height: 6px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: #f9fafb;
+    border-radius: 3px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 3px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+  }
+  
+  /* Cookie Consent Animations */
+  @keyframes cookiePulse {
+    0%, 100% {
+      transform: scale(1) rotate(0deg);
+    }
+    50% {
+      transform: scale(1.05) rotate(5deg);
+    }
+  }
+  
+  .cookie-icon-animate {
+    animation: cookiePulse 2s ease-in-out infinite;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
