@@ -5,8 +5,9 @@ import BackToTop from './BackToTop';
 import MessageMe from './MessageMe';
 import { useState, useEffect } from 'react';
 
-// Use local images from public/images/hero/1.jpg to 12.jpg
-const bgImages = Array.from({ length: 12 }, (_, i) => `/images/hero/${i + 1}.jpg`);
+// Use local images from public/images/hero/1.jpg to X.jpg
+// Update the length parameter to match your actual number of images
+const bgImages = Array.from({ length: 11 }, (_, i) => `/images/hero/${i + 1}.jpg`);
 
 const Hero = () => {
   const [bgIndex, setBgIndex] = useState(0);
@@ -80,7 +81,7 @@ const Hero = () => {
 
   return (
     <>
-      <div id="hero" className="relative h-90vh min-h-screen overflow-hidden">
+      <div id="hero" className="relative w-full h-[80vh] overflow-hidden">
         {/* Sliding Background Images */}
         <div className="absolute inset-0 w-full h-full">
           <AnimatePresence>
