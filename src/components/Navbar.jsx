@@ -70,96 +70,128 @@ const Navbar = ({ scrollToSection }) => {
         ></div>
 
         {/* Navbar content */}
-        <div className="relative z-10 flex items-center justify-between p-2 sm:p-3 lg:px-6">
+        <div className="relative z-10 flex items-center justify-between px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12 py-2 sm:py-3 max-w-screen-2xl mx-auto">
+          {/* Logo - Responsive sizing */}
           <button 
             onClick={() => handleNavClick('hero')}
-            className="flex items-center cursor-pointer hover:opacity-80 transition-opacity duration-200"
+            className="flex items-center cursor-pointer hover:opacity-80 transition-opacity duration-200 flex-shrink-0"
             type="button"
             aria-label="Go to home"
           >
-            <div className="w-12 h-12 rounded-full flex items-center justify-center p-1.5">
+            <div className="h-8 xs:h-9 sm:h-10 md:h-11 lg:h-12 flex items-center">
               <img 
-                src="/images/cavclogo.png" 
+                src="/images/cavclogohorizontal.webp" 
                 alt="CAVC Logo" 
-                className="w-full h-full object-contain"
+                className="h-full w-auto object-contain"
               />
             </div>
-            <span className="ml-3 text-white font-semibold text-lg hidden sm:block">
-              City Advertising Ventures Corporation
-            </span>
           </button>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-8">
-            <button onClick={() => handleNavClick('hero')} className="btn-nav">
+          {/* Desktop Navigation - Responsive breakpoints and spacing */}
+          <div className="hidden lg:flex absolute left-1/2 items-center space-x-4 xl:space-x-8">
+            <button onClick={() => handleNavClick('hero')} className="btn-nav text-sm xl:text-base">
               Home
             </button>
-            <button onClick={() => handleNavClick('services')} className="btn-nav">
+            <button onClick={() => handleNavClick('services')} className="btn-nav text-sm xl:text-base">
               Services
             </button>
-            <button onClick={() => handleNavClick('about')} className="btn-nav">
+            <button onClick={() => handleNavClick('about')} className="btn-nav text-sm xl:text-base">
               About Us
             </button>
-            {/* New Contact button */}
-            <button onClick={() => handleNavClick('footer')} className="btn-nav">
+            <button onClick={() => handleNavClick('footer')} className="btn-nav text-sm xl:text-base">
               Contact
             </button>
             <CallButton />
           </div>
 
+          {/* Tablet Navigation (md to lg) - Compact version */}
+          <div className="hidden md:flex lg:hidden absolute left-1/2 items-center space-x-3">
+            <button onClick={() => handleNavClick('hero')} className="btn-nav text-xs">
+              Home
+            </button>
+            <button onClick={() => handleNavClick('services')} className="btn-nav text-xs">
+              Services
+            </button>
+            <button onClick={() => handleNavClick('about')} className="btn-nav text-xs">
+              About
+            </button>
+            <button onClick={() => handleNavClick('footer')} className="btn-nav text-xs">
+              Contact
+            </button>
+            <button
+              onClick={isMobile ? openCallModal : openQrModal}
+              className="btn-primary relative overflow-hidden h-9 flex items-center justify-center px-3 text-xs font-semibold tracking-wide glow-animate call-btn-animate"
+              type="button"
+            >
+              <Phone className="w-4 h-4 mr-1.5 text-yellow-highlight call-btn-icon" />
+              <span className="hidden lg:inline">Call Us </span>{mainDisplayNumber}
+              <span className="absolute inset-0 rounded-lg pointer-events-none glow-overlay"></span>
+            </button>
+          </div>
+
+          {/* Spacer for balance - Responsive */}
+          <div className="hidden md:block lg:w-[190px] xl:w-[210px] md:w-[160px]"></div>
+
           {/* Mobile menu button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="btn-mobile-menu md:hidden"
+            className="btn-mobile-menu md:hidden p-2"
+            aria-label="Toggle menu"
+            type="button"
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </nav>
 
-      {/* Mobile Navigation */}
-      {isMenuOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          className="fixed top-20 left-0 right-0 bg-primary-dark bg-opacity-95 backdrop-blur-sm z-40 md:hidden"
-        >
-          <div className="px-4 py-6 space-y-4">
-            <button onClick={() => handleNavClick('hero')} className="block w-full text-left btn-nav">
-              Home
-            </button>
-            <button onClick={() => handleNavClick('services')} className="block w-full text-left btn-nav">
-              Services
-            </button>
-            <button onClick={() => handleNavClick('about')} className="block w-full text-left btn-nav">
-              About
-            </button>
-            <button onClick={() => handleNavClick('footer')} className="block w-full text-left btn-nav">
-              Contact
-            </button>
-            <CallButton />
-          </div>
-        </motion.div>
-      )}
+      {/* Mobile Navigation - Improved spacing */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.2 }}
+            className="fixed top-16 xs:top-18 sm:top-20 left-0 right-0 bg-primary-dark bg-opacity-95 backdrop-blur-sm z-40 md:hidden"
+          >
+            <div className="px-4 sm:px-6 py-4 sm:py-6 space-y-3 sm:space-y-4">
+              <button onClick={() => handleNavClick('hero')} className="block w-full text-left btn-nav py-2 text-base sm:text-lg">
+                Home
+              </button>
+              <button onClick={() => handleNavClick('services')} className="block w-full text-left btn-nav py-2 text-base sm:text-lg">
+                Services
+              </button>
+              <button onClick={() => handleNavClick('about')} className="block w-full text-left btn-nav py-2 text-base sm:text-lg">
+                About
+              </button>
+              <button onClick={() => handleNavClick('footer')} className="block w-full text-left btn-nav py-2 text-base sm:text-lg">
+                Contact
+              </button>
+              <div className="pt-2">
+                <CallButton />
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      {/* Call Modal for mobile */}
+      {/* Call Modal for mobile - Responsive sizing */}
       {isMobile && callModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
-          <div className="bg-white rounded-lg shadow-lg p-6 relative max-w-xs w-full flex flex-col items-center">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 p-4">
+          <div className="bg-white rounded-lg shadow-lg p-5 sm:p-6 relative max-w-xs w-full flex flex-col items-center">
             <button
               className="absolute top-2 right-2 text-gray-700 hover:text-red-500"
               onClick={closeCallModal}
               aria-label="Close"
               type="button"
             >
-              <CloseIcon className="w-6 h-6" />
+              <CloseIcon className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
-            <Phone className="w-8 h-8 text-accent-green mb-2" />
-            <h3 className="text-lg font-bold mb-2 text-primary-dark">Call Manila Office</h3>
-            <span className="mb-4 text-gray-700 font-medium">{mainDisplayNumber}</span>
+            <Phone className="w-7 h-7 sm:w-8 sm:h-8 text-accent-green mb-2" />
+            <h3 className="text-base sm:text-lg font-bold mb-2 text-primary-dark text-center">Call Manila Office</h3>
+            <span className="mb-4 text-gray-700 font-medium text-sm sm:text-base">{mainDisplayNumber}</span>
             <button
-              className="px-6 py-2 rounded bg-accent-green text-white font-semibold text-base shadow hover:bg-yellow-highlight transition-colors duration-200"
+              className="px-5 sm:px-6 py-2 sm:py-2.5 rounded bg-accent-green text-white font-semibold text-sm sm:text-base shadow hover:bg-yellow-highlight transition-colors duration-200 w-full sm:w-auto"
               onClick={() => { window.location.href = `tel:${mainIntlNumber}`; }}
               type="button"
             >
@@ -169,7 +201,7 @@ const Navbar = ({ scrollToSection }) => {
         </div>
       )}
 
-      {/* Desktop QR Modal */}
+      {/* Desktop QR Modal - Responsive sizing */}
       <AnimatePresence>
         {!isMobile && qrModalOpen && (
           <motion.div
@@ -177,14 +209,14 @@ const Navbar = ({ scrollToSection }) => {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 p-4"
           >
             <motion.div
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: 30, opacity: 0 }}
               transition={{ duration: 0.25 }}
-              className="bg-white rounded-lg shadow-lg p-6 relative max-w-xs w-full flex flex-col items-center"
+              className="bg-white rounded-lg shadow-lg p-5 sm:p-6 lg:p-8 relative max-w-xs sm:max-w-sm w-full flex flex-col items-center"
             >
               <button
                 className="absolute top-2 right-2 text-gray-700 hover:text-red-500"
@@ -192,12 +224,14 @@ const Navbar = ({ scrollToSection }) => {
                 aria-label="Close"
                 type="button"
               >
-                <CloseIcon className="w-6 h-6" />
+                <CloseIcon className="w-5 h-5 sm:w-6 sm:h-6" />
               </button>
-              <Phone className="w-8 h-8 text-accent-green mb-2" />
-              <h3 className="text-lg font-bold mb-2 text-primary-dark">Scan to Call Manila Office</h3>
-              <QRCode value={`tel:${mainIntlNumber}`} size={128} />
-              <span className="mt-4 text-base text-gray-700 font-medium text-center">
+              <Phone className="w-7 h-7 sm:w-8 sm:h-8 text-accent-green mb-2 sm:mb-3" />
+              <h3 className="text-base sm:text-lg font-bold mb-3 sm:mb-4 text-primary-dark text-center">
+                Scan to Call Manila Office
+              </h3>
+              <QRCode value={`tel:${mainIntlNumber}`} size={window.innerWidth < 640 ? 112 : 128} />
+              <span className="mt-3 sm:mt-4 text-sm sm:text-base text-gray-700 font-medium text-center">
                 {mainDisplayNumber}
               </span>
             </motion.div>
