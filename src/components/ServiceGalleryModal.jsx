@@ -18,6 +18,7 @@ const ServiceGalleryModal = ({ service, isOpen, onClose }) => {
 	const [currentImage, setCurrentImage] = useState(0);
 	const [imgLoaded, setImgLoaded] = useState(false);
 	const [downloading, setDownloading] = useState(false);
+	const [downloaded, setDownloaded] = useState(false);
 	const [modalReady, setModalReady] = useState(false);
 	const [thumbLoadStates, setThumbLoadStates] = useState({});
 	const gallery = buildGallery(service);
@@ -62,12 +63,18 @@ const ServiceGalleryModal = ({ service, isOpen, onClose }) => {
 		setDownloading(true);
 		setTimeout(() => {
 			setDownloading(false);
+			setDownloaded(true);
 			const link = document.createElement('a');
-			link.href = '/company-profile.pdf';
-			link.download = 'company-profile.pdf';
+			link.href = service.pdfFile || '/company-profile.pdf';
+			link.download = service.pdfFileName || 'company-profile.pdf';
 			document.body.appendChild(link);
 			link.click();
 			document.body.removeChild(link);
+			
+			// Re-enable button after 10 seconds
+			setTimeout(() => {
+				setDownloaded(false);
+			}, 10000);
 		}, 1200);
 	};
 
@@ -130,9 +137,9 @@ const ServiceGalleryModal = ({ service, isOpen, onClose }) => {
 								</button>
 								<button
 									onClick={handleDownload}
-									disabled={downloading}
+									disabled={downloading || downloaded}
 									className={`bg-white/10 hover:bg-white/20 text-white font-semibold py-1.5 px-4 rounded-md transition-all duration-300 backdrop-blur-sm flex items-center justify-center text-sm relative ${
-										downloading ? 'cursor-wait opacity-70' : ''
+										downloading || downloaded ? 'cursor-not-allowed opacity-50' : ''
 									}`}
 								>
 									<Download className="w-4 h-4 mr-2" />
@@ -141,8 +148,13 @@ const ServiceGalleryModal = ({ service, isOpen, onClose }) => {
 											<span className="mr-2">Loading...</span>
 											<span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
 										</span>
+									) : downloaded ? (
+										<span className="flex items-center">
+											<span className="mr-2">✓</span>
+											<span>Downloaded</span>
+										</span>
 									) : (
-										'Corporate Profile'
+										'Download Gallery'
 									)}
 								</button>
 							</div>

@@ -77,6 +77,7 @@ const ServiceCard = ({ service, index, onClick }) => {
 const Services = () => {
 	const [selectedService, setSelectedService] = useState(null);
 	const [downloading, setDownloading] = useState(false);
+	const [downloaded, setDownloaded] = useState(false);
 	const [filters, setFilters] = useState({ location: 'all', service: 'all' });
 
 	const openGallery = (service) => setSelectedService(service);
@@ -86,12 +87,18 @@ const Services = () => {
 		setDownloading(true);
 		setTimeout(() => {
 			setDownloading(false);
+			setDownloaded(true);
 			const link = document.createElement('a');
 			link.href = '/company-profile.pdf';
 			link.download = 'company-profile.pdf';
 			document.body.appendChild(link);
 			link.click();
 			document.body.removeChild(link);
+			
+			// Re-enable button after 10 seconds
+			setTimeout(() => {
+				setDownloaded(false);
+			}, 10000);
 		}, 1200);
 	};
 
@@ -189,19 +196,32 @@ const Services = () => {
 							</button>
 							<button
 								onClick={handleDownload}
-								disabled={downloading}
-								className={`bg-white/10 hover:bg-white/20 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 backdrop-blur-sm flex items-center justify-center relative ${
-									downloading ? 'cursor-wait opacity-70' : ''
+								disabled={downloading || downloaded}
+								className={`font-semibold py-3 px-8 rounded-lg transition-all duration-300 backdrop-blur-sm flex items-center justify-center relative ${
+									downloaded 
+										? 'bg-gray-400 text-gray-600 cursor-not-allowed opacity-70' 
+										: downloading 
+										? 'bg-white/10 hover:bg-white/20 text-white cursor-wait opacity-70'
+										: 'bg-white/10 hover:bg-white/20 text-white'
 								}`}
 							>
-								<Download className="w-5 h-5 mr-2" />
-								{downloading ? (
-									<span className="flex items-center">
+								{downloaded ? (
+									<>
+										<svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+											<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+										</svg>
+										Downloaded
+									</>
+								) : downloading ? (
+									<>
 										<span className="mr-2">Loading...</span>
 										<span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-									</span>
+									</>
 								) : (
-									'Corporate Profile'
+									<>
+										<Download className="w-5 h-5 mr-2" />
+										Corporate Profile
+									</>
 								)}
 							</button>
 						</div>

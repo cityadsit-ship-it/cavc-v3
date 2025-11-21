@@ -1,6 +1,7 @@
 const SERVICES_IMAGE_BASE = '/images/services';
+const SERVICES_PDF_BASE = '/pdfs/services';
 
-// Try multiple possible paths
+// Try multiple possible paths for images
 const imageModules = import.meta.glob([
   '/images/services/**/*.jpg',
   '/images/services/**/*.jpeg',
@@ -84,6 +85,8 @@ export const serviceData = [
     adSize: '2ft x 6ft',
     material: 'Tarpaulin',
     location: 'Metro Manila (Key Roads)',
+    pdfFile: `${SERVICES_PDF_BASE}/banner-cavc.pdf`,
+    pdfFileName: 'banner-cavc.pdf',
     captions: [
       'Banner on lamp post',
       'Streamer installation',
@@ -100,6 +103,8 @@ export const serviceData = [
     adSize: 'Custom',
     material: 'Sticker/Vinyl',
     location: 'High-traffic Areas',
+    pdfFile: `${SERVICES_PDF_BASE}/pillar-ads-cavc.pdf`,
+    pdfFileName: 'pillar-ads-cavc.pdf',
     captions: [
       'Pillar ad in MRT station',
       'Column wrap advertising',
@@ -115,6 +120,8 @@ export const serviceData = [
     adSize: '20ft x 40ft',
     material: 'Tarpaulin',
     location: 'Highways & Urban Centers',
+    pdfFile: `${SERVICES_PDF_BASE}/billboards-cavc.pdf`,
+    pdfFileName: 'billboards-cavc.pdf',
     captions: [
       'Highway billboard',
       'Urban billboard',
@@ -133,6 +140,8 @@ export const serviceData = [
     adSize: 'Varies',
     material: 'LED Panel',
     location: 'Prime Locations',
+    pdfFile: `${SERVICES_PDF_BASE}/led-displays-cavc.pdf`,
+    pdfFileName: 'led-displays-cavc.pdf',
     captions: [
       'LED billboard at night',
       'Dynamic LED display',
@@ -150,6 +159,8 @@ export const serviceData = [
     adSize: 'Custom',
     material: 'Sticker/Vinyl',
     location: 'Public Transport',
+    pdfFile: `${SERVICES_PDF_BASE}/transit-ads.pdf`,
+    pdfFileName: 'transit-ads.pdf',
     captions: [
       'Bus wrap ad',
       'Train interior ad',
@@ -166,6 +177,8 @@ export const serviceData = [
     adSize: '2ft x 3ft',
     material: 'Acrylic/Metal',
     location: 'Strategic Points',
+    pdfFile: `${SERVICES_PDF_BASE}/signages-cavc.pdf`,
+    pdfFileName: 'signages-cavc.pdf',
     captions: [
       'Sidewalk signage',
       'Entrance directional sign',
