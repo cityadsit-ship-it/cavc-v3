@@ -26,7 +26,7 @@ const redIcon = new L.Icon({
 });
 
 // Metro Manila cities
-const metroManilaLocations = [
+export const metroManilaLocations = [
   { name: 'Manila', lat: 14.5995, lng: 120.9842 },
   { name: 'Caloocan', lat: 14.6507, lng: 120.9661 },
   { name: 'Malabon', lat: 14.6686, lng: 120.9656 },
@@ -42,7 +42,7 @@ const metroManilaLocations = [
 ];
 
 // Provincial locations
-const provincialLocations = [
+export const provincialLocations = [
   { name: 'Laoag', lat: 18.1978, lng: 120.5952 },
   { name: 'Ilocos', lat: 17.5747, lng: 120.3869 },
   { name: 'La Union', lat: 16.6156, lng: 120.3186 },
