@@ -47,20 +47,11 @@ const ServiceCard = ({ service, index, onClick }) => {
 						<h3 className="text-xl font-bold mb-1 drop-shadow-lg">{service.title}</h3>
 						<p className="text-sm opacity-90 drop-shadow-lg">{service.imageCount} images</p>
 					</div>
-								</div>
-
-								{/* Gallery hint (hidden by default) */}
-				<div className="absolute top-4 right-4 bg-white bg-opacity-20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
-					Click to view gallery
 				</div>
 
-				{/* Center play/gallery icon on hover */}
-				<div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-75 group-hover:scale-100">
-					<div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-full p-4 border-2 border-white border-opacity-50">
-						<svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-							<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-						</svg>
-					</div>
+				{/* Gallery hint (hidden by default) */}
+				<div className="absolute top-4 right-4 bg-white bg-opacity-20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+					Click to view gallery
 				</div>
 			</div>
 

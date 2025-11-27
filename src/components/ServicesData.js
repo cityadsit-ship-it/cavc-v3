@@ -1,17 +1,12 @@
 const SERVICES_IMAGE_BASE = '/images/services';
 const SERVICES_PDF_BASE = '/pdfs/services';
 
-// Try multiple possible paths for images
+// Only use direct paths - public directory is served at root
 const imageModules = import.meta.glob([
   '/images/services/**/*.jpg',
   '/images/services/**/*.jpeg',
   '/images/services/**/*.png',
-  '../public/images/services/**/*.jpg',
-  '../public/images/services/**/*.jpeg',
-  '../public/images/services/**/*.png',
-  '../../public/images/services/**/*.jpg',
-  '../../public/images/services/**/*.jpeg',
-  '../../public/images/services/**/*.png',
+  '/images/services/**/*.webp',
 ], {
   eager: true,
   query: '?url',
@@ -28,22 +23,20 @@ const getImagesForFolder = (folder) => {
   
   const images = Object.entries(imageModules)
     .filter(([path]) => {
-      // Match any path that contains the folder name and ends with image extension
-      const patterns = [
-        new RegExp(`/images/services/${folder}/[^/]+\\.(jpg|jpeg|png)$`, 'i'),
-        new RegExp(`/public/images/services/${folder}/[^/]+\\.(jpg|jpeg|png)$`, 'i'),
-      ];
-      const matches = patterns.some(pattern => pattern.test(path));
+      // Only match direct /images/services/ paths (no /public/ prefix)
+      const pattern = new RegExp(`^/images/services/${folder}/[^/]+\\.(jpg|jpeg|png|webp)$`, 'i');
+      const matches = pattern.test(path);
       console.log(`  Path: ${path} - Matches: ${matches}`);
       return matches;
     })
     .map(([path, url]) => {
       const filename = path.split('/').pop();
-      console.log(`  ✅ Found: ${filename} -> ${url}`);
+      // Detect main.* across common extensions
+      const isMain = /^main\.(jpg|jpeg|png|webp)$/i.test(filename);
       return {
         filename,
-        url: url,
-        isMain: filename.toLowerCase() === 'main.jpg',
+        url,
+        isMain,
       };
     })
     .sort((a, b) => {
@@ -68,11 +61,26 @@ const generateGalleryFromImages = (folder, captions = []) => {
 
   return images
     .filter((img) => !img.isMain)
+    .filter((img) => /\.webp$/i.test(img.filename)) // only webp in modal/thumbnail
     .map((img, idx) => ({
       url: img.url,
-      caption: captions[idx] || `${folder} - ${img.filename}`,
+      caption: captions?.[idx] || `${folder} - ${img.filename}`,
     }));
 };
+
+// Import specific banner images - only direct paths, now using /banners/ subfolder
+const bannerImages = import.meta.glob([
+  '/images/services/banners/FB*.webp',
+  '/images/services/banners/Walking*.webp',
+  '/images/services/banners/zAcross*.webp',
+], {
+  eager: true,
+  query: '?url',
+  import: 'default',
+});
+
+console.log('🎯 Banner images found:', bannerImages);
+console.log('🎯 Banner image keys:', Object.keys(bannerImages));
 
 // Service definitions - galleryCount now auto-detected from actual files
 export const serviceData = [
@@ -80,19 +88,61 @@ export const serviceData = [
     id: 1,
     folder: 'banners',
     title: 'Banners and Streamers',
-    description:
-      'Banners are mounted on either lamp post or streets signs along major and secondary roads.',
-    adSize: '2ft x 6ft',
-    material: 'Tarpaulin',
-    location: 'Metro Manila (Key Roads)',
-    pdfFile: `${SERVICES_PDF_BASE}/banner-cavc.pdf`,
-    pdfFileName: 'banner-cavc.pdf',
-    captions: [
-      'Banner on lamp post',
-      'Streamer installation',
-      'Street signage banners',
-      'High visibility banners',
+    description: 'Banners are mounted on either lamp post or streets signs along major and secondary roads.',
+    // Gallery images with individual modal data
+    galleryItems: [
+      {
+        webp: bannerImages['/images/services/banners/FB Page1_LPB_photo.webp'] || '/images/services/banners/FB Page1_LPB_photo.webp',
+        jpg: '/images/services/banners/FB Page1_LPB.jpg',
+        modalDescription: 'LAMP POST BANNERS',
+        standardSize: '3ft(w) x 9ft(h)',
+        locations: 'Ortigas Center, Pasig, MOA, Pasay, Manila, Mandaluyong, Muntinlupa, Malabon, Caloocan, Rizal, Cavite, Cavitex, Bacolod, Bulacan, CDO, Laguna, Ilo-ilo, Cebu, and other provinces',
+      },
+      {
+        webp: bannerImages['/images/services/banners/FB Page1_Ortigas Center banners_photo.webp'] || '/images/services/banners/FB Page1_Ortigas Center banners_photo.webp',
+        jpg: '/images/services/banners/FB Page1_Ortigas Center banners.jpg',
+        modalDescription: 'ORTIGAS CENTER LAMP POST BANNERS',
+        adSize: '3ft(w) x 9ft(h)',
+        adType: 'Lighted and regular banners',
+        location: 'Ortigas Center, Pasig City',
+      },
+      {
+        webp: bannerImages['/images/services/banners/FB Page1_Ortigas Center lighted banners_photo.webp'] || '/images/services/banners/FB Page1_Ortigas Center lighted banners_photo.webp',
+        jpg: '/images/services/banners/FB Page1_Ortigas Center lighted banners.jpg',
+        modalDescription: 'ORTIGAS CENTER LIGHTED BANNERS',
+        adSize: '3ft(w) x 9ft(h)',
+        adType: 'Lighted banners',
+        location: 'San Miguel Avenue, ADB Avenue, J Vargas Avenue, Ortigas Center, Pasig City',
+      },
+      {
+        webp: bannerImages['/images/services/banners/Walking Banner Ad_photo.webp'] || '/images/services/banners/Walking Banner Ad_photo.webp',
+        jpg: '/images/services/banners/Walking Banner Ad.jpg',
+        modalDescription: 'WALKING BANNER AD',
+        adSize: '1.6ft(w) x 4ft(h)',
+        adType: 'Walking banner',
+        location: "Client's requirement",
+      },
+      {
+        webp: bannerImages['/images/services/banners/Walking LED Ad_photo.webp'] || '/images/services/banners/Walking LED Ad_photo.webp',
+        jpg: '/images/services/banners/Walking LED Ad.jpg',
+        modalDescription: 'WALKING LED AD',
+        adSize: 'front: 23in(w) x 25in(h) | 23in(w) x 57in(h)',
+        adType: 'Walking LED',
+        location: "Client's requirement",
+      },
+      {
+        webp: bannerImages['/images/services/banners/zAcross the street streamer_photo.webp'] || '/images/services/banners/zAcross the street streamer_photo.webp',
+        jpg: '/images/services/banners/zAcross the street streamer.jpg',
+        modalDescription: 'ACROSS THE STREET STREAMER',
+        adSize: '12ft(w) x 4ft(h) / 15ft(w) x 4ft(h)',
+        adType: 'Street streamer',
+        location: "Client's requirement",
+      },
     ],
+    // Use first item as preview
+    previewImage: bannerImages['/images/services/banners/FB Page1_LPB_photo.webp'] || '/images/services/banners/FB Page1_LPB_photo.webp',
+    downloadFile: '/images/services/banners/FB Page1_LPB.jpg',
+    downloadFileName: 'FB Page1_LPB.jpg',
   },
   {
     id: 2,
@@ -186,6 +236,34 @@ export const serviceData = [
     ],
   },
 ].map((service) => {
+  // If service has galleryItems, use them instead of folder-based discovery
+  if (service.galleryItems) {
+    const gallery = service.galleryItems.map((item) => ({
+      url: item.webp,
+      downloadUrl: item.jpg,
+      caption: item.modalDescription,
+      modalDescription: item.modalDescription,
+      adSize: item.adSize,
+      adType: item.adType,
+      location: item.location,
+      standardSize: item.standardSize,
+      locations: item.locations,
+    }));
+
+    console.log(`📊 Service ${service.folder}: ${gallery.length} gallery images (manual)`);
+    console.log(`📷 Gallery items:`, gallery);
+    console.log(`🖼️ First image URL:`, gallery[0]?.url);
+
+    return {
+      ...service,
+      mainImage: service.previewImage || gallery[0]?.url,
+      gallery,
+      galleryCount: gallery.length,
+      imageCount: gallery.length,
+    };
+  }
+
+  // Otherwise use folder-based discovery
   const images = getImagesForFolder(service.folder);
   const mainImage = images.find((img) => img.isMain);
   const gallery = generateGalleryFromImages(service.folder, service.captions);
@@ -194,16 +272,15 @@ export const serviceData = [
 
   return {
     ...service,
-    mainImage: mainImage?.url || `${SERVICES_IMAGE_BASE}/${service.folder}/main.jpg`,
+    mainImage: service.previewImage || mainImage?.url || `${SERVICES_IMAGE_BASE}/${service.folder}/main.jpg`,
     gallery,
     galleryCount: gallery.length,
-    imageCount: gallery.length + 1,
+    imageCount: gallery.length,
   };
 });
 
 // Helper to build full gallery including main image
 export const buildGallery = (service) => [
-  { url: service.mainImage, caption: 'Main Image' },
   ...service.gallery,
 ];
 

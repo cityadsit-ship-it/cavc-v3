@@ -21,11 +21,11 @@ const ServiceGalleryModal = ({ service, isOpen, onClose }) => {
 	const [downloaded, setDownloaded] = useState(false);
 	const [modalReady, setModalReady] = useState(false);
 	const [thumbLoadStates, setThumbLoadStates] = useState({});
-	const gallery = buildGallery(service);
+	const gallery = buildGallery(service); // now only webp, without main image
 
-	// Preload main image before showing modal
+	// Preload first gallery image (no main image)
 	useEffect(() => {
-		if (isOpen && service) {
+		if (isOpen && service && gallery.length) {
 			setModalReady(false);
 			const img = new Image();
 			img.src = gallery[0].url;
@@ -65,8 +65,10 @@ const ServiceGalleryModal = ({ service, isOpen, onClose }) => {
 			setDownloading(false);
 			setDownloaded(true);
 			const link = document.createElement('a');
-			link.href = service.pdfFile || '/company-profile.pdf';
-			link.download = service.pdfFileName || 'company-profile.pdf';
+			// Use current gallery item's downloadUrl if available
+			const currentItem = gallery[currentImage];
+			link.href = currentItem?.downloadUrl || service.downloadFile || service.pdfFile || '/company-profile.pdf';
+			link.download = currentItem?.downloadUrl?.split('/').pop() || service.downloadFileName || service.pdfFileName || 'service-image.jpg';
 			document.body.appendChild(link);
 			link.click();
 			document.body.removeChild(link);
@@ -81,6 +83,34 @@ const ServiceGalleryModal = ({ service, isOpen, onClose }) => {
 	const handleThumbLoad = (idx) => {
 		setThumbLoadStates(prev => ({ ...prev, [idx]: true }));
 	};
+
+	// Get current gallery item for dynamic modal content
+	const currentItem = gallery[currentImage] || {};
+	const currentModalDescription = currentItem.modalDescription || service.modalDescription || service.title;
+	
+	const modalDetails = (currentItem.standardSize || currentItem.locations || currentItem.adSize || currentItem.adType || currentItem.location)
+		? [
+			currentItem.standardSize && { label: 'STANDARD SIZE', value: currentItem.standardSize },
+			currentItem.locations && { label: 'LOCATIONS', value: currentItem.locations },
+			currentItem.adSize && { label: 'AD SIZE', value: currentItem.adSize },
+			currentItem.adType && { label: 'AD TYPE', value: currentItem.adType },
+			currentItem.location && { label: 'LOCATION', value: currentItem.location },
+		].filter(Boolean)
+		: (service.standardSize || service.locations)
+		? [
+			service.standardSize && { label: 'STANDARD SIZE', value: service.standardSize },
+			service.locations && { label: 'LOCATIONS', value: service.locations },
+		].filter(Boolean)
+		: [
+			{ label: 'Ad Size', value: service.adSize },
+			{ label: 'Material', value: service.material },
+			{ label: 'Location', value: service.location },
+		];
+
+	const detailColsClass =
+		modalDetails.length === 2 ? 'grid-cols-2'
+		: modalDetails.length === 3 ? 'grid-cols-3'
+		: 'grid-cols-1';
 
 	return (
 		<motion.div
@@ -103,20 +133,22 @@ const ServiceGalleryModal = ({ service, isOpen, onClose }) => {
 				<div className="flex-1 flex flex-col" style={{ minWidth: 0 }}>
 					{/* Gradient header: title + description + details */}
 					<div className="flex items-start justify-between mb-2 px-0 pt-0 flex-shrink-0">
-						<div className="w-full bg-gradient-to-r from-primary-dark via-accent-green to-primary-dark p-4 rounded-t-2xl">
-							<h3 className="text-base md:text-lg font-bold text-white mb-1 drop-shadow-sm">{service.title}</h3>
-							<p className="text-xs md:text-sm text-white/90 drop-shadow-sm">{service.description}</p>
-							{/* Details block - one line, three columns */}
-							<div className="mt-3 flex flex-row gap-4 text-xs md:text-sm text-white/90 justify-between items-center">
-								<div className="flex-1 text-left truncate">
-									<span className="font-semibold">Ad Size:</span> {service.adSize}
-								</div>
-								<div className="flex-1 text-center truncate">
-									<span className="font-semibold">Material:</span> {service.material}
-								</div>
-								<div className="flex-1 text-center truncate">
-									<span className="font-semibold">Location:</span> {service.location}
-								</div>
+						<div className="w-full bg-gradient-to-r from-primary-dark via-accent-green to-primary-dark p-4 rounded-t-2xl relative">
+							<h3 className="text-base md:text-lg font-bold text-white mb-1 drop-shadow-sm">
+								{currentModalDescription}
+							</h3>
+							{/* (Title badge moved to image area) */}
+							<p className="text-xs md:text-sm text-white/90 drop-shadow-sm font-semibold">
+								{/* description intentionally hidden */}
+							</p>
+							{/* Dynamic details grid */}
+							<div className={`mt-3 grid ${detailColsClass} gap-3 text-[11px] md:text-xs text-white/90`}>
+								{modalDetails.map(d => (
+									<div key={d.label} className="flex flex-col min-w-0">
+										<span className="font-semibold tracking-wide">{d.label}:</span>
+										<span className="mt-0.5 leading-snug break-words">{d.value}</span>
+									</div>
+								))}
 							</div>
 							{/* Action buttons */}
 							<div className="mt-5 flex flex-row gap-2 flex-wrap">
@@ -154,7 +186,7 @@ const ServiceGalleryModal = ({ service, isOpen, onClose }) => {
 											<span>Downloaded</span>
 										</span>
 									) : (
-										'Download Gallery'
+										'Download Image'
 									)}
 								</button>
 							</div>
@@ -170,7 +202,15 @@ const ServiceGalleryModal = ({ service, isOpen, onClose }) => {
 					</div>
 					{/* Image area */}
 					<div className="relative flex items-center justify-center flex-1 px-4 py-6 overflow-hidden" style={{ minHeight: 0 }}>
-						{/* Image count - top center, overlapping image */}
+						{/* Title badge on image */}
+						{service.title && (
+							<div className="absolute top-4 left-4 z-10">
+								<span className="px-3 py-1 rounded-md text-xs md:text-sm font-semibold shadow-md bg-yellow-400/90 text-primary-dark border border-yellow-500/60 backdrop-blur-sm">
+									{service.title}
+								</span>
+							</div>
+						)}
+						{/* Image count */}
 						<div className="absolute top-4 left-1/2 -translate-x-1/2 bg-black/60 text-white px-4 py-1 rounded-full text-sm shadow-lg z-10">
 							{currentImage + 1} / {gallery.length}
 						</div>
@@ -189,10 +229,10 @@ const ServiceGalleryModal = ({ service, isOpen, onClose }) => {
 								<ImageSkeleton className="w-full h-full rounded-md" style={{ maxHeight: '60vh' }} />
 							)}
 							<img
-								src={gallery[currentImage].url}
-								alt={gallery[currentImage].caption || service.title}
+								src={gallery[currentImage]?.url}
+								alt={gallery[currentImage]?.caption || service.title}
 								onLoad={() => setImgLoaded(true)}
-								onError={e => { e.currentTarget.onerror = null; e.currentTarget.src = service.mainImage; setImgLoaded(true); }}
+								onError={(e) => { e.currentTarget.onerror = null; setImgLoaded(true); }} // no fallback to main.jpg
 								className={`object-contain rounded-md shadow-lg border border-gray-200 bg-white ${imgLoaded ? '' : 'invisible'}`}
 								style={{
 									maxHeight: '60vh',
@@ -235,7 +275,7 @@ const ServiceGalleryModal = ({ service, isOpen, onClose }) => {
 									alt={img.caption || service.title}
 									className={`object-cover w-full h-full ${thumbLoadStates[idx] ? '' : 'invisible'}`}
 									onLoad={() => handleThumbLoad(idx)}
-									onError={e => { e.currentTarget.onerror = null; e.currentTarget.src = service.mainImage; handleThumbLoad(idx); }}
+									onError={(e) => { e.currentTarget.onerror = null; handleThumbLoad(idx); }} // no fallback to main.jpg
 								/>
 							</button>
 						))}
@@ -262,7 +302,7 @@ const ServiceGalleryModal = ({ service, isOpen, onClose }) => {
 								alt={img.caption || service.title}
 								className={`object-cover w-full h-full ${thumbLoadStates[idx] ? '' : 'invisible'}`}
 								onLoad={() => handleThumbLoad(idx)}
-								onError={e => { e.currentTarget.onerror = null; e.currentTarget.src = service.mainImage; handleThumbLoad(idx); }}
+								onError={(e) => { e.currentTarget.onerror = null; handleThumbLoad(idx); }} // no fallback to main.jpg
 							/>
 						</button>
 					))}
