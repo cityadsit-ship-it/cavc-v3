@@ -59,17 +59,17 @@ const SearchFilter = ({ onFilterChange }) => {
 		);
 	}, [serviceSearchTerm]);
 
-	// Initial search on component mount (page load)
-	useEffect(() => {
-		if (isInitialMount.current) {
-			isInitialMount.current = false;
-			// Trigger initial search after a short delay
-			const timer = setTimeout(() => {
-				handleSearch();
-			}, 500);
-			return () => clearTimeout(timer);
-		}
-	}, []);
+	// Remove initial search on component mount
+	// (Commented out to prevent auto-search on page load)
+	// useEffect(() => {
+	// 	if (isInitialMount.current) {
+	// 		isInitialMount.current = false;
+	// 		const timer = setTimeout(() => {
+	// 			handleSearch();
+	// 		}, 500);
+	// 		return () => clearTimeout(timer);
+	// 	}
+	// }, []);
 
 	// Instant auto-search after first manual search (removed 3-second delay)
 	useEffect(() => {
