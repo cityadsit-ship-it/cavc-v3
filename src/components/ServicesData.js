@@ -82,6 +82,18 @@ const bannerImages = import.meta.glob([
 console.log('🎯 Banner images found:', bannerImages);
 console.log('🎯 Banner image keys:', Object.keys(bannerImages));
 
+// Import specific signage images - only direct paths, using /signages/ subfolder
+const signageImages = import.meta.glob([
+  '/images/services/signages/FB*.webp',
+], {
+  eager: true,
+  query: '?url',
+  import: 'default',
+});
+
+console.log('🎯 Signage images found:', signageImages);
+console.log('🎯 Signage image keys:', Object.keys(signageImages));
+
 // Service definitions - galleryCount now auto-detected from actual files
 export const serviceData = [
   {
@@ -222,18 +234,35 @@ export const serviceData = [
     id: 6,
     folder: 'signages',
     title: 'Directional Signage',
-    description:
-      'Directional signage is placed in strategic locations, such as sidewalks, entrances, and high-traffic zones, featuring arrows, logos, or catchy slogans to attract foot traffic.',
-    adSize: '2ft x 3ft',
-    material: 'Acrylic/Metal',
-    location: 'Strategic Points',
-    pdfFile: `${SERVICES_PDF_BASE}/signages-cavc.pdf`,
-    pdfFileName: 'signages-cavc.pdf',
-    captions: [
-      'Sidewalk signage',
-      'Entrance directional sign',
-      'High-traffic zone signage',
+    description: 'Directional signage is placed in strategic locations, such as sidewalks, entrances, and high-traffic zones, featuring arrows, logos, or catchy slogans to attract foot traffic.',
+    // Gallery images with individual modal data
+    galleryItems: [
+      {
+        webp: signageImages['/images/services/signages/FB Page1_Directional Sign_clamp directional_photo.webp'] || '/images/services/signages/FB Page1_Directional Sign_clamp directional_photo.webp',
+        jpg: '/images/services/signages/FB Page1_Directional Sign_clamp directional.jpg',
+        modalDescription: 'CLAMP DIRECTIONAL SIGN',
+        adSize: '2ft(w) x 3ft(h)',
+        location: "Client's requirement",
+      },
+      {
+        webp: signageImages['/images/services/signages/FB Page1_Directional Sign_double pole_photo.webp'] || '/images/services/signages/FB Page1_Directional Sign_double pole_photo.webp',
+        jpg: '/images/services/signages/FB Page1_Directional Sign_double pole.jpg',
+        modalDescription: 'DOUBLE POLE DIRECTIONAL SIGN',
+        adSize: '4ft(w) x 3ft(h), 6ft(w) x 4ft(h)',
+        location: "Client's requirement",
+      },
+      {
+        webp: signageImages['/images/services/signages/FB Page1_Directional Sign_single pole_photo.webp'] || '/images/services/signages/FB Page1_Directional Sign_single pole_photo.webp',
+        jpg: '/images/services/signages/FB Page1_Directional Sign_single pole.jpg',
+        modalDescription: 'SINGLE POLE DIRECTIONAL SIGN',
+        adSize: '2ft(w) x 3ft(h), 3ft(w) x 4ft(h)',
+        location: "Client's requirement",
+      },
     ],
+    // Use first item as preview
+    previewImage: signageImages['/images/services/signages/FB Page1_Directional Sign_clamp directional_photo.webp'] || '/images/services/signages/FB Page1_Directional Sign_clamp directional_photo.webp',
+    downloadFile: '/images/services/signages/FB Page1_Directional Sign_clamp directional.jpg',
+    downloadFileName: 'FB Page1_Directional Sign_clamp directional.jpg',
   },
 ].map((service) => {
   // If service has galleryItems, use them instead of folder-based discovery

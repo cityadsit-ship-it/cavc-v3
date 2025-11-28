@@ -202,28 +202,39 @@ const ServiceGalleryModal = ({ service, isOpen, onClose }) => {
 					</div>
 					{/* Image area */}
 					<div className="relative flex items-center justify-center flex-1 px-4 py-6 overflow-hidden" style={{ minHeight: 0 }}>
-						{/* Title badge on image */}
+						{/* Service category badge - repositioned top-left with horizontal orange gradient */}
 						{service.title && (
-							<div className="absolute top-4 left-4 z-10">
-								<span className="px-3 py-1 rounded-md text-xs md:text-sm font-semibold shadow-md bg-yellow-400/90 text-primary-dark border border-yellow-500/60 backdrop-blur-sm">
-									{service.title}
-								</span>
+							<div className="absolute top-0 left-0 z-10">
+								<div
+									className="px-4 py-2 rounded-br-xl text-sm md:text-base font-bold shadow-xl text-white backdrop-blur-md transform transition-all duration-300 hover:scale-105"
+									style={{
+										background: 'linear-gradient(90deg, #ea580c 0%, #fb923c 50%, #ea580c 100%)',
+										boxShadow: '0 4px 20px rgba(234, 88, 12, 0.5)',
+									}}
+								>
+									<div className="flex items-center gap-2">
+										<span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
+										<span className="tracking-wide">{service.title}</span>
+									</div>
+								</div>
 							</div>
 						)}
-						{/* Image count */}
-						<div className="absolute top-4 left-1/2 -translate-x-1/2 bg-black/60 text-white px-4 py-1 rounded-full text-sm shadow-lg z-10">
+						{/* Image count - repositioned to avoid badge overlap */}
+						<div className="absolute top-4 right-4 bg-black/70 text-white px-3 py-1.5 rounded-full text-xs md:text-sm font-semibold shadow-lg z-10 backdrop-blur-sm">
 							{currentImage + 1} / {gallery.length}
 						</div>
+						{/* Navigation arrows */}
 						{gallery.length > 1 && (
 							<button
 								onClick={prevImage}
 								disabled={currentImage === 0}
-								className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/70 text-primary-dark p-2 rounded-full hover:bg-accent-green/80 transition disabled:opacity-30 z-10"
+								className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-primary-dark p-2 md:p-3 rounded-full hover:scale-110 transition-all duration-300 disabled:opacity-30 disabled:hover:scale-100 z-10 shadow-lg"
 								aria-label="Previous"
 							>
-								<ChevronLeft className="w-6 h-6" />
+								<ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
 							</button>
 						)}
+						{/* Image container */}
 						<div className="flex items-center justify-center w-full h-full">
 							{!imgLoaded && (
 								<ImageSkeleton className="w-full h-full rounded-md" style={{ maxHeight: '60vh' }} />
@@ -247,10 +258,10 @@ const ServiceGalleryModal = ({ service, isOpen, onClose }) => {
 							<button
 								onClick={nextImage}
 								disabled={currentImage === gallery.length - 1}
-								className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/70 text-primary-dark p-2 rounded-full hover:bg-accent-green/80 transition disabled:opacity-30 z-10"
+								className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-primary-dark p-2 md:p-3 rounded-full hover:scale-110 transition-all duration-300 disabled:opacity-30 disabled:hover:scale-100 z-10 shadow-lg"
 								aria-label="Next"
 							>
-								<ChevronRight className="w-6 h-6" />
+								<ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
 							</button>
 						)}
 					</div>
