@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight, Mail, Download } from 'lucide-react';
 import { buildGallery } from './ServicesData';
@@ -21,6 +21,9 @@ const ServiceGalleryModal = ({ service, isOpen, onClose }) => {
 	const [downloaded, setDownloaded] = useState(false);
 	const [modalReady, setModalReady] = useState(false);
 	const [thumbLoadStates, setThumbLoadStates] = useState({});
+	const thumbnailRefs = useRef([]);
+	const mobileThumbContainerRef = useRef(null);
+	const desktopThumbContainerRef = useRef(null);
 	const gallery = buildGallery(service); // now only webp, without main image
 
 	// Preload first gallery image (no main image)
@@ -48,6 +51,17 @@ const ServiceGalleryModal = ({ service, isOpen, onClose }) => {
 
 	useEffect(() => {
 		setImgLoaded(false);
+	}, [currentImage]);
+
+	// Auto-scroll thumbnail into view
+	useEffect(() => {
+		if (thumbnailRefs.current[currentImage]) {
+			thumbnailRefs.current[currentImage].scrollIntoView({
+				behavior: 'smooth',
+				block: 'nearest',
+				inline: 'center'
+			});
+		}
 	}, [currentImage]);
 
 	if (!isOpen || !service || !modalReady) return null;
@@ -266,10 +280,11 @@ const ServiceGalleryModal = ({ service, isOpen, onClose }) => {
 						)}
 					</div>
 					{/* Thumbnails for mobile (below image) */}
-					<div className="flex md:hidden gap-2 px-6 pb-4 overflow-x-auto flex-shrink-0">
+					<div ref={mobileThumbContainerRef} className="flex md:hidden gap-2 px-6 pb-4 overflow-x-auto flex-shrink-0">
 						{gallery.map((img, idx) => (
 							<button
 								key={img.url}
+								ref={el => thumbnailRefs.current[idx] = el}
 								onClick={() => setCurrentImage(idx)}
 								className={`border-2 rounded-lg overflow-hidden w-14 h-14 focus:outline-none transition flex-shrink-0 ${
 									currentImage === idx
@@ -293,10 +308,11 @@ const ServiceGalleryModal = ({ service, isOpen, onClose }) => {
 					</div>
 				</div>
 				{/* Thumbnails grid on right side (desktop) */}
-				<div className="hidden md:flex flex-col gap-2 p-4 bg-white/80 rounded-r-2xl border-l border-gray-100 overflow-y-auto flex-shrink-0" style={{ maxHeight: '90vh', width: '100px' }}>
+				<div ref={desktopThumbContainerRef} className="hidden md:flex flex-col gap-2 p-4 bg-white/80 rounded-r-2xl border-l border-gray-100 overflow-y-auto flex-shrink-0" style={{ maxHeight: '90vh', width: '100px' }}>
 					{gallery.map((img, idx) => (
 						<button
 							key={img.url}
+							ref={el => thumbnailRefs.current[idx] = el}
 							onClick={() => setCurrentImage(idx)}
 							className={`border-2 rounded-lg overflow-hidden w-16 h-16 mb-2 focus:outline-none transition flex-shrink-0 ${
 								currentImage === idx
