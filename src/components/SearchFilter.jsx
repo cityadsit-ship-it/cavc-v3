@@ -22,6 +22,8 @@ const SearchFilter = ({ onFilterChange }) => {
 	const isInitialMount = useRef(true);
 	const locationInputRef = useRef(null);
 	const serviceInputRef = useRef(null);
+	const imageCache = useRef({});
+	const fullImageCache = useRef({});
 
 	// Memoize locationData to prevent recalculation on every render
 	const locationData = useMemo(() => [
@@ -60,6 +62,35 @@ const SearchFilter = ({ onFilterChange }) => {
 			service.title.toLowerCase().includes(searchLower)
 		);
 	}, [serviceSearchTerm]);
+
+	// Preload all images from serviceData on mount
+	useEffect(() => {
+		serviceData.forEach(service => {
+			if (service.galleryItems && service.galleryItems.length > 0) {
+				service.galleryItems.forEach((item, idx) => {
+					const resultId = `${service.id}-${idx}`;
+					
+					// Preload display image (webp)
+					if (item.webp && !imageCache.current[resultId]) {
+						const img = new window.Image();
+						img.src = item.webp;
+						imageCache.current[resultId] = img;
+						
+						img.onload = () => {
+							setImageLoading(prev => ({ ...prev, [resultId]: 'loaded' }));
+						};
+					}
+					
+					// Preload full image (jpg) for popup
+					if (item.jpg && !fullImageCache.current[resultId]) {
+						const fullImg = new window.Image();
+						fullImg.src = item.jpg;
+						fullImageCache.current[resultId] = fullImg;
+					}
+				});
+			}
+		});
+	}, []);
 
 	// Remove initial search on component mount
 	// (Commented out to prevent auto-search on page load)
@@ -180,7 +211,6 @@ const SearchFilter = ({ onFilterChange }) => {
 				
 				setSearchResults(finalResults);
 				setIsSearching(false);
-				setImageLoading({});
 			}, delay);
 		});
 	}, [selectedService, selectedLocation, locationData, autoSearchEnabled, hasSearched]);
@@ -194,20 +224,17 @@ const SearchFilter = ({ onFilterChange }) => {
 	}, []);
 
 	const openImagePopup = useCallback((imageUrl, title) => {
-		setPopupImageLoading(true);
+		// Check if image is already cached
+		const cachedImage = Object.values(fullImageCache.current).find(img => img.src === imageUrl);
+		
+		if (cachedImage && cachedImage.complete) {
+			setPopupImageLoading(false);
+		} else {
+			setPopupImageLoading(true);
+		}
+		
 		setSelectedImage({ url: imageUrl, title });
 	}, []);
-
-	// Initialize blur state for images
-	useEffect(() => {
-		if (searchResults && searchResults.length > 0) {
-			const initialStates = {};
-			searchResults.forEach(result => {
-				initialStates[result.id] = 'blur';
-			});
-			setImageLoading(initialStates);
-		}
-	}, [searchResults]);
 
 	// Memoize selected names
 	const selectedLocationName = useMemo(() => 
@@ -453,7 +480,7 @@ const SearchFilter = ({ onFilterChange }) => {
 											transition={{ duration: 0.2, delay: Math.min(index * 0.02, 0.3) }}
 											className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-200 border border-gray-200 hover:border-green-500 group flex flex-col"
 										>
-											{/* Image Section with Blur Loading */}
+											{/* Image Section - No blur if cached */}
 											<div 
 												className="relative h-48 xs:h-56 sm:h-56 md:h-48 xl:h-56 bg-gray-100 overflow-hidden cursor-pointer"
 												onClick={() => openImagePopup(result.fullImage, result.modalDescription)}
@@ -465,7 +492,9 @@ const SearchFilter = ({ onFilterChange }) => {
 													className={`w-full h-full object-cover group-hover:scale-105 transition-all duration-500 will-change-transform ${
 														imageLoading[result.id] === 'loaded'
 															? 'blur-0 opacity-100'
-															: 'blur-md opacity-70'
+															: imageCache.current[result.id]?.complete
+															? 'blur-0 opacity-100'
+															: 'blur-sm opacity-70'
 													}`}
 													onLoad={() => handleImageLoad(result.id)}
 													onError={() => handleImageError(result.id)}
@@ -571,7 +600,7 @@ const SearchFilter = ({ onFilterChange }) => {
 								<X className="w-6 h-6" />
 							</button>
 							
-							{/* Loading State */}
+							{/* Loading State - Only show if not cached */}
 							{popupImageLoading && (
 								<div className="absolute inset-0 flex items-center justify-center bg-gray-100">
 									<div className="text-center">
@@ -591,20 +620,6 @@ const SearchFilter = ({ onFilterChange }) => {
 								onLoad={() => setPopupImageLoading(false)}
 								onError={() => setPopupImageLoading(false)}
 							/>
-							
-							{/* Image Title */}
-							{!popupImageLoading && (
-								<motion.div
-									initial={{ opacity: 0, y: 20 }}
-									animate={{ opacity: 1, y: 0 }}
-									transition={{ delay: 0.2 }}
-									className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6"
-								>
-									<p className="text-white font-semibold text-lg text-center">
-										{selectedImage.title}
-									</p>
-								</motion.div>
-							)}
 						</motion.div>
 					</motion.div>
 				)}
