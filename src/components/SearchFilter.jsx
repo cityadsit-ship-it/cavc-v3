@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, MapPin, Grid3X3, ChevronDown, AlertCircle, Ruler, X } from 'lucide-react';
+import { Search, MapPin, Grid3X3, ChevronDown, AlertCircle, Ruler, X, Loader2 } from 'lucide-react';
 import { serviceData } from './ServicesData';
 import { metroManilaLocations, provincialLocations } from './Map';
 
@@ -14,6 +14,8 @@ const SearchFilter = ({ onFilterChange }) => {
 	const [hasSearched, setHasSearched] = useState(false);
 	const [autoSearchEnabled, setAutoSearchEnabled] = useState(false);
 	const [selectedImage, setSelectedImage] = useState(null);
+	const [imageLoading, setImageLoading] = useState({});
+	const [popupImageLoading, setPopupImageLoading] = useState(true);
 	const [locationSearchTerm, setLocationSearchTerm] = useState('');
 	const [serviceSearchTerm, setServiceSearchTerm] = useState('');
 	const searchTimeoutRef = useRef(null);
@@ -129,53 +131,83 @@ const SearchFilter = ({ onFilterChange }) => {
 					filteredServices = serviceData.filter(s => s.id === parseInt(selectedService));
 				}
 				
-				// Flatten gallery items for search results
+				// Flatten gallery items for search results using modalDetails
 				const resultsWithImages = filteredServices.flatMap(service => {
 					if (service.galleryItems && service.galleryItems.length > 0) {
-						return service.galleryItems.map(item => ({
-							id: `${service.id}-${item.modalDescription}`,
-							serviceId: service.id,
-							serviceTitle: service.title,
-							displayImage: item.webp,
-							fullImage: item.jpg,
-							modalDescription: item.modalDescription,
-							adSize: item.adSize || item.standardSize,
-							adType: item.adType,
-							specificLocation: item.location || item.locations,
-						}));
+						return service.galleryItems.map((item, idx) => {
+							// Extract location from modalDetails
+							const modalDetails = item.modalDetails || {};
+							const location = modalDetails['Location'] || modalDetails['Locations'] || modalDetails['Route'] || '';
+							
+							const resultId = `${service.id}-${idx}`;
+							
+							return {
+								id: resultId,
+								serviceId: service.id,
+								serviceTitle: service.title,
+								displayImage: item.webp,
+								fullImage: item.jpg,
+								modalDescription: item.modalDescription,
+								modalDetails: modalDetails,
+								specificLocation: location,
+							};
+						});
 					}
-					return [{
-						id: service.id,
-						serviceId: service.id,
-						serviceTitle: service.title,
-						displayImage: service.mainImage,
-						fullImage: service.mainImage,
-						modalDescription: service.title,
-						adSize: service.adSize,
-						specificLocation: service.location,
-					}];
+					return [];
 				});
 
 				// Filter by location if not "all"
 				let finalResults = resultsWithImages;
 				if (selectedLocation !== 'all') {
 					const selectedLoc = locationData.find(l => l.id === selectedLocation);
+					const searchTerm = selectedLoc?.name.toLowerCase() || '';
+					
 					finalResults = resultsWithImages.filter(result => {
-						const locations = result.specificLocation;
-						if (!locations) return false;
+						const location = result.specificLocation?.toLowerCase() || '';
 						
-						if (typeof locations === 'string') {
-							return locations.toLowerCase().includes(selectedLoc?.name.toLowerCase());
+						// Check if location contains the search term
+						if (location.includes(searchTerm)) return true;
+						
+						// Check for "Client's requirement" or "All Locations" keywords
+						if (location.includes("client") || location.includes("requirement") || 
+						    location.includes("all") || location.includes("various")) {
+							return true;
 						}
+						
 						return false;
 					});
 				}
 				
 				setSearchResults(finalResults);
 				setIsSearching(false);
+				setImageLoading({});
 			}, delay);
 		});
 	}, [selectedService, selectedLocation, locationData, autoSearchEnabled, hasSearched]);
+
+	const handleImageLoad = useCallback((resultId) => {
+		setImageLoading(prev => ({ ...prev, [resultId]: 'loaded' }));
+	}, []);
+
+	const handleImageError = useCallback((resultId) => {
+		setImageLoading(prev => ({ ...prev, [resultId]: 'loaded' }));
+	}, []);
+
+	const openImagePopup = useCallback((imageUrl, title) => {
+		setPopupImageLoading(true);
+		setSelectedImage({ url: imageUrl, title });
+	}, []);
+
+	// Initialize blur state for images
+	useEffect(() => {
+		if (searchResults && searchResults.length > 0) {
+			const initialStates = {};
+			searchResults.forEach(result => {
+				initialStates[result.id] = 'blur';
+			});
+			setImageLoading(initialStates);
+		}
+	}, [searchResults]);
 
 	// Memoize selected names
 	const selectedLocationName = useMemo(() => 
@@ -421,27 +453,27 @@ const SearchFilter = ({ onFilterChange }) => {
 											transition={{ duration: 0.2, delay: Math.min(index * 0.02, 0.3) }}
 											className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-200 border border-gray-200 hover:border-green-500 group flex flex-col"
 										>
-											{/* Image Section */}
+											{/* Image Section with Blur Loading */}
 											<div 
 												className="relative h-48 xs:h-56 sm:h-56 md:h-48 xl:h-56 bg-gray-100 overflow-hidden cursor-pointer"
-												onClick={() => setSelectedImage({ url: result.fullImage, title: result.modalDescription })}
+												onClick={() => openImagePopup(result.fullImage, result.modalDescription)}
 											>
 												<img 
 													src={result.displayImage} 
 													alt={result.modalDescription}
 													loading="lazy"
-													className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 will-change-transform"
-													onError={(e) => {
-														e.target.style.display = 'none';
-														e.target.nextElementSibling?.classList.remove('hidden');
-													}}
+													className={`w-full h-full object-cover group-hover:scale-105 transition-all duration-500 will-change-transform ${
+														imageLoading[result.id] === 'loaded'
+															? 'blur-0 opacity-100'
+															: 'blur-md opacity-70'
+													}`}
+													onLoad={() => handleImageLoad(result.id)}
+													onError={() => handleImageError(result.id)}
 												/>
-												<div className="absolute inset-0 bg-gradient-to-br from-green-400 to-green-600 items-center justify-center text-7xl hidden">
-													📢
-												</div>
+												
 												<div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-200 flex items-center justify-center">
 													<span className="text-white text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-green-600 px-3 py-1 rounded-full">
-														View Image
+														View Full Image
 													</span>
 												</div>
 												<div className="absolute top-2 right-2 bg-orange-500 px-2.5 py-1 rounded-full shadow-md">
@@ -451,27 +483,31 @@ const SearchFilter = ({ onFilterChange }) => {
 												</div>
 											</div>
 											
-											{/* Content Section */}
+											{/* Content Section with modalDetails */}
 											<div className="p-3 sm:p-4 flex-1 flex flex-col">
 												<h4 className="font-bold text-xs sm:text-sm text-gray-800 mb-2 group-hover:text-green-600 transition-colors line-clamp-2">
 													{result.modalDescription}
 												</h4>
 												
-												{result.adSize && (
-													<div className="flex items-center gap-1.5 mb-2 text-gray-600">
-														<Ruler className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
-														<span className="text-xs font-medium line-clamp-1">{result.adSize}</span>
-													</div>
-												)}
+												{/* Display first 2 unique modalDetails (skip redundant location info) */}
+												{result.modalDetails && Object.entries(result.modalDetails)
+													.filter(([key]) => !key.toLowerCase().includes('location') && !key.toLowerCase().includes('landmarks'))
+													.slice(0, 2)
+													.map(([key, value]) => (
+														<div key={key} className="flex items-start gap-1.5 mb-1.5 text-gray-600">
+															{key.toLowerCase().includes('size') ? (
+																<Ruler className="w-3.5 h-3.5 text-green-500 flex-shrink-0 mt-0.5" />
+															) : (
+																<div className="w-3.5 h-3.5 rounded-full bg-green-500 flex-shrink-0 mt-1" />
+															)}
+															<div className="flex-1 min-w-0">
+																<span className="text-[10px] font-semibold text-gray-500 uppercase block">{key}:</span>
+																<span className="text-xs font-medium line-clamp-2">{value}</span>
+															</div>
+														</div>
+													))}
 												
-												{result.adType && (
-													<div className="mb-2">
-														<span className="text-xs bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full font-medium border border-blue-200">
-															{result.adType}
-														</span>
-													</div>
-												)}
-												
+												{/* Show location only at the bottom */}
 												{result.specificLocation && (
 													<div className="mt-auto pt-2 border-t border-gray-100">
 														<div className="flex items-center gap-1 mb-1">
@@ -508,7 +544,7 @@ const SearchFilter = ({ onFilterChange }) => {
 				)}
 			</AnimatePresence>
 
-			{/* Image Popup Modal */}
+			{/* Image Popup Modal with Loading */}
 			<AnimatePresence>
 				{selectedImage && (
 					<motion.div
@@ -534,12 +570,41 @@ const SearchFilter = ({ onFilterChange }) => {
 							>
 								<X className="w-6 h-6" />
 							</button>
+							
+							{/* Loading State */}
+							{popupImageLoading && (
+								<div className="absolute inset-0 flex items-center justify-center bg-gray-100">
+									<div className="text-center">
+										<Loader2 className="w-12 h-12 text-green-500 animate-spin mx-auto mb-4" />
+										<p className="text-gray-600 font-medium">Loading image...</p>
+									</div>
+								</div>
+							)}
+							
 							<img
 								src={selectedImage.url}
-								alt=""
-								className="w-full h-full object-contain"
+								alt={selectedImage.title}
+								className={`w-full h-full object-contain transition-opacity duration-300 ${
+									popupImageLoading ? 'opacity-0' : 'opacity-100'
+								}`}
 								style={{ maxHeight: '90vh' }}
+								onLoad={() => setPopupImageLoading(false)}
+								onError={() => setPopupImageLoading(false)}
 							/>
+							
+							{/* Image Title */}
+							{!popupImageLoading && (
+								<motion.div
+									initial={{ opacity: 0, y: 20 }}
+									animate={{ opacity: 1, y: 0 }}
+									transition={{ delay: 0.2 }}
+									className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6"
+								>
+									<p className="text-white font-semibold text-lg text-center">
+										{selectedImage.title}
+									</p>
+								</motion.div>
+							)}
 						</motion.div>
 					</motion.div>
 				)}

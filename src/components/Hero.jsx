@@ -11,56 +11,32 @@ const bgImages = Array.from({ length: 11 }, (_, i) => `/images/hero/${i + 1}.jpg
 
 const Hero = () => {
   const [bgIndex, setBgIndex] = useState(0);
-  const [firstLoaded, setFirstLoaded] = useState(false);
-  const [imgLoaded, setImgLoaded] = useState(false);
-  const [canTransition, setCanTransition] = useState(true);
 
-  // Only preload the first image
+  // Preload all images on mount
   useEffect(() => {
-    const img = new window.Image();
-    img.src = bgImages[0];
-    img.onload = () => {
-      setFirstLoaded(true);
-      setImgLoaded(true);
-    };
+    bgImages.forEach(src => {
+      const img = new window.Image();
+      img.src = src;
+    });
   }, []);
-
-  // For each transition, set imgLoaded to false and then true when image is loaded
-  useEffect(() => {
-    if (!firstLoaded) return;
-    setImgLoaded(false);
-    setCanTransition(false);
-    const img = new window.Image();
-    img.src = bgImages[bgIndex];
-    img.onload = () => {
-      setImgLoaded(true);
-      setCanTransition(true);
-    };
-  }, [bgIndex, firstLoaded]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (canTransition) {
-        setBgIndex((prev) => (prev + 1) % bgImages.length);
-      }
+      setBgIndex((prev) => (prev + 1) % bgImages.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, [canTransition]);
+  }, []);
 
   const handlePrev = () => {
-    if (canTransition) {
-      setBgIndex((prev) => (prev - 1 + bgImages.length) % bgImages.length);
-    }
+    setBgIndex((prev) => (prev - 1 + bgImages.length) % bgImages.length);
   };
 
   const handleNext = () => {
-    if (canTransition) {
-      setBgIndex((prev) => (prev + 1) % bgImages.length);
-    }
+    setBgIndex((prev) => (prev + 1) % bgImages.length);
   };
 
   const handleDotClick = (index) => {
-    if (canTransition && index !== bgIndex) {
+    if (index !== bgIndex) {
       setBgIndex(index);
     }
   };
@@ -84,40 +60,16 @@ const Hero = () => {
       <div id="hero" className="relative w-full h-[80vh] overflow-hidden">
         {/* Sliding Background Images */}
         <div className="absolute inset-0 w-full h-full">
-          <AnimatePresence>
-            {firstLoaded ? (
-              <motion.div
-                key={bgImages[bgIndex]}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 1 }}
-                className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
-                style={{ backgroundImage: `url(${bgImages[bgIndex]})` }}
-              >
-                {!imgLoaded && (
-                  <div className="absolute inset-0 w-full h-full backdrop-blur-md bg-black bg-opacity-20 transition-all duration-500 z-10" />
-                )}
-              </motion.div>
-            ) : (
-              // Loader only for the very first image load
-              <motion.div
-                key="loader"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5 }}
-                className="absolute inset-0 w-full h-full flex items-center justify-center bg-black bg-opacity-60 z-40"
-              >
-                <div className="flex flex-col items-center">
-                  <svg className="animate-spin h-12 w-12 text-white mb-4" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 01-8 8z"/>
-                  </svg>
-                  <span className="text-white text-lg font-semibold">Loading background...</span>
-                </div>
-              </motion.div>
-            )}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={bgImages[bgIndex]}
+              initial={{ opacity: 0, filter: 'blur(10px)' }}
+              animate={{ opacity: 1, filter: 'blur(0px)' }}
+              exit={{ opacity: 0, filter: 'blur(10px)' }}
+              transition={{ duration: 0.8, ease: 'easeInOut' }}
+              className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
+              style={{ backgroundImage: `url(${bgImages[bgIndex]})` }}
+            />
           </AnimatePresence>
         </div>
         {/* Gradient overlay for brand connection */}
@@ -169,42 +121,36 @@ const Hero = () => {
         </motion.div>
 
         {/* Navigation Buttons */}
-        {firstLoaded && (
-          <>
-            <button
-              onClick={handlePrev}
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-40 bg-white bg-opacity-20 hover:bg-opacity-30 backdrop-blur-sm rounded-full p-2 transition-all duration-300 group"
-              aria-label="Previous image"
-            >
-              <ChevronLeft size={24} className="text-white" />
-            </button>
-            <button
-              onClick={handleNext}
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-40 bg-white bg-opacity-20 hover:bg-opacity-30 backdrop-blur-sm rounded-full p-2 transition-all duration-300 group"
-              aria-label="Next image"
-            >
-              <ChevronRight size={24} className="text-white" />
-            </button>
-          </>
-        )}
+        <button
+          onClick={handlePrev}
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-40 bg-white bg-opacity-20 hover:bg-opacity-30 backdrop-blur-sm rounded-full p-2 transition-all duration-300 group"
+          aria-label="Previous image"
+        >
+          <ChevronLeft size={24} className="text-white" />
+        </button>
+        <button
+          onClick={handleNext}
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-40 bg-white bg-opacity-20 hover:bg-opacity-30 backdrop-blur-sm rounded-full p-2 transition-all duration-300 group"
+          aria-label="Next image"
+        >
+          <ChevronRight size={24} className="text-white" />
+        </button>
 
         {/* Navigation Dots */}
-        {firstLoaded && (
-          <div className="absolute bottom-20 left-1/2 -translate-x-1/2 z-40 flex gap-2">
-            {bgImages.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => handleDotClick(idx)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  idx === bgIndex 
-                    ? 'bg-white w-8' 
-                    : 'bg-white bg-opacity-50 hover:bg-opacity-75'
-                }`}
-                aria-label={`Go to image ${idx + 1}`}
-              />
-            ))}
-          </div>
-        )}
+        <div className="absolute bottom-20 left-1/2 -translate-x-1/2 z-40 flex gap-2">
+          {bgImages.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => handleDotClick(idx)}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                idx === bgIndex 
+                  ? 'bg-white w-8' 
+                  : 'bg-white bg-opacity-50 hover:bg-opacity-75'
+              }`}
+              aria-label={`Go to image ${idx + 1}`}
+            />
+          ))}
+        </div>
       </div>
       <BackToTop />
       <MessageMe scrollToSection={scrollToSection} />
