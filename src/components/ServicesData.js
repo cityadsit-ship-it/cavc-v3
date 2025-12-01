@@ -316,6 +316,8 @@ export const serviceData = [
     previewImage: bannerImages['/images/services/banners/FB Page1_LPB_photo.webp'] || '/images/services/banners/FB Page1_LPB_photo.webp',
     downloadFile: '/images/services/banners/FB Page1_LPB.jpg',
     downloadFileName: 'FB Page1_LPB.jpg',
+    pdfFile: `${SERVICES_PDF_BASE}/banner-cavc.pdf`,
+    pdfFileName: 'banner-cavc.pdf',
   },
   {
     id: 2,
@@ -1118,10 +1120,11 @@ export const serviceData = [
         webp: billboardImages['/images/services/billboards/Footbridge_Welcome Rotunda_Face B_photo.webp'] || '/images/services/billboards/Footbridge_Welcome Rotunda_Face B_photo.webp',
         jpg: '/images/services/billboards/Footbridge_Welcome Rotunda_Face B.jpg',
         modalDescription: 'FOOTBRIDGE BILLBOARD',
+       
         modalDetails: {
           'Ad Size': '10ft(w) x 15ft(h)',
           'Location': 'Various locations',
-                   'Landmarks': 'near MRT stations, major intersections',
+          'Landmarks': 'near MRT stations, major intersections',
         },
       },
       {
@@ -1480,6 +1483,8 @@ export const serviceData = [
     previewImage: signageImages['/images/services/signages/FB Page1_Directional Sign_clamp directional_photo.webp'] || '/images/services/signages/FB Page1_Directional Sign_clamp directional_photo.webp',
     downloadFile: '/images/services/signages/FB Page1_Directional Sign_clamp directional.jpg',
     downloadFileName: 'FB Page1_Directional Sign_clamp directional.jpg',
+    pdfFile: `${SERVICES_PDF_BASE}/signages-cavc.pdf`,
+    pdfFileName: 'signages-cavc.pdf',
   },
 ].map((service) => {
   if (service.galleryItems) {

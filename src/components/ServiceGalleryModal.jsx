@@ -78,11 +78,15 @@ const ServiceGalleryModal = ({ service, isOpen, onClose }) => {
 		setTimeout(() => {
 			setDownloading(false);
 			setDownloaded(true);
+			
+			// Download the service PDF file
 			const link = document.createElement('a');
-			// Use current gallery item's downloadUrl if available
-			const currentItem = gallery[currentImage];
-			link.href = currentItem?.downloadUrl || service.downloadFile || service.pdfFile || '/company-profile.pdf';
-			link.download = currentItem?.downloadUrl?.split('/').pop() || service.downloadFileName || service.pdfFileName || 'service-image.jpg';
+			// Construct PDF filename based on service title
+			const pdfFileName = `${service.title.toLowerCase().replace(/\s+/g, '-')}-cavc.pdf`;
+			const pdfPath = service.pdfFile || `/pdfs/services/${pdfFileName}`;
+			
+			link.href = pdfPath;
+			link.download = service.pdfFileName || pdfFileName;
 			document.body.appendChild(link);
 			link.click();
 			document.body.removeChild(link);
@@ -190,7 +194,7 @@ const ServiceGalleryModal = ({ service, isOpen, onClose }) => {
 											<span>Downloaded</span>
 										</span>
 									) : (
-										'Download Image'
+										'Download Gallery'
 									)}
 								</button>
 							</div>
