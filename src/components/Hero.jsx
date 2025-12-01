@@ -11,16 +11,15 @@ const bgImages = Array.from({ length: 11 }, (_, i) => `/images/hero/${i + 1}.jpg
 
 const Hero = () => {
   const [bgIndex, setBgIndex] = useState(0);
+  const [prevBgIndex, setPrevBgIndex] = useState(0);
   const [imagesLoaded, setImagesLoaded] = useState({});
-  const [isInitialLoad, setIsInitialLoad] = useState(true);
+  const [firstImageLoaded, setFirstImageLoaded] = useState(false);
   const [canTransition, setCanTransition] = useState(false);
   const imageCache = useRef({});
-  const hasTransitioned = useRef(false);
 
   // Preload and cache all images on mount
   useEffect(() => {
     const loadedStatus = {};
-    let loadedCount = 0;
 
     bgImages.forEach((src, index) => {
       const img = new window.Image();
@@ -29,25 +28,28 @@ const Hero = () => {
       
       img.onload = () => {
         loadedStatus[index] = true;
-        loadedCount++;
         
         // Update loaded status
         setImagesLoaded(prev => ({ ...prev, [index]: true }));
         
-        // Once first image is loaded, allow initial transition
-        if (index === 0) {
-          setIsInitialLoad(false);
+        // Once first image is loaded, allow transitions
+        if (index === 0 && !firstImageLoaded) {
+          setFirstImageLoaded(true);
           setCanTransition(true);
         }
       };
       
       img.onerror = () => {
         loadedStatus[index] = true;
-        loadedCount++;
         setImagesLoaded(prev => ({ ...prev, [index]: true }));
+        
+        if (index === 0 && !firstImageLoaded) {
+          setFirstImageLoaded(true);
+          setCanTransition(true);
+        }
       };
     });
-  }, []);
+  }, [firstImageLoaded]);
 
   // Auto-transition with image readiness check
   useEffect(() => {
@@ -55,7 +57,7 @@ const Hero = () => {
       const nextIndex = (bgIndex + 1) % bgImages.length;
       // Only transition if next image is loaded
       if (imagesLoaded[nextIndex] && canTransition) {
-        hasTransitioned.current = true;
+        setPrevBgIndex(bgIndex);
         setBgIndex(nextIndex);
       }
     }, 5000);
@@ -65,7 +67,7 @@ const Hero = () => {
   const handlePrev = () => {
     const prevIndex = (bgIndex - 1 + bgImages.length) % bgImages.length;
     if (imagesLoaded[prevIndex]) {
-      hasTransitioned.current = true;
+      setPrevBgIndex(bgIndex);
       setBgIndex(prevIndex);
     }
   };
@@ -73,14 +75,14 @@ const Hero = () => {
   const handleNext = () => {
     const nextIndex = (bgIndex + 1) % bgImages.length;
     if (imagesLoaded[nextIndex]) {
-      hasTransitioned.current = true;
+      setPrevBgIndex(bgIndex);
       setBgIndex(nextIndex);
     }
   };
 
   const handleDotClick = (index) => {
     if (index !== bgIndex && imagesLoaded[index]) {
-      hasTransitioned.current = true;
+      setPrevBgIndex(bgIndex);
       setBgIndex(index);
     }
   };
@@ -104,18 +106,21 @@ const Hero = () => {
       <div id="hero" className="relative w-full h-[80vh] overflow-hidden">
         {/* Sliding Background Images */}
         <div className="absolute inset-0 w-full h-full">
+          {/* Previous image - stays underneath */}
+          <div
+            className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url(${bgImages[prevBgIndex]})` }}
+          />
+          
+          {/* Current image - fades in on top */}
           <AnimatePresence mode="wait">
             <motion.div
-              key={bgImages[bgIndex]}
-              initial={{ 
-                opacity: 0, 
-                filter: isInitialLoad && !hasTransitioned.current ? 'blur(10px)' : 'blur(0px)' 
-              }}
+              key={bgIndex}
+              initial={{ opacity: firstImageLoaded ? 0 : 0, filter: !firstImageLoaded ? 'blur(10px)' : 'blur(0px)' }}
               animate={{ opacity: 1, filter: 'blur(0px)' }}
-              exit={{ opacity: 0, filter: 'blur(0px)' }}
               transition={{ 
-                duration: isInitialLoad && !hasTransitioned.current ? 0.8 : 0.4, 
-                ease: 'easeInOut' 
+                opacity: { duration: firstImageLoaded ? 0.8 : 1, ease: 'easeInOut' },
+                filter: { duration: 0.8, ease: 'easeInOut' }
               }}
               className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
               style={{ backgroundImage: `url(${bgImages[bgIndex]})` }}
@@ -196,13 +201,14 @@ const Hero = () => {
                 idx === bgIndex 
                   ? 'bg-white w-8' 
                   : 'bg-white bg-opacity-50 hover:bg-opacity-75'
-              } ${!imagesLoaded[idx] ? 'opacity-50 cursor-not-allowed' : ''}`}
+              } ${!imagesLoaded[idx] ? 'opacity-30 cursor-not-allowed' : ''}`}
               aria-label={`Go to image ${idx + 1}`}
               disabled={!imagesLoaded[idx]}
             />
           ))}
         </div>
       </div>
+      
       <BackToTop />
       <MessageMe scrollToSection={scrollToSection} />
     </>
