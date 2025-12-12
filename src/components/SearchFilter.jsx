@@ -18,12 +18,16 @@ const SearchFilter = ({ onFilterChange }) => {
 	const [popupImageLoading, setPopupImageLoading] = useState(true);
 	const [locationSearchTerm, setLocationSearchTerm] = useState('');
 	const [serviceSearchTerm, setServiceSearchTerm] = useState('');
+	const [showVariousLocations, setShowVariousLocations] = useState(false);
+	const [showClientRequirement, setShowClientRequirement] = useState(false);
 	const searchTimeoutRef = useRef(null);
 	const isInitialMount = useRef(true);
 	const locationInputRef = useRef(null);
 	const serviceInputRef = useRef(null);
 	const imageCache = useRef({});
 	const fullImageCache = useRef({});
+	const variousLocationsSectionRef = useRef(null);
+	const clientRequirementSectionRef = useRef(null);
 
 	// Memoize locationData to prevent recalculation on every render
 	const locationData = useMemo(() => [
@@ -187,29 +191,91 @@ const SearchFilter = ({ onFilterChange }) => {
 					return [];
 				});
 
-				// Filter by location if not "all"
-				let finalResults = resultsWithImages;
+				// Filter and categorize by location
+				let exactMatches = [];
+				let variousLocationMatches = [];
+				let clientRequirementMatches = [];
+				
 				if (selectedLocation !== 'all') {
 					const selectedLoc = locationData.find(l => l.id === selectedLocation);
 					const searchTerm = selectedLoc?.name.toLowerCase() || '';
 					
-					finalResults = resultsWithImages.filter(result => {
+					// Extract significant words (longer than 3 characters to avoid common words)
+					const searchWords = searchTerm.split(' ').filter(word => word.length > 3);
+					
+					resultsWithImages.forEach(result => {
 						const location = result.specificLocation?.toLowerCase() || '';
+						const description = result.modalDescription?.toLowerCase() || '';
 						
-						// Check if location contains the search term
-						if (location.includes(searchTerm)) return true;
-						
-						// Check for "Client's requirement" or "All Locations" keywords
-						if (location.includes("client") || location.includes("requirement") || 
-						    location.includes("all") || location.includes("various")) {
-							return true;
+						// Check for "Various Location" or similar
+						if (location.includes("various") || location.includes("all locations")) {
+							variousLocationMatches.push(result);
+							return;
 						}
 						
-						return false;
+						// Check for "Client's requirement" or similar
+						if (location.includes("client") || location.includes("requirement")) {
+							clientRequirementMatches.push(result);
+							return;
+						}
+						
+						// Strict matching: location must contain the EXACT search term or ALL significant words
+						let isMatch = false;
+						let matchScore = 0;
+						
+						// Exact full match gets highest priority
+						if (location.includes(searchTerm)) {
+							isMatch = true;
+							matchScore = 100;
+						} else if (searchWords.length > 0) {
+							// For multi-word locations (e.g., "Quezon City"), check if ALL words are present
+							const allWordsMatch = searchWords.every(word => location.includes(word));
+							
+							if (allWordsMatch) {
+								isMatch = true;
+								matchScore = 80;
+							}
+						}
+						
+						// Additional scoring for description matches (lower priority)
+						if (isMatch && description.includes(searchTerm)) {
+							matchScore += 10;
+						}
+						
+						if (isMatch) {
+							exactMatches.push({ ...result, matchScore });
+						}
 					});
+					
+					// Sort exact matches by score (highest first)
+					exactMatches.sort((a, b) => b.matchScore - a.matchScore);
+				} else {
+					// If "All Locations" selected, show all results as exact matches
+					exactMatches = resultsWithImages.map(result => {
+						const location = result.specificLocation?.toLowerCase() || '';
+						
+						if (location.includes("various") || location.includes("all locations")) {
+							variousLocationMatches.push(result);
+							return null;
+						}
+						if (location.includes("client") || location.includes("requirement")) {
+							clientRequirementMatches.push(result);
+							return null;
+						}
+						return result;
+					}).filter(Boolean);
 				}
 				
+				// Combine results: exact matches first, then various/client (shown separately)
+				const finalResults = {
+					exact: exactMatches,
+					various: variousLocationMatches,
+					client: clientRequirementMatches
+				};
+				
 				setSearchResults(finalResults);
+				setShowVariousLocations(false);
+				setShowClientRequirement(false);
 				setIsSearching(false);
 			}, delay);
 		});
@@ -222,6 +288,28 @@ const SearchFilter = ({ onFilterChange }) => {
 	const handleImageError = useCallback((resultId) => {
 		setImageLoading(prev => ({ ...prev, [resultId]: 'loaded' }));
 	}, []);
+
+	const toggleVariousLocations = useCallback(() => {
+		if (showVariousLocations) {
+			// Scroll to section when collapsing
+			variousLocationsSectionRef.current?.scrollIntoView({ 
+				behavior: 'smooth', 
+				block: 'start'
+			});
+		}
+		setShowVariousLocations(!showVariousLocations);
+	}, [showVariousLocations]);
+
+	const toggleClientRequirement = useCallback(() => {
+		if (showClientRequirement) {
+			// Scroll to section when collapsing
+			clientRequirementSectionRef.current?.scrollIntoView({ 
+				behavior: 'smooth', 
+				block: 'start'
+			});
+		}
+		setShowClientRequirement(!showClientRequirement);
+	}, [showClientRequirement]);
 
 	const openImagePopup = useCallback((imageUrl, title) => {
 		// Check if image is already cached
@@ -461,99 +549,327 @@ const SearchFilter = ({ onFilterChange }) => {
 								<div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-gray-200 border-t-green-500 mb-4"></div>
 								<p className="text-gray-600 font-medium">Searching for services...</p>
 							</div>
-						) : searchResults && searchResults.length > 0 ? (
-							<div className="bg-gradient-to-br from-green-50 to-white rounded-2xl shadow-lg p-4 sm:p-8 border border-green-100">
-								<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 sm:mb-8 gap-2">
-									<h3 className="text-xl sm:text-2xl font-bold text-gray-800">
-										Search Results
-									</h3>
-									<span className="bg-orange-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-md">
-										{searchResults.length} {searchResults.length === 1 ? 'Result' : 'Results'} Found
-									</span>
-								</div>
-								<div className="grid gap-4 sm:gap-5 grid-cols-1 xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
-									{searchResults.map((result, index) => (
-										<motion.div
-											key={result.id}
-											initial={{ opacity: 0, y: 20 }}
-											animate={{ opacity: 1, y: 0 }}
-											transition={{ duration: 0.2, delay: Math.min(index * 0.02, 0.3) }}
-											className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-200 border border-gray-200 hover:border-green-500 group flex flex-col"
-										>
-											{/* Image Section - No blur if cached */}
-											<div 
-												className="relative h-48 xs:h-56 sm:h-56 md:h-48 xl:h-56 bg-gray-100 overflow-hidden cursor-pointer"
-												onClick={() => openImagePopup(result.fullImage, result.modalDescription)}
-											>
-												<img 
-													src={result.displayImage} 
-													alt={result.modalDescription}
-													loading="lazy"
-													className={`w-full h-full object-cover group-hover:scale-105 transition-all duration-500 will-change-transform ${
-														imageLoading[result.id] === 'loaded'
-															? 'blur-0 opacity-100'
-															: imageCache.current[result.id]?.complete
-															? 'blur-0 opacity-100'
-															: 'blur-sm opacity-70'
-													}`}
-													onLoad={() => handleImageLoad(result.id)}
-													onError={() => handleImageError(result.id)}
-												/>
-												
-												<div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-200 flex items-center justify-center">
-													<span className="text-white text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-green-600 px-3 py-1 rounded-full">
-														View Full Image
-													</span>
-												</div>
-												<div className="absolute top-2 right-2 bg-orange-500 px-2.5 py-1 rounded-full shadow-md">
-													<span className="text-xs font-bold text-white">
-														{result.serviceTitle}
-													</span>
-												</div>
+						) : searchResults && (searchResults.exact?.length > 0 || searchResults.various?.length > 0 || searchResults.client?.length > 0) ? (
+							<div className="space-y-6">
+								{/* No Exact Matches Message - Show when only Explore More sections exist */}
+								{searchResults.exact?.length === 0 && (searchResults.various?.length > 0 || searchResults.client?.length > 0) && (
+									<div className="bg-gradient-to-br from-orange-50 to-white rounded-2xl shadow-lg p-6 sm:p-8 border border-orange-100">
+										<div className="text-center max-w-2xl mx-auto">
+											<div className="inline-flex items-center justify-center w-16 h-16 bg-orange-100 rounded-full mb-4">
+												<AlertCircle className="w-8 h-8 text-orange-500" />
 											</div>
-											
-											{/* Content Section with modalDetails */}
-											<div className="p-3 sm:p-4 flex-1 flex flex-col">
-												<h4 className="font-bold text-xs sm:text-sm text-gray-800 mb-2 group-hover:text-green-600 transition-colors line-clamp-2">
-													{result.modalDescription}
-												</h4>
-												
-												{/* Display first 2 unique modalDetails (skip redundant location info) */}
-												{result.modalDetails && Object.entries(result.modalDetails)
-													.filter(([key]) => !key.toLowerCase().includes('location') && !key.toLowerCase().includes('landmarks'))
-													.slice(0, 2)
-													.map(([key, value]) => (
-														<div key={key} className="flex items-start gap-1.5 mb-1.5 text-gray-600">
-															{key.toLowerCase().includes('size') ? (
-																<Ruler className="w-3.5 h-3.5 text-green-500 flex-shrink-0 mt-0.5" />
-															) : (
-																<div className="w-3.5 h-3.5 rounded-full bg-green-500 flex-shrink-0 mt-1" />
-															)}
-															<div className="flex-1 min-w-0">
-																<span className="text-[10px] font-semibold text-gray-500 uppercase block">{key}:</span>
-																<span className="text-xs font-medium line-clamp-2">{value}</span>
-															</div>
-														</div>
-													))}
-												
-												{/* Show location only at the bottom */}
-												{result.specificLocation && (
-													<div className="mt-auto pt-2 border-t border-gray-100">
-														<div className="flex items-center gap-1 mb-1">
-															<MapPin className="w-3 h-3 text-green-500 flex-shrink-0" />
-															<span className="text-xs font-semibold text-gray-500">
-																Location:
+											<h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">
+												Oops! No Exact Match Found
+											</h3>
+											<p className="text-gray-600 mb-1">
+												We couldn't find services that exactly match your selected location.
+											</p>
+											<p className="text-sm text-gray-500 mb-4">
+												But don't worry! Check out our alternative options below that might interest you.
+											</p>
+											<div className="inline-flex items-center gap-2 text-orange-600 font-semibold">
+												<span className="animate-bounce">👇</span>
+												<span>Explore More Options Below</span>
+												<span className="animate-bounce">👇</span>
+											</div>
+										</div>
+									</div>
+								)}
+
+								{/* Exact Matches Section */}
+								{searchResults.exact?.length > 0 && (
+									<div className="bg-gradient-to-br from-green-50 to-white rounded-2xl shadow-lg p-4 sm:p-8 border border-green-100">
+										<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 sm:mb-8 gap-2">
+											<h3 className="text-xl sm:text-2xl font-bold text-gray-800">
+												Search Results
+											</h3>
+											<span className="bg-orange-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-md">
+												{searchResults.exact.length} {searchResults.exact.length === 1 ? 'Result' : 'Results'} Found
+											</span>
+										</div>
+										<div className="grid gap-4 sm:gap-5 grid-cols-1 xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+											{searchResults.exact.map((result, index) => (
+												<motion.div
+													key={result.id}
+													initial={{ opacity: 0, y: 20 }}
+													animate={{ opacity: 1, y: 0 }}
+													transition={{ duration: 0.2, delay: Math.min(index * 0.02, 0.3) }}
+													className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-200 border border-gray-200 hover:border-green-500 group flex flex-col"
+												>
+													{/* Image Section */}
+													<div 
+														className="relative h-48 xs:h-56 sm:h-56 md:h-48 xl:h-56 bg-gray-100 overflow-hidden cursor-pointer"
+														onClick={() => openImagePopup(result.fullImage, result.modalDescription)}
+													>
+														<img 
+															src={result.displayImage} 
+															alt={result.modalDescription}
+															loading="lazy"
+															className={`w-full h-full object-cover group-hover:scale-105 transition-all duration-500 will-change-transform ${
+																imageLoading[result.id] === 'loaded'
+																	? 'blur-0 opacity-100'
+																	: imageCache.current[result.id]?.complete
+																	? 'blur-0 opacity-100'
+																	: 'blur-sm opacity-70'
+															}`}
+															onLoad={() => handleImageLoad(result.id)}
+															onError={() => handleImageError(result.id)}
+														/>
+														<div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-200 flex items-center justify-center">
+															<span className="text-white text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-green-600 px-3 py-1 rounded-full">
+																View Full Image
 															</span>
 														</div>
-														<div className="text-xs text-gray-700 line-clamp-2">
-															{result.specificLocation}
+														<div className="absolute top-2 right-2 bg-orange-500 px-2.5 py-1 rounded-full shadow-md">
+															<span className="text-xs font-bold text-white">
+																{result.serviceTitle}
+															</span>
 														</div>
 													</div>
-												)}
+													{/* Content Section */}
+													<div className="p-3 sm:p-4 flex-1 flex flex-col">
+														<h4 className="font-bold text-xs sm:text-sm text-gray-800 mb-2 group-hover:text-green-600 transition-colors line-clamp-2">
+															{result.modalDescription}
+														</h4>
+														{result.modalDetails && Object.entries(result.modalDetails)
+															.filter(([key]) => !key.toLowerCase().includes('location') && !key.toLowerCase().includes('landmarks'))
+															.slice(0, 2)
+															.map(([key, value]) => (
+																<div key={key} className="flex items-start gap-1.5 mb-1.5 text-gray-600">
+																	{key.toLowerCase().includes('size') ? (
+																		<Ruler className="w-3.5 h-3.5 text-green-500 flex-shrink-0 mt-0.5" />
+																	) : (
+																		<div className="w-3.5 h-3.5 rounded-full bg-green-500 flex-shrink-0 mt-1" />
+																	)}
+																	<div className="flex-1 min-w-0">
+																		<span className="text-[10px] font-semibold text-gray-500 uppercase block">{key}:</span>
+																		<span className="text-xs font-medium line-clamp-2">{value}</span>
+																	</div>
+																</div>
+															))}
+														{result.specificLocation && (
+															<div className="mt-auto pt-2 border-t border-gray-100">
+																<div className="flex items-center gap-1 mb-1">
+																	<MapPin className="w-3 h-3 text-green-500 flex-shrink-0" />
+																	<span className="text-xs font-semibold text-gray-500">
+																		Location:
+																	</span>
+																</div>
+																<div className="text-xs text-gray-700 line-clamp-2">
+																	{result.specificLocation}
+																</div>
+															</div>
+														)}
+													</div>
+												</motion.div>
+											))}
+										</div>
+									</div>
+								)}
+
+								{/* Various Locations Section */}
+								{searchResults.various?.length > 0 && (
+									<div ref={variousLocationsSectionRef} className="bg-gradient-to-br from-green-50 to-white rounded-2xl shadow-lg p-4 sm:p-8 border border-green-100">
+										<div className="flex items-center justify-between mb-6">
+											<div>
+												<h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-1">
+													Explore More - Various Locations
+												</h3>
+												<p className="text-sm text-gray-600">Projects available across multiple areas</p>
 											</div>
-										</motion.div>
-									))}
-								</div>
+											<span className="bg-orange-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-md">
+												{searchResults.various.length}
+											</span>
+										</div>
+										<div className="grid gap-4 sm:gap-5 grid-cols-1 xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+											{(showVariousLocations ? searchResults.various : searchResults.various.slice(0, 4)).map((result, index) => (
+												<motion.div
+													key={result.id}
+													initial={{ opacity: 0, y: 20 }}
+													animate={{ opacity: 1, y: 0 }}
+													transition={{ duration: 0.2, delay: Math.min(index * 0.02, 0.3) }}
+													className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-200 border border-gray-200 hover:border-green-500 group flex flex-col"
+												>
+													<div 
+														className="relative h-48 xs:h-56 sm:h-56 md:h-48 xl:h-56 bg-gray-100 overflow-hidden cursor-pointer"
+														onClick={() => openImagePopup(result.fullImage, result.modalDescription)}
+													>
+														<img 
+															src={result.displayImage} 
+															alt={result.modalDescription}
+															loading="lazy"
+															className={`w-full h-full object-cover group-hover:scale-105 transition-all duration-500 will-change-transform ${
+																imageLoading[result.id] === 'loaded'
+																	? 'blur-0 opacity-100'
+																	: imageCache.current[result.id]?.complete
+																	? 'blur-0 opacity-100'
+																	: 'blur-sm opacity-70'
+															}`}
+															onLoad={() => handleImageLoad(result.id)}
+															onError={() => handleImageError(result.id)}
+														/>
+														<div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-200 flex items-center justify-center">
+															<span className="text-white text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-green-600 px-3 py-1 rounded-full">
+																View Full Image
+															</span>
+														</div>
+														<div className="absolute top-2 right-2 bg-orange-500 px-2.5 py-1 rounded-full shadow-md">
+															<span className="text-xs font-bold text-white">
+																{result.serviceTitle}
+															</span>
+														</div>
+													</div>
+													<div className="p-3 sm:p-4 flex-1 flex flex-col">
+														<h4 className="font-bold text-xs sm:text-sm text-gray-800 mb-2 group-hover:text-green-600 transition-colors line-clamp-2">
+															{result.modalDescription}
+														</h4>
+														{result.modalDetails && Object.entries(result.modalDetails)
+															.filter(([key]) => !key.toLowerCase().includes('location') && !key.toLowerCase().includes('landmarks'))
+															.slice(0, 2)
+															.map(([key, value]) => (
+																<div key={key} className="flex items-start gap-1.5 mb-1.5 text-gray-600">
+																	{key.toLowerCase().includes('size') ? (
+																		<Ruler className="w-3.5 h-3.5 text-green-500 flex-shrink-0 mt-0.5" />
+																	) : (
+																		<div className="w-3.5 h-3.5 rounded-full bg-green-500 flex-shrink-0 mt-1" />
+																	)}
+																	<div className="flex-1 min-w-0">
+																		<span className="text-[10px] font-semibold text-gray-500 uppercase block">{key}:</span>
+																		<span className="text-xs font-medium line-clamp-2">{value}</span>
+																	</div>
+																</div>
+															))}
+														{result.specificLocation && (
+															<div className="mt-auto pt-2 border-t border-gray-100">
+																<div className="flex items-center gap-1 mb-1">
+																	<MapPin className="w-3 h-3 text-green-500 flex-shrink-0" />
+																	<span className="text-xs font-semibold text-gray-500">
+																		Location:
+																	</span>
+																</div>
+																<div className="text-xs text-gray-700 line-clamp-2">
+																	{result.specificLocation}
+																</div>
+															</div>
+														)}
+													</div>
+												</motion.div>
+											))}
+										</div>
+										{searchResults.various.length > 4 && (
+											<div className="mt-6 text-center">
+												<button
+													onClick={toggleVariousLocations}
+													className="px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg"
+												>
+													{showVariousLocations ? 'Show Less' : `See More (${searchResults.various.length - 4} more)`}
+												</button>
+											</div>
+										)}
+									</div>
+								)}
+
+								{/* Client's Requirement Section */}
+								{searchResults.client?.length > 0 && (
+									<div ref={clientRequirementSectionRef} className="bg-gradient-to-br from-green-50 to-white rounded-2xl shadow-lg p-4 sm:p-8 border border-green-100">
+										<div className="flex items-center justify-between mb-6">
+											<div>
+												<h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-1">
+													Explore More - Client's Requirement
+												</h3>
+												<p className="text-sm text-gray-600">Custom projects tailored to specific needs</p>
+											</div>
+											<span className="bg-orange-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-md">
+												{searchResults.client.length}
+											</span>
+										</div>
+										<div className="grid gap-4 sm:gap-5 grid-cols-1 xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+											{(showClientRequirement ? searchResults.client : searchResults.client.slice(0, 4)).map((result, index) => (
+												<motion.div
+													key={result.id}
+													initial={{ opacity: 0, y: 20 }}
+													animate={{ opacity: 1, y: 0 }}
+													transition={{ duration: 0.2, delay: Math.min(index * 0.02, 0.3) }}
+													className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-200 border border-gray-200 hover:border-green-500 group flex flex-col"
+												>
+													<div 
+														className="relative h-48 xs:h-56 sm:h-56 md:h-48 xl:h-56 bg-gray-100 overflow-hidden cursor-pointer"
+														onClick={() => openImagePopup(result.fullImage, result.modalDescription)}
+													>
+														<img 
+															src={result.displayImage} 
+															alt={result.modalDescription}
+															loading="lazy"
+															className={`w-full h-full object-cover group-hover:scale-105 transition-all duration-500 will-change-transform ${
+																imageLoading[result.id] === 'loaded'
+																	? 'blur-0 opacity-100'
+																	: imageCache.current[result.id]?.complete
+																	? 'blur-0 opacity-100'
+																	: 'blur-sm opacity-70'
+															}`}
+															onLoad={() => handleImageLoad(result.id)}
+															onError={() => handleImageError(result.id)}
+														/>
+														<div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-200 flex items-center justify-center">
+															<span className="text-white text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-green-600 px-3 py-1 rounded-full">
+																View Full Image
+															</span>
+														</div>
+														<div className="absolute top-2 right-2 bg-orange-500 px-2.5 py-1 rounded-full shadow-md">
+															<span className="text-xs font-bold text-white">
+																{result.serviceTitle}
+															</span>
+														</div>
+													</div>
+													<div className="p-3 sm:p-4 flex-1 flex flex-col">
+														<h4 className="font-bold text-xs sm:text-sm text-gray-800 mb-2 group-hover:text-green-600 transition-colors line-clamp-2">
+															{result.modalDescription}
+														</h4>
+														{result.modalDetails && Object.entries(result.modalDetails)
+															.filter(([key]) => !key.toLowerCase().includes('location') && !key.toLowerCase().includes('landmarks'))
+															.slice(0, 2)
+															.map(([key, value]) => (
+																<div key={key} className="flex items-start gap-1.5 mb-1.5 text-gray-600">
+																	{key.toLowerCase().includes('size') ? (
+																		<Ruler className="w-3.5 h-3.5 text-green-500 flex-shrink-0 mt-0.5" />
+																	) : (
+																		<div className="w-3.5 h-3.5 rounded-full bg-green-500 flex-shrink-0 mt-1" />
+																	)}
+																	<div className="flex-1 min-w-0">
+																		<span className="text-[10px] font-semibold text-gray-500 uppercase block">{key}:</span>
+																		<span className="text-xs font-medium line-clamp-2">{value}</span>
+																	</div>
+																</div>
+															))}
+														{result.specificLocation && (
+															<div className="mt-auto pt-2 border-t border-gray-100">
+																<div className="flex items-center gap-1 mb-1">
+																	<MapPin className="w-3 h-3 text-green-500 flex-shrink-0" />
+																	<span className="text-xs font-semibold text-gray-500">
+																		Location:
+																	</span>
+																</div>
+																<div className="text-xs text-gray-700 line-clamp-2">
+																	{result.specificLocation}
+																</div>
+															</div>
+														)}
+													</div>
+												</motion.div>
+											))}
+										</div>
+										{searchResults.client.length > 4 && (
+											<div className="mt-6 text-center">
+												<button
+													onClick={toggleClientRequirement}
+													className="px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg"
+												>
+													{showClientRequirement ? 'Show Less' : `See More (${searchResults.client.length - 4} more)`}
+												</button>
+											</div>
+										)}
+									</div>
+								)}
 							</div>
 						) : (
 							<div className="bg-white rounded-2xl shadow-lg p-12 text-center border border-gray-200">
@@ -573,7 +889,7 @@ const SearchFilter = ({ onFilterChange }) => {
 				)}
 			</AnimatePresence>
 
-			{/* Image Popup Modal with Loading */}
+			{/* Image Popup Modal */}
 			<AnimatePresence>
 				{selectedImage && (
 					<motion.div

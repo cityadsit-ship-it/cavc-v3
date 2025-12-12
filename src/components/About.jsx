@@ -129,7 +129,7 @@ const About = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 justify-center">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-20 lg:gap-22 max-w-5xl mx-auto">
             {whyChooseUsData.map((item, index) => (
               <motion.div
                 key={index}
