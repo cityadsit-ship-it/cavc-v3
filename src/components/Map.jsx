@@ -51,6 +51,7 @@ export const provincialLocations = [
   { name: 'Subic', lat: 14.7956, lng: 120.2863 },
   { name: 'Tuguegarao', lat: 17.6131, lng: 121.7269 },
   { name: 'Baguio', lat: 16.4023, lng: 120.5960 },
+  { name: 'Tuba Benguet', lat: 16.3167, lng: 120.5500 },
   { name: 'Bulacan', lat: 14.7928, lng: 120.9783 },
   { name: 'Bacoor', lat: 14.4594, lng: 120.9617 },
   { name: 'Imus', lat: 14.4297, lng: 120.9406 },
