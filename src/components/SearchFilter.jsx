@@ -33,17 +33,21 @@ const SearchFilter = ({ onFilterChange }) => {
 	const locationData = useMemo(() => [
 		{ id: 'all', name: 'All Locations', type: 'all' },
 		{ id: 'metro-manila', name: '── Metro Manila ──', type: 'header', disabled: true },
-		...metroManilaLocations.map(loc => ({
-			id: loc.name.toLowerCase().replace(/\s+/g, '-'),
-			name: loc.name,
-			type: 'metro'
-		})),
+		...metroManilaLocations
+			.sort((a, b) => a.name.localeCompare(b.name))
+			.map(loc => ({
+				id: loc.name.toLowerCase().replace(/\s+/g, '-'),
+				name: loc.name,
+				type: 'metro'
+			})),
 		{ id: 'provincial', name: '── Provincial ──', type: 'header', disabled: true },
-		...provincialLocations.map(loc => ({
-			id: loc.name.toLowerCase().replace(/\s+/g, '-'),
-			name: loc.name,
-			type: 'provincial'
-		}))
+		...provincialLocations
+			.sort((a, b) => a.name.localeCompare(b.name))
+			.map(loc => ({
+				id: loc.name.toLowerCase().replace(/\s+/g, '-'),
+				name: loc.name,
+				type: 'provincial'
+			}))
 	], []);
 
 	// Filter locations based on search term
