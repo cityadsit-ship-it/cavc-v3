@@ -199,6 +199,28 @@ const SearchFilter = ({ onFilterChange }) => {
 				let exactMatches = [];
 				let variousLocationMatches = [];
 				let clientRequirementMatches = [];
+				let transitAdsMatches = [];
+				
+				// Extract all Transit Ads (moving ads - relevant for all locations)
+				const transitAdsService = serviceData.find(s => s.title.toLowerCase().includes('transit'));
+				if (transitAdsService && transitAdsService.galleryItems) {
+					transitAdsMatches = transitAdsService.galleryItems.map((item, idx) => {
+						const modalDetails = item.modalDetails || {};
+						const location = modalDetails['Location'] || modalDetails['Locations'] || modalDetails['Route'] || '';
+						const resultId = `${transitAdsService.id}-${idx}`;
+						
+						return {
+							id: resultId,
+							serviceId: transitAdsService.id,
+							serviceTitle: transitAdsService.title,
+							displayImage: item.webp,
+							fullImage: item.jpg,
+							modalDescription: item.modalDescription,
+							modalDetails: modalDetails,
+							specificLocation: location,
+						};
+					});
+				}
 				
 				if (selectedLocation !== 'all') {
 					const selectedLoc = locationData.find(l => l.id === selectedLocation);
@@ -253,6 +275,9 @@ const SearchFilter = ({ onFilterChange }) => {
 					
 					// Sort exact matches by score (highest first)
 					exactMatches.sort((a, b) => b.matchScore - a.matchScore);
+					
+					// Add Transit Ads to the end of exact matches (always relevant for all locations)
+					exactMatches = [...exactMatches, ...transitAdsMatches];
 				} else {
 					// If "All Locations" selected, show all results as exact matches
 					exactMatches = resultsWithImages.map(result => {
@@ -268,11 +293,15 @@ const SearchFilter = ({ onFilterChange }) => {
 						}
 						return result;
 					}).filter(Boolean);
+					
+					// Add Transit Ads to the end when showing all locations
+					exactMatches = [...exactMatches, ...transitAdsMatches];
 				}
 				
-				// Combine results: exact matches first, then various/client (shown separately)
+				// Combine results: exact matches (including transit ads at the end), then various/client (shown separately)
 				const finalResults = {
 					exact: exactMatches,
+					transit: [], // Empty since transit ads are now in exact matches
 					various: variousLocationMatches,
 					client: clientRequirementMatches
 				};
@@ -580,7 +609,7 @@ const SearchFilter = ({ onFilterChange }) => {
 									</div>
 								)}
 
-								{/* Exact Matches Section */}
+								{/* Exact Matches Section (now includes Transit Ads at the end) */}
 								{searchResults.exact?.length > 0 && (
 									<div className="bg-gradient-to-br from-green-50 to-white rounded-2xl shadow-lg p-4 sm:p-8 border border-green-100">
 										<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 sm:mb-8 gap-2">

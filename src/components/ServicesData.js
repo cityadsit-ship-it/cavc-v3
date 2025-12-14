@@ -248,7 +248,7 @@ export const serviceData = [
   {
     id: 1,
     folder: 'banners',
-    title: 'Banners and Streamers',
+    title: "Banners, Lighted Box and Streamers",
     description: 'Banners are mounted on either lamp post or streets signs along major and secondary roads.',
     // Gallery images with individual modal data
     galleryItems: [
