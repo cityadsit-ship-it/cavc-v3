@@ -1455,7 +1455,7 @@ export const serviceData = [
           'Static Ad Space': 'STATIC AD SPACE: 178in(w) x 91in(h)*',
           'Front Ad Panel': 'FRONT AD PANEL: 44in(w) x 56in(h) x 52in (bottom w)**',
           'Rear Ad': 'REAR AD: 5ft(w) x 8ft(h)**',
-          'Material': 'Panaflex* & outdoor sticker**',
+          'AD Material': 'Panaflex* & outdoor sticker**',
         },
       },
       {
