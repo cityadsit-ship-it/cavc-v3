@@ -7,7 +7,7 @@ const whyChooseUsData = [
   {
     icon: Award,
     title: '20+ Years of Expertise',
-    description: 'We do things faster, more accurate and cost-effective.'
+    description: 'Delivering reliable solutions built on decades of knowledge, experience, and proven results.'
   },
   {
     icon: Users,

@@ -102,7 +102,6 @@ const ledImages = import.meta.glob([
   '/images/services/leds/04_FB Page1_EDSA Cubao LED SB_photo.webp',
   '/images/services/leds/07_FB Page1_LRT TV Monitor_photo.webp',
   '/images/services/leds/08_FB Page1_Baguio LED billboard_photo.webp',
-  '/images/services/leds/FB Page1_EDSA Buendia Gantry NB_photo.webp',
   '/images/services/leds/FB Page1_EDSA Buendia Gantry SB_photo.webp',
   '/images/services/leds/FB Page1_EDSA Gantry generic_photo.webp',
   '/images/services/leds/FB Page1_EDSA Guadix Gantry NB_photo.webp',
@@ -230,6 +229,8 @@ const billboardImages = import.meta.glob([
   '/images/services/billboards/Footbridge_Welcome Rotunda_Face B_photo.webp',
   '/images/services/billboards/Footbridge_Welcome Rotunda_Face C_photo.webp',
   '/images/services/billboards/Footbridge_Welcome Rotunda_Face E_photo.webp',
+  '/images/services/billboards/Footbridge_EDSA Caloocan_Face A_photo.webp',
+  '/images/services/billboards/Footbridge_EDSA Caloocan_Face B_photo.webp',
   '/images/services/billboards/ZBacoor POB_D_photo.webp',
   '/images/services/billboards/ZBacoor waiting shed_A_photo.webp',
   '/images/services/billboards/ZBacoor waiting shed_B_photo.webp',
@@ -416,7 +417,7 @@ export const serviceData = [
         modalDescription: 'C5 TAGUIG BILLBOARD',
         modalDetails: {
           'Ad Size': '60ft(w) x 40ft(h) *north bound',
-          'Location': 'Service Road, C5, Makati City',
+          'Location': 'Service Road, C5, Pembo, Taguig City',
           'Landmarks': 'across Market! Market!, near BGC, Treston College, SM Aura',
         },
       },
@@ -426,7 +427,7 @@ export const serviceData = [
         modalDescription: 'C5 TAGUIG BILLBOARD',
         modalDetails: {
           'Ad Size': '60ft(w) x 40ft(h) *south bound',
-          'Location': 'Service Road, C5, Makati City',
+          'Location': 'Service Road, C5, Pembo, Taguig City',
           'Landmarks': 'across Market! Market!, near BGC, Treston College, SM Aura',
         },
       },
@@ -1139,7 +1140,6 @@ export const serviceData = [
         webp: billboardImages['/images/services/billboards/Footbridge_Welcome Rotunda_Face B_photo.webp'] || '/images/services/billboards/Footbridge_Welcome Rotunda_Face B_photo.webp',
         jpg: '/images/services/billboards/Footbridge_Welcome Rotunda_Face B.jpg',
         modalDescription: 'WELCOME ROTUNDA FOOTBRIDGE AD',
-       
         modalDetails: {
           'Ad Size': 'Face B: 28ft(w) x 13ft(h) *from España towards G. Araneta',
           'Location': 'Welcome Rotunda, Quezon City',
@@ -1167,6 +1167,28 @@ export const serviceData = [
           'Location': 'Welcome Rotunda, Quezon City',
           'Landmarks': 'near SMDC Sun Residences, Southeast Asian College',
           'Traffic Count': '102,500 per day',
+        },
+      },
+      {
+        webp: billboardImages['/images/services/billboards/Footbridge_EDSA Caloocan_Face A_photo.webp'] || '/images/services/billboards/Footbridge_EDSA Caloocan_Face A_photo.webp',
+        jpg: '/images/services/billboards/Footbridge_EDSA Caloocan_Face A.jpg',
+        modalDescription: 'EDSA CALOOCAN FOOTBRIDGE AD',
+        modalDetails: {
+          'Ad Size': 'Face A: Approx 40ft(w) x 10ft(h) *from Monumento to Cubao',
+          'Location': 'EDSA near corner General Tinio Street, Caloocan City',
+          'Landmarks': 'Shell Station, UniOil, Mang Inasal',
+          'Traffic Count': '250,000 per day',
+        },
+      },
+      {
+        webp: billboardImages['/images/services/billboards/Footbridge_EDSA Caloocan_Face B_photo.webp'] || '/images/services/billboards/Footbridge_EDSA Caloocan_Face B_photo.webp',
+        jpg: '/images/services/billboards/Footbridge_EDSA Caloocan_Face B.jpg',
+        modalDescription: 'EDSA CALOOCAN FOOTBRIDGE AD',
+        modalDetails: {
+          'Ad Size': 'Face B: 35ft(w) x 12ft(h) *from Cubao towards Monumento',
+          'Location': 'EDSA near corner General Tinio, Caloocan City',
+          'Landmarks': 'near Yamaha, Shell and Manila Central University',
+          'Traffic Count': '427,000 per day',
         },
       },
       {
@@ -1249,7 +1271,7 @@ export const serviceData = [
         modalDescription: 'EDSA CUBAO LED BILLBOARD - NB',
         modalDetails: {
           'Ad Size': '17m(w) x 4m(h)',
-          'Location': 'EDSA Araneta Cubao (Araneta City Footbridge) *Northbound',
+          'Location': 'EDSA Araneta Cubao, Quezon City (Araneta City Footbridge) *Northbound',
           'Landmarks': 'near Araneta Coliseum, Farmer\'s Plaza, Philtranco, MRT Araneta-Cubao Station',
         },
       },
@@ -1259,7 +1281,7 @@ export const serviceData = [
         modalDescription: 'EDSA CUBAO LED BILLBOARD - SB',
         modalDetails: {
           'Ad Size': '11m(w) x 4m(h)',
-          'Location': 'EDSA Araneta Cubao (Farmer\'s Footbridge) *Southbound',
+          'Location': 'EDSA Araneta Cubao, Quezon City (Farmer\'s Footbridge) *Southbound',
           'Landmarks': 'near Araneta Coliseum, Farmer\'s Plaza, Philtranco, MRT Araneta-Cubao Station',
         },
       },
@@ -1268,9 +1290,8 @@ export const serviceData = [
         jpg: '/images/services/leds/07_FB Page1_LRT TV Monitor.jpg',
         modalDescription: 'LRT 2 TV MONITOR',
         modalDetails: {
-          'Ad Size': '65inches-28 units | 55 inches-7 units | 43 inches-2 units',
-          'Location': 'Highway 54, EDSA, Mandaluyong City',
-          'Landmarks': 'near Gateway Mall, Araneta Center Cubao, Robinsons Magnolia, Robinsons Metro East, St. Bridget School, Hi-Top Supermarket',
+          'Ad Size': '65 inches - 28 units, 55 inches - 7 units, 43 inches - 2 units',
+          'Location': 'LRT 2 Santolan, Katipunan, Legarda, Araneta, V. Mapa, Pureza, and Recto Stations. Quezon and Manila City',
         },
       },
       {
@@ -1281,16 +1302,6 @@ export const serviceData = [
           'Ad Size': '5m(w) x 6m(h) 308px(w) 368px(h)',
           'Location': 'City Center Hotel, Session Road corner Mabini Street, Baguio City',
           'Landmarks': 'near Burnnham Park, Baguio Night Market, Maharlika Livelihood Center',
-        },
-      },
-      {
-        webp: ledImages['/images/services/leds/FB Page1_EDSA Buendia Gantry NB_photo.webp'] || '/images/services/leds/FB Page1_EDSA Buendia Gantry NB_photo.webp',
-        jpg: '/images/services/leds/FB Page1_EDSA Buendia Gantry NB.jpg',
-        modalDescription: 'EDSA BUENDIA LED GANTRY',
-        modalDetails: {
-          'Ad Size': '40.288ft(w) x 6.719ft(h)',
-          'Location': 'EDSA Buendia, Makati City *Northbound',
-          'Landmarks': 'near Kalayaan Avenue approaching Buendia Avenue',
         },
       },
       {
@@ -1316,7 +1327,7 @@ export const serviceData = [
       {
         webp: ledImages['/images/services/leds/FB Page1_EDSA Guadix Gantry NB_photo.webp'] || '/images/services/leds/FB Page1_EDSA Guadix Gantry NB_photo.webp',
         jpg: '/images/services/leds/FB Page1_EDSA Guadix Gantry NB.jpg',
-        modalDescription: 'EDSA GUADIZ LED GANTRY',
+        modalDescription: 'EDSA GUADIX LED GANTRY',
         modalDetails: {
           'Ad Size': '39.37ft(w) x 8.86ft(h)',
           'Location': 'EDSA, Mandaluyong City *Northbound',
