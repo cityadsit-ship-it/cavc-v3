@@ -259,6 +259,7 @@ export const serviceData = [
         modalDescription: 'LAMP POST BANNERS',
         modalDetails: {
           'Standard Size': '3ft(w) x 9ft(h)',
+          'AD Material': '',
           'Locations': 'Ortigas Center, Pasig, MOA, Pasay, Manila, Mandaluyong, Muntinlupa, Malabon, Caloocan, Rizal, Cavite, Cavitex, Bacolod, Bulacan, CDO, Laguna, Ilo-ilo, Cebu, and other provinces',
         },
       },
@@ -269,6 +270,7 @@ export const serviceData = [
         modalDetails: {
           'Ad Size': '3ft(w) x 9ft(h)',
           'Ad Type': 'Lighted and regular banners',
+          'AD Material': '',
           'Location': 'Ortigas Center, Pasig City',
         },
       },
@@ -279,6 +281,7 @@ export const serviceData = [
         modalDetails: {
           'Ad Size': '3ft(w) x 9ft(h)',
           'Ad Type': 'Lighted banners',
+          'AD Material': '',
           'Location': 'San Miguel Avenue, ADB Avenue, J Vargas Avenue, Ortigas Center, Pasig City',
         },
       },
@@ -289,6 +292,7 @@ export const serviceData = [
         modalDetails: {
           'Ad Size': '1.6ft(w) x 4ft(h)',
           'Ad Type': 'Walking banner',
+          'AD Material': '',
           'Location': "Client's requirement",
         },
       },
@@ -299,6 +303,7 @@ export const serviceData = [
         modalDetails: {
           'Ad Size': 'front: 23in(w) x 25in(h) | 23in(w) x 57in(h)',
           'Ad Type': 'Walking LED',
+          'AD Material': '',
           'Location': "Client's requirement",
         },
       },
@@ -309,6 +314,7 @@ export const serviceData = [
         modalDetails: {
           'Ad Size': '12ft(w) x 4ft(h) / 15ft(w) x 4ft(h)',
           'Ad Type': 'Street streamer',
+          'AD Material': '',
           'Location': "Client's requirement",
         },
       },
@@ -333,6 +339,7 @@ export const serviceData = [
         modalDescription: 'FULL WRAP PILLAR ADS',
         modalDetails: {
           'Ad Size': '10ft(w) x 15ft to 43ft(h) ad size varies on the pillars',
+          'AD Material': '',
           'Locations': 'LRT 1 Quezon City part',
           'Landmarks': 'from North EDSA to Balintawak Stations',
         },
@@ -343,6 +350,7 @@ export const serviceData = [
         modalDescription: 'LRT 2 EXTENSIONS PILLAR ADS',
         modalDetails: {
           'Ad Size': '6ft(w) 10ft - 15ft(w)',
+          'AD Material': '',
           'Locations': 'LRT 2 Extensions',
           'Landmarks': 'from Santolan to Masinag Stations',
         },
@@ -367,6 +375,7 @@ export const serviceData = [
         modalDescription: 'HIGHWAY 54 WALLBOARD',
         modalDetails: {
           'Ad Size': '40ft(w) x 60ft(h)',
+          'AD Material': '',
           'Location': 'Lux Center, EDSA, Mandaluyong City',
           'Landmarks': 'Beside Highway 54, near Megamall, Ortigas CBD Starmall, Greenfield District, Shangri-La Mall',
         },
@@ -377,6 +386,7 @@ export const serviceData = [
         modalDescription: 'HIGHWAY 54 Billboard',
         modalDetails: {
           'Ad Size': '30ft(w) x 50ft(h) * north bound',
+          'AD Material': '',
           'Location': 'Highway 54, EDSA, Mandaluyong City',
           'Landmarks': 'across SM Megamall, near Starmall, Ortigas CBD, Greenfield District, St. Augustine School of Nursing, Shangri-La Mall',
         },
@@ -387,6 +397,7 @@ export const serviceData = [
         modalDescription: 'ESDA BONI BILLBOARD',
         modalDetails: {
           'Ad Size': '20ft(w) x 30ft(h)',
+          'AD Material': '',
           'Location': 'Edsa Boni, Mandaluyong City',
           'Landmarks': 'Beside Prudential, near Caltex, Amber\'s & Guadalupe Bridge, Across Go Hotels',
         },
@@ -397,6 +408,7 @@ export const serviceData = [
         modalDescription: 'EDSA-QUEZON AVE BILLBOARD',
         modalDetails: {
           'Ad Size': '60ft(w) x 50ft(h)',
+          'AD Material': '',
           'Location': 'Quedsa Plaza Building, Quezon Ave corner EDSA, Quezon City',
           'Landmarks': 'NAPOLCOM Building, Centris MRT Station',
         },
@@ -407,6 +419,7 @@ export const serviceData = [
         modalDescription: 'EDSA-CUBAO BILLBOARD',
         modalDetails: {
           'Ad Size': 'Half frame: 60ft(w) x 40ft(h) *whole: 60ft(h) x 80ft(h)',
+          'AD Material': '',
           'Location': 'EDSA near corner P. Tuazon Blvd, Quezon City, North bound',
           'Landmarks': 'near Araneta City, Smart Araneta Coliseum, SeaOil Gasoline Station, across Samson College of Science and Technology',
         },
@@ -417,6 +430,7 @@ export const serviceData = [
         modalDescription: 'C5 TAGUIG BILLBOARD',
         modalDetails: {
           'Ad Size': '60ft(w) x 40ft(h) *north bound',
+          'AD Material': '',
           'Location': 'Service Road, C5, Pembo, Taguig City',
           'Landmarks': 'across Market! Market!, near BGC, Treston College, SM Aura',
         },
@@ -427,6 +441,7 @@ export const serviceData = [
         modalDescription: 'C5 TAGUIG BILLBOARD',
         modalDetails: {
           'Ad Size': '60ft(w) x 40ft(h) *south bound',
+          'AD Material': '',
           'Location': 'Service Road, C5, Pembo, Taguig City',
           'Landmarks': 'across Market! Market!, near BGC, Treston College, SM Aura',
         },
@@ -437,6 +452,7 @@ export const serviceData = [
         modalDescription: 'C5 BAGONG ILOG BILLBOARD',
         modalDetails: {
           'Ad Size': '30ft(w) x 50ft(h)',
+          'AD Material': '',
           'Location': '23 San Roque Extension, Bagong Ilog Pasig * North bound',
           'Landmarks': 'near URC Floor Division, Rizal Medical Center',
         },
@@ -447,6 +463,7 @@ export const serviceData = [
         modalDescription: 'C5 KALAYAAN BRIDGE BILLBOARD',
         modalDetails: {
           'Ad Size': '32.5ftft(w) x 50ft(h) *east bound',
+          'AD Material': '',
           'Location': 'Dr. Jose P. Rizal Extension, Makati City',
           'Landmarks': 'visible along C5 Kalayaan Bridge, from Pasig towards C5 elevated U-turn and Kalayaan Avenue',
         },
@@ -457,6 +474,7 @@ export const serviceData = [
         modalDescription: 'ESPAÑA BOULEVARD BILLBOARD',
         modalDetails: {
           'Ad Size': '40ft(h) x 50ft(w) *south bound',
+          'AD Material': '',
           'Location': 'España Boulevard corner Maceda Street, Manila City',
           'Landmarks': 'beside Mercury Drug Store, near KFC, BDO España, Wellcoco Building, District, towards University of Sto. Tomas',
         },
@@ -467,6 +485,7 @@ export const serviceData = [
         modalDescription: 'MORAYTA LERMA BILLBOARD',
         modalDetails: {
           'Ad Size': '84ft(w) x 30ft9h)',
+          'AD Material': '',
           'Location': 'Lerma corner Nicanor Reyes, Manila City',
           'Landmarks': 'Louella Dormitory, FEU, U-Belt area, Greenwich, Mang Inasal, Chowking',
         },
@@ -477,6 +496,7 @@ export const serviceData = [
         modalDescription: 'MARCOS HIGHWAY BILLBOARD',
         modalDetails: {
           'Ad Size': '32.5ft(w) x 50ft(h) *east bound',
+          'AD Material': '',
           'Location': 'F. Mariano corner Marcos Highway, Dela Paz, Pasig City',
           'Landmarks': 'near Bike 101, Honda Cars Marcos Highway, Assad Mini Mart, Robinsons Metro East',
         },
@@ -487,6 +507,7 @@ export const serviceData = [
         modalDescription: 'ORTIGAS AVE EXT BILLBOARD',
         modalDetails: {
           'Ad Size': '26ft(w) x 40ft(h)',
+          'AD Material': '',
           'Location': 'Ortigas Avenue Extension, Rosario, Pasig City',
           'Landmarks': 'near Puregold Supermarket, Alfonso Supermarket, SSS Pasig Rosario Branch, Alfonso Specialist Hospital',
         },
@@ -497,6 +518,7 @@ export const serviceData = [
         modalDescription: 'NAIA ROAD BILLBOARD',
         modalDetails: {
           'Ad Size': '40ft(w) x 60ft(h) *east bound',
+          'AD Material': '',
           'Location': 'Naia Road, Tambo, Paranaque City',
           'Landmarks': 'visible along NAIA Expressway, beside WGM Building, near Roxas Boulevard',
         },
@@ -507,6 +529,7 @@ export const serviceData = [
         modalDescription: 'NAIA ROAD BILLBOARD',
         modalDetails: {
           'Ad Size': '40ft(w) x 60ft(h) *west bound',
+          'AD Material': '',
           'Location': 'Naia Road, Tambo, Paranaque City',
           'Landmarks': 'visible along NAIA Expressway, beside WGM Building, near Roxas Boulevard',
         },
@@ -517,6 +540,7 @@ export const serviceData = [
         modalDescription: 'SLEX BICUTAN BILLBOARD',
         modalDetails: {
           'Ad Size': '41ft(w) x 70ft(h) *north bound',
+          'AD Material': '',
           'Location': 'West Service Road, Bicutan, Paranaque City',
           'Landmarks': 'beside Andok\'s, Pour Over Cafe, near Azure Urban Resort Residence, DHL Logistics Center',
         },
@@ -527,6 +551,7 @@ export const serviceData = [
         modalDescription: 'SLEX BICUTAN BILLBOARD',
         modalDetails: {
           'Ad Size': '50ft(w) x 70ft(h) *south bound',
+          'AD Material': '',
           'Location': 'West Service Road, Bicutan, Paranaque City',
           'Landmarks': 'beside Andok\'s Pour Over Cafe, near Azure Urban Resort Residence, DHL Logistics Center',
         },
@@ -537,6 +562,7 @@ export const serviceData = [
         modalDescription: 'SLEX ALABANG BILLBOARD',
         modalDetails: {
           'Ad Size': '55ft(w) x 55ft(h) *north bound',
+          'AD Material': '',
           'Location': 'KM 23 East Road, Alabang, Muntinlupa City',
           'Landmarks': 'also visible from Skyway and SLEX, beside Industrial and Technology Works Corp, near Filinvest Belize Oasis Alabang',
         },
@@ -547,6 +573,7 @@ export const serviceData = [
         modalDescription: 'SLEX MUNTINLUPA BILLBOARD',
         modalDetails: {
           'Ad Size': '50ft(w) x 50ft(h) *south bound',
+          'AD Material': '',
           'Location': 'SLEX corner Katihan Road, Muntinlupa City',
           'Landmarks': 'across Southernside Montessori School, near Bilibid Katihan Road Overpass',
         },
@@ -557,6 +584,7 @@ export const serviceData = [
         modalDescription: 'SLEX MUNTINLUPA BILLBOARD',
         modalDetails: {
           'Ad Size': '50ft(w) x 50ft(h) *north bound',
+          'AD Material': '',
           'Location': 'SLEX corner Katihan Road, Muntinlupa City',
           'Landmarks': 'across Southernside Montessori School, near Bilibid Katihan Road Overpass',
         },
@@ -567,6 +595,7 @@ export const serviceData = [
         modalDescription: 'IMUS CAVITE BILLBOARD',
         modalDetails: {
           'Ad Size': '30ft(w) x 50ft(h) *north bound',
+          'AD Material': '',
           'Location': 'Emilio Aguinaldo Highway, Anabu, Imus, Cavite',
           'Landmarks': 'beside Shell, near SM Hypermarket, City Mall, Anabu Hills Subdivision, The Grand Parkplace',
         },
@@ -577,6 +606,7 @@ export const serviceData = [
         modalDescription: 'IMUS CAVITE BILLBOARD',
         modalDetails: {
           'Ad Size': '30ft(w) x 50ft(h) *south bound',
+          'AD Material': '',
           'Location': 'Emilio Aguinaldo Hihgway, Anabu, Imus, Cavite',
           'Landmarks': 'beside Shell, near SM Hypermarket, City Mall, Anabu Hills Subdivision, The Grand Parkplace',
         },
@@ -587,6 +617,7 @@ export const serviceData = [
         modalDescription: 'MALVAR BATANGAS BILLBOARD',
         modalDetails: {
           'Ad Size': '40ft(w) x 30ft(h) *north bound',
+          'AD Material': '',
           'Location': 'President Jose P. Laurel Highway cor Main Blvd, Malvar, Batangas',
           'Landmarks': 'Lima Technology Center entrance, Iglesia Ni Cristo, Palawan Pawnshop',
         },
@@ -597,6 +628,7 @@ export const serviceData = [
         modalDescription: 'MALVAR BATANGAS BILLBOARD',
         modalDetails: {
           'Ad Size': '40ft(w) x 30ft(h) *south bound',
+          'AD Material': '',
           'Location': 'President Jose P. Laurel Highway cor Main Blvd, Malvar, Batangas',
           'Landmarks': 'Lima Technology Center entrance, Iglesia Ni Cristo, Palawan Pawnshop',
         },
@@ -607,6 +639,7 @@ export const serviceData = [
         modalDescription: 'NLEX MARILAO BILLBOARD',
         modalDetails: {
           'Ad Size': '50ft(w) x 85ft(h)*north bound',
+          'AD Material': '',
           'Location': 'NLEX Marilao, Bulacan',
           'Landmarks': 'in between Petron KM23 Gasolin Station and Lias Bridge',
         },
@@ -617,6 +650,7 @@ export const serviceData = [
         modalDescription: 'BOCAUE BILLBOARD',
         modalDetails: {
           'Ad Size': '60ft(w) x 100ft(h) *double-faced',
+          'AD Material': '',
           'Location': 'NLEX Bocaue, Bulacan*north bound',
           'Landmarks': 'before Bocaue Toll Plaza',
         },
@@ -627,6 +661,7 @@ export const serviceData = [
         modalDescription: 'NLEX CANDABA VIADUCT BILLBOARD',
         modalDetails: {
           'Ad Size': '60ft(w) x 40ft(h) *7 units(14 faces)',
+          'AD Material': '',
           'Location': 'NLEX Candaba Viaduct, Pulilan, Bulacan *south bound',
           'Landmarks': 'Calumpit and Pulilan areas. Before Pulilan Regional Road',
         },
@@ -637,6 +672,7 @@ export const serviceData = [
         modalDescription: 'TUBA BENGUET BILLBOARD A',
         modalDetails: {
           'Ad Size': '30ft(w) x 45ft(h) *north bound',
+          'AD Material': '',
           'Location': 'Aspiras-Palispis Highway, Población, Tuba Benguet',
           'Landmarks': 'beside 4J\'s Pasalubong, Guerrero Iron Works, near West Point Shooting Range',
         },
@@ -647,6 +683,7 @@ export const serviceData = [
         modalDescription: 'TUBA BENGUET BILLBOARD A',
         modalDetails: {
           'Ad Size': '30ft(w) x 45ft(h) *south bound',
+          'AD Material': '',
           'Location': 'Aspiras-Palispis Highway, Población, Tuba Benguet',
           'Landmarks': 'beside 4J\'s Pasalubong, Guerrero Iron Works, near West Point Shooting Range',
         },
@@ -657,6 +694,7 @@ export const serviceData = [
         modalDescription: 'TUBA BENGUET BILLBOARD B',
         modalDetails: {
           'Ad Size': '30ft(w) x 50ft(h) *north bound',
+          'AD Material': '',
           'Location': 'Aspiras-Palispis Highway, Población, Tuba Benguet',
           'Landmarks': 'beside Mapteng Bake Shop, near Rapide, Carpentrade Home Depot, Emerald Sky view Center',
         },
@@ -667,6 +705,7 @@ export const serviceData = [
         modalDescription: 'TUBA BENGUET BILLBOARD B',
         modalDetails: {
           'Ad Size': '30ft(w) x 50ft(h) *south bound',
+          'AD Material': '',
           'Location': 'Aspiras-Palispis Highway, Población, Tuba Benguet',
           'Landmarks': 'beside Mapteng Bake Shop, near Rapide, Carpentrade Home Depot, Emerald Skyview Center',
         },
@@ -677,6 +716,7 @@ export const serviceData = [
         modalDescription: 'C5 J. VARGAS FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face A:30ft(w) x 12ft(h) *from Makati towards QC Libis',
+          'AD Material': '',
           'Location': 'C5 corner J. Vargas, Pasig City',
           'Landmarks': 'near Shell Station',
           'Traffic Count': '333,200 per day',
@@ -688,6 +728,7 @@ export const serviceData = [
         modalDescription: 'C5 J. VARGAS FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face B:30ft(w) x 12ft(h) *from QC Libis towards Makati',
+          'AD Material': '',
           'Location': 'C5 corner J. Vargas, Pasig City',
           'Landmarks': 'near Shell Station',
           'Traffic Count': '333,200 per day',
@@ -699,6 +740,7 @@ export const serviceData = [
         modalDescription: 'C5 KALAYAAN FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face A:50ft(w) x 16ft(h) *from SLEX towards Pasig',
+          'AD Material': '',
           'Location': 'C5 Kalayaan near Elevated U-Turn, Taguig City',
           'Landmarks': 'gateway to Makati and Pasig City',
           'Traffic Count': '228,000 per day',
@@ -710,6 +752,7 @@ export const serviceData = [
         modalDescription: 'C5 KALAYAAN FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face B:50ft(w) x 16ft(h) *from Pasig towards SLEX',
+          'AD Material': '',
           'Location': 'C5 Kalayaan near Elevated U-Turn, Taguig City',
           'Landmarks': 'gateway to Makati and Pasig City',
           'Traffic Count': '228,000 per day',
@@ -721,6 +764,7 @@ export const serviceData = [
         modalDescription: 'C5 KALAYAAN FOOTBRIDGE',
         modalDetails: {
           'Ad Size': 'Face C:50FT(w) x 16ft(h) *from Makati towards C5 (off bound)',
+          'AD Material': '',
           'Location': 'C5 Kalayaan near Elevated U-Turn, Taguig City',
           'Landmarks': 'gateway to Makati and Pasig City',
           'Traffic Count': '228,000 per day',
@@ -732,6 +776,7 @@ export const serviceData = [
         modalDescription: 'C5 KALAYAAN FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face D: 50ft(w) x 16ft(h) *from Makati towards C5',
+          'AD Material': '',
           'Location': 'C5 Kalayaan near Elevated U-Turn, Taguig City',
           'Landmarks': 'gateway to Makati and Pasig City',
           'Traffic Count': '228,000 per day',
@@ -743,6 +788,7 @@ export const serviceData = [
         modalDescription: 'C5 KALAYAAN FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face E & F:Approx 60ft(w) x 16ft(h) *from Pateros towards C5',
+          'AD Material': '',
           'Location': 'C5 Kalayaan near Elevated U-Turn, Taguig City',
           'Landmarks': 'gateway to Makati and Pasig City',
           'Traffic Count': '228,000 per day',
@@ -754,6 +800,7 @@ export const serviceData = [
         modalDescription: 'C5 KALAYAAN FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face G:Approx 50ft(w) x 16ft(h) *view from C5 northbound(parallel)',
+          'AD Material': '',
           'Location': 'C5 Kalayaan near Elevated U-Turn, Taguig City',
           'Landmarks': 'gateway to Makati and Pasig City',
           'Traffic Count': '228,000 per day',
@@ -765,6 +812,7 @@ export const serviceData = [
         modalDescription: 'C5 KALAYAAN FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face H: Approx 60ft(w) x 16ft(h) *from C5 towards Pateros',
+          'AD Material': '',
           'Location': 'C5 Kalayaan near Elevated U-Turn, Taguig City',
           'Landmarks': 'gateway to Makati and Pasig City',
           'Traffic Count': '228,000 per day',
@@ -776,6 +824,7 @@ export const serviceData = [
         modalDescription: 'C5 KALAYAAN FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face I: 50ft(w) x 16ft(h) *view from C5 southbound (parallel)',
+          'AD Material': '',
           'Location': 'C5 Kalayaan near Elevated U-Turn, Taguig City',
           'Landmarks': 'gateway to Makati and Pasig City',
           'Traffic Count': '228,000 per day',
@@ -787,6 +836,7 @@ export const serviceData = [
         modalDescription: 'C5 KALAYAAN FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face J:Approx 60ft(w) x 16ft(h) *C5 towards Makati',
+          'AD Material': '',
           'Location': 'C5 Kalayaan near Elevated U-Turn, Taguig City',
           'Landmarks': 'gateway to Makati and Pasig City',
           'Traffic Count': '228,000 per day',
@@ -798,6 +848,7 @@ export const serviceData = [
         modalDescription: 'KATIPUNAN-BONNY SERRANO FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face A:40ft(w) x 10ft(h) *towards White Plains | Face B:40ft(w) x 10ft(h) *towards EDSA',
+          'AD Material': '',
           'Location': 'Katipunan corner Bonny Serrano, Quezon City',
           'Landmarks': 'Petron, Blue Ridge Subdivision, Autovogue Car Exchange',
         },
@@ -808,6 +859,7 @@ export const serviceData = [
         modalDescription: 'KATIPUNAN-BONNY SERRANO FOOTBRDIGE AD',
         modalDetails: {
           'Ad Size': 'Face C:60ft(w) x 10ft(h) *towards EDSA',
+          'AD Material': '',
           'Location': 'Katipunan corner Bonny Serrano, Quezon City',
           'Landmarks': 'Petron, Blue Ridge Subdivision, Autovogue Car Exchange',
         },
@@ -818,6 +870,7 @@ export const serviceData = [
         modalDescription: 'KATIPUNAN-BONNY SERRANO FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face D:40ft(w) x 10ft(h) *towards Commonwealth',
+          'AD Material': '',
           'Location': 'Katipunan corner Bonny Serrano, Quezon City',
           'Landmarks': 'Petron, Blue Ridge Subdivison, Autovogue Car Exchange',
         },
@@ -828,6 +881,7 @@ export const serviceData = [
         modalDescription: 'KATIPUNAN-BONNY SERRANO FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face E:40ft(w) x 10ft(h) *towards Marikina',
+          'AD Material': '',
           'Location': 'Katipunan corner Bonny Serrano, Quezon City',
           'Landmarks': 'Petron, Blue Ridge Subdivison, Autovogue Car Exchange',
         },
@@ -838,6 +892,7 @@ export const serviceData = [
         modalDescription: 'MARCOS HIGHWAY FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face A: 40ft(w) x 14ft(h) *towards Antipolo',
+          'AD Material': '',
           'Location': 'Marcos Highway, Pasig City',
           'Landmarks': 'near Ayala Mall Feliz, Puregold Ligaya, Jollibee, Chowking',
         },
@@ -848,6 +903,7 @@ export const serviceData = [
         modalDescription: 'MARCOS HIGHWAY FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face B 40ft(w) x 14ft(h) *towards Quezon City',
+          'AD Material': '',
           'Location': 'Marcos Highway, Pasig City',
           'Landmarks': 'near Ayala Mall Feliz, Puregold Ligaya, Jollibee, Chowking',
         },
@@ -858,6 +914,7 @@ export const serviceData = [
         modalDescription: 'MONTILLANO FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face A: Approx 40ft(w) x 10ft(h) *from Ilaya St towards SLEX',
+          'AD Material': '',
           'Location': 'Alabang Montillano corner SLEX, Muntinlupa City',
           'Landmarks': 'near P2P Bus Terminal Alabang, Festival Mall, Asian Hospital',
           'Traffic Count': '108,000 Per day',
@@ -869,6 +926,7 @@ export const serviceData = [
         modalDescription: 'MONTILLANO FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face B: Approx 40ft(w) x 10ft(h) *towards Laguna & Festival Mall',
+          'AD Material': '',
           'Location': 'Alabang Montillano corner SLEX, Muntinlupa City',
           'Landmarks': 'near P2P Bus Terminal Alabang, Festival Mall, Asian Hospital',
           'Traffic Count': '108,000 Per day',
@@ -880,6 +938,7 @@ export const serviceData = [
         modalDescription: 'MONTILLANO FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face D: Approx 40ft(w) x 10ft(h) *from SLEX towards Festival Mall(Parallel)',
+          'AD Material': '',
           'Location': 'Alabang Montillano corner SLEX, Muntinlupa City',
           'Landmarks': 'near P2P Bus Terminal Alabang, Festival Mall, Asian Hospital',
           'Traffic Count': '108,000 Per day',
@@ -891,6 +950,7 @@ export const serviceData = [
         modalDescription: 'MONTILLANO FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face E: Approx 40ft(w) x 10ft(h) *from Festival Mall towards SLEX',
+          'AD Material': '',
           'Location': 'Alabang Montillano corner SLEX, Muntinlupa City',
           'Landmarks': 'near P2P Bus Terminal Alabang, Festival Mall, Asian Hospital',
           'Traffic Count': '108,000 Per day',
@@ -902,6 +962,7 @@ export const serviceData = [
         modalDescription: 'MONTILLANO FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face F: Approx 40ft(w) x 10ft(h) *from SLEX towards Festival Mall',
+          'AD Material': '',
           'Location': 'Alabang Montillano corner SLEX, Muntinlupa City',
           'Landmarks': 'near P2P Bus Terminal Alabang, Festival Mall, Asian Hospital',
           'Traffic Count': '108,000 Per day',
@@ -913,6 +974,7 @@ export const serviceData = [
         modalDescription: 'ORTIGAS-C.RAYMUNDO FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face A: 40ft(w) x 16ft(h) *from Antipolo towards Ortigas Center',
+          'AD Material': '',
           'Location': 'Ortigas Avenue corner C. Raymundo Avenue, Pasig City',
           'Landmarks': 'near Petron Station, Jollibee, Burger King, Starbucks',
           'Traffic Count': '192,400 per day',
@@ -924,6 +986,7 @@ export const serviceData = [
         modalDescription: 'ORTIGAS-C.RAYMUNDO FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face A: 40ft(w) x 16ft(h) *from C5 towards Antipoli City',
+          'AD Material': '',
           'Location': 'Ortigas Avenue corner C. Raymundo Avenue, Pasig City',
           'Landmarks': 'near Petron Station, Jollibee, Burger King, Starbucks',
           'Traffic Count': '192,400 per day',
@@ -935,6 +998,7 @@ export const serviceData = [
         modalDescription: 'ORTIGAS-MERALCO GATE 2 FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face A: 35ft(w) x 18ft(h) *from EDSA towards Antipolo City',
+          'AD Material': '',
           'Location': 'Ortigas Avenue-Meralco Gate 2, Pasig City',
           'Landmarks': 'near Rockwell Pasig, Medical City Hospital, Home Depot',
           'Traffic Count': '224,400 per day',
@@ -946,6 +1010,7 @@ export const serviceData = [
         modalDescription: 'ORTIGAS-MERALCO GATE 2 FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face B: 30ft(w) x 18ft(h) *from Antipolo towards EDSA',
+          'AD Material': '',
           'Location': 'Ortigas Avenue-Meralco Gate 2, Pasig City',
           'Landmarks': 'near Rockwell Pasig, Medical City Hospital, Home Depot',
           'Traffic Count': '224,400 per day',
@@ -957,6 +1022,7 @@ export const serviceData = [
         modalDescription: 'ORTIGAS FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face A: 35ft(w) x 10ft(h) *towards San Juan',
+          'AD Material': '',
           'Location': 'Ortigas Avenue near corner EDSA, Quezon City',
           'Landmarks': 'near ETON Cyberpad, across Robinsons Galleria',
         },
@@ -967,6 +1033,7 @@ export const serviceData = [
         modalDescription: 'ORTIGAS FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face B: 30ft(w) x 10ft(h) *towards Antipolo',
+          'AD Material': '',
           'Location': 'Ortigas Avenue near corner EDSA, Quezon City',
           'Landmarks': 'near ETON Cyberpad, across Robinsons Galleria',
         },
@@ -977,6 +1044,7 @@ export const serviceData = [
         modalDescription: 'STARMALL ALABANG FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face A: 28ft(w) x 10ft(h) *from Laguna towards Manila',
+          'AD Material': '',
           'Location': 'Alabang Starmall, Muntinlupa City',
           'Landmarks': 'near HM Transport Bus',
           'Traffic Count': '108,000 per day',
@@ -988,6 +1056,7 @@ export const serviceData = [
         modalDescription: 'STARMALL ALABANG FOOTBRIGE AD',
         modalDetails: {
           'Ad Size': 'Face B: 40ft(w) x 8ft(h) *from Manila towards Laguna',
+          'AD Material': '',
           'Location': 'Alabang Starmall, Muntinlupa City',
           'Landmarks': 'near HM Transport Bus',
           'Traffic Count': '108,000 per day',
@@ -999,6 +1068,7 @@ export const serviceData = [
         modalDescription: 'SUMULONG HIGHWAY FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face A: Approx 40ft(w) x 16ft(h) *from QC towards Antipolo',
+          'AD Material': '',
           'Location': 'Sumulong Highway corner Gil Fernando Avenue, Marikina City',
           'Landmarks': 'near Marikina Sport Complex, Bluewave Marikina',
           'Traffic Count': '81,800 per day',
@@ -1010,6 +1080,7 @@ export const serviceData = [
         modalDescription: 'SUMULONG HIGHWAY FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face B: Approx 30ft(w) x 16ft(h) *from Antipolo towards QC',
+          'AD Material': '',
           'Location': 'Sumulong Highway corner Gil Fernando Avenue, Marikina City',
           'Landmarks': 'near Marikina Sport Complex, Bluewave Marikina',
           'Traffic Count': '81,800 per day',
@@ -1021,6 +1092,7 @@ export const serviceData = [
         modalDescription: 'SUMULONG HIGHWAY FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face C: Approx 40ft(w) x 16ft(h) *from San Mateo towards Cainta',
+          'AD Material': '',
           'Location': 'Sumulong Highway corner Gil Fernando Avenue, Marikina City',
           'Landmarks': 'near Marikina Sport Complex, Bluewave Marikina',
           'Traffic Count': '81,800 per day',
@@ -1032,6 +1104,7 @@ export const serviceData = [
         modalDescription: 'SUMULONG HIGHWAY FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face D: 40ft(w) x 16ft(h) *from Antipolo towards QC',
+          'AD Material': '',
           'Location': 'Sumulong Highway corner Gil Fernando Avenue, Marikina City',
           'Landmarks': 'near Marikina Sport Complex, Bluewave Marikina',
           'Traffic Count': '81,800 per day',
@@ -1043,6 +1116,7 @@ export const serviceData = [
         modalDescription: 'SUMULONG HIGHWAY FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face E: Approx 30ft(w) x 16ft(h) *from QC towards Antipolo',
+          'AD Material': '',
           'Location': 'Sumulong Highway corner Gil Fernando Avenue, Marikina City',
           'Landmarks': 'near Marikina Sport Complex, Bluewave Marikina',
           'Traffic Count': '81,800 per day',
@@ -1054,6 +1128,7 @@ export const serviceData = [
         modalDescription: 'SUMULONG HIGHWAY FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face F: Approx 40ft(w) x 16ft(h) *from Cainta towards San Mateo',
+          'AD Material': '',
           'Location': 'Sumulong Highway corner Gil Fernando Avenue, Marikina City',
           'Landmarks': 'near Marikina Sport Complex, Bluewave Marikina',
           'Traffic Count': '81,800 per day',
@@ -1065,6 +1140,7 @@ export const serviceData = [
         modalDescription: 'SUSANA HEIGHTS FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face A: Approx 40ft(w) x 10ft(h) *from Alabang towards Laguna',
+          'AD Material': '',
           'Location': 'National Highway, Susan Heights, Muntinlupa City',
           'Landmarks': 'near SMDC Leaf, Motocentral, MCX',
           'Traffic Count': '101,000 per day',
@@ -1076,6 +1152,7 @@ export const serviceData = [
         modalDescription: 'SUSANA HEIGHTS FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face B: Approx 35ft(w) x 10ft(h) *from Laguna towards Alabang',
+          'AD Material': '',
           'Location': 'National Highway, Susan Heights, Muntinlupa City',
           'Landmarks': 'near SMDC Leaf, Motocentral, MCX',
           'Traffic Count': '101,000 per day',
@@ -1087,6 +1164,7 @@ export const serviceData = [
         modalDescription: 'SUSANA HEIGHTS FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face C: Approx 30ft(w) x 10ft(h) *from Alabang towards Laguna',
+          'AD Material': '',
           'Location': 'National Highway, Susan Heights, Muntinlupa City',
           'Landmarks': 'near SMDC Leaf, Motocentral, MCX',
           'Traffic Count': '101,000 per day',
@@ -1098,6 +1176,7 @@ export const serviceData = [
         modalDescription: 'SUSANA HEIGHTS FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face D: Approx 30ft(w) x 10ft(h) *from Laguna towards Alabang',
+          'AD Material': '',
           'Location': 'National Highway, Susan Heights, Muntinlupa City',
           'Landmarks': 'near SMDC Leaf, Motocentral, MCX',
           'Traffic Count': '101,000 per day',
@@ -1109,6 +1188,7 @@ export const serviceData = [
         modalDescription: 'SUSANA HEIGHTS FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face E: Approx 28ft(w) x 10ft(h) *from SLEX towards National Highway',
+          'AD Material': '',
           'Location': 'National Highway, Susan Heights, Muntinlupa City',
           'Landmarks': 'near SMDC Leaf, Motocentral, MCX',
           'Traffic Count': '101,000 per day',
@@ -1120,6 +1200,7 @@ export const serviceData = [
         modalDescription: 'SUSANA HEIGHTS FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face F: Approx 30ft(w) x 10ft(h) *from National Highway towards SLEX',
+          'AD Material': '',
           'Location': 'National Highway, Susan Heights, Muntinlupa City',
           'Landmarks': 'near SMDC Leaf, Motocentral, MCX',
           'Traffic Count': '101,000 per day',
@@ -1131,6 +1212,7 @@ export const serviceData = [
         modalDescription: 'WELCOME ROTUNDA FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face A: 60ft(w) x 10ft(h) *from España towards EDSA',
+          'AD Material': '',
           'Location': 'Welcome Rotunda, Quezon City',
           'Landmarks': 'near SMDC Sun Residences, Southeast Asian College',
           'Traffic Count': '102,500 per day',
@@ -1142,6 +1224,7 @@ export const serviceData = [
         modalDescription: 'WELCOME ROTUNDA FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face B: 28ft(w) x 13ft(h) *from España towards G. Araneta',
+          'AD Material': '',
           'Location': 'Welcome Rotunda, Quezon City',
           'Landmarks': 'near SMDC Sun Residences, Southeast Asian College',
           'Traffic Count': '102,500 per day',
@@ -1153,6 +1236,7 @@ export const serviceData = [
         modalDescription: 'WELCOME ROTUNDA FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face C: 40ft(w) x 10ft(h) *from EDSA towards España',
+          'AD Material': '',
           'Location': 'Welcome Rotunda, Quezon City',
           'Landmarks': 'near SMDC Sun Residences, Southeast Asian College',
           'Traffic Count': '102,500 per day',
@@ -1164,6 +1248,7 @@ export const serviceData = [
         modalDescription: 'WELCOME ROTUNDA FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face E: 50ft(w) x 10ft(h) *from G.Araneta towards Rotunda',
+          'AD Material': '',
           'Location': 'Welcome Rotunda, Quezon City',
           'Landmarks': 'near SMDC Sun Residences, Southeast Asian College',
           'Traffic Count': '102,500 per day',
@@ -1175,6 +1260,7 @@ export const serviceData = [
         modalDescription: 'EDSA CALOOCAN FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face A: Approx 40ft(w) x 10ft(h) *from Monumento to Cubao',
+          'AD Material': '',
           'Location': 'EDSA near corner General Tinio Street, Caloocan City',
           'Landmarks': 'Shell Station, UniOil, Mang Inasal',
           'Traffic Count': '250,000 per day',
@@ -1186,6 +1272,7 @@ export const serviceData = [
         modalDescription: 'EDSA CALOOCAN FOOTBRIDGE AD',
         modalDetails: {
           'Ad Size': 'Face B: 35ft(w) x 12ft(h) *from Cubao towards Monumento',
+          'AD Material': '',
           'Location': 'EDSA near corner General Tinio, Caloocan City',
           'Landmarks': 'near Yamaha, Shell and Manila Central University',
           'Traffic Count': '427,000 per day',
@@ -1197,6 +1284,7 @@ export const serviceData = [
         modalDescription: 'BACOOR OVERPASS BILLBOARD',
         modalDetails: {
           'Ad Size': 'Top: 30ft(w) x 10ft(h) *2 faces | Bottom: 40ft(w) x 14ft(h) *2 faces',
+          'AD Material': '',
           'Location': 'Emilio Aguinaldo Highway near corner Niog Road, Bacoor, Cavite',
           'Landmarks': 'near Jollibee, Coronado Commercial Complex',
         },
@@ -1207,6 +1295,7 @@ export const serviceData = [
         modalDescription: 'BACOOR WAITING SHED',
         modalDetails: {
           'Ad Size': 'Mini billboard: 29.53ft(w) x 6.56(h) *1 face | Panel ads: 7.84ft(w) x 4ft(h) *3 faces',
+          'AD Material': '',
           'Location': 'Emilio Aguinaldo Highway, Bacoor, Cavite',
           'Landmarks': 'near SM City Bacoor',
         },
@@ -1217,6 +1306,7 @@ export const serviceData = [
         modalDescription: 'BACOOR WAITING SHED',
         modalDetails: {
           'Ad Size': 'Mini billboard: 29.53ft(w) x 6.56(h) *1 face | Panel ads: 6.84ft-8.53ft(w) x 4ft(h) *3 faces',
+          'AD Material': '',
           'Location': 'Gen. Evangelista Street, Bacoor, Cavite',
           'Landmarks': 'in front of Población Elementary School',
         },
@@ -1227,6 +1317,7 @@ export const serviceData = [
         modalDescription: 'BACOOR WAITING SHED',
         modalDetails: {
           'Ad Size': 'Mini billboard: 20.42ft(w) x 6.56(h) *1 face | Panel ads: 7.55ft(w) x 4ft(h) *2 faces',
+          'AD Material': '',
           'Location': 'Tirona Highway, Bacoor, Cavite',
           'Landmarks': 'near Bacoor Freedom Park Mabolo Plaza',
         },
@@ -1251,6 +1342,7 @@ export const serviceData = [
         modalDescription: 'HIGHWAY 54 LED BILLBOARD',
         modalDetails: {
           'Ad Size': '10m(w) x 16m(h)',
+          'Pixel Size': '',
           'Location': 'EDSA, Mandaluyong City *Southbound',
           'Landmarks': 'across SM Megamall, beside Highway 54, near Starmall, Ortigas CBD, Shangri-La Mall, MRT Shaw & Ortigas Station, Greenfield District',
         },
@@ -1261,6 +1353,7 @@ export const serviceData = [
         modalDescription: 'EDSA-P.TUAZON LED BILLBOARD',
         modalDetails: {
           'Ad Size': '12m(w) x 6m(h)',
+          'Pixel Size': '',
           'Location': 'EDSA corner P.Tuazon Boulevard, Quezon City',
           'Landmarks': 'near SeaOil Gasoline Station, Amaia Skies Cubao, Smart Araneta Coliseum, Farmer\'s Market, STI College',
         },
@@ -1271,6 +1364,7 @@ export const serviceData = [
         modalDescription: 'EDSA CUBAO LED BILLBOARD - NB',
         modalDetails: {
           'Ad Size': '17m(w) x 4m(h)',
+          'Pixel Size': '',
           'Location': 'EDSA Araneta Cubao, Quezon City (Araneta City Footbridge) *Northbound',
           'Landmarks': 'near Araneta Coliseum, Farmer\'s Plaza, Philtranco, MRT Araneta-Cubao Station',
         },
@@ -1281,6 +1375,7 @@ export const serviceData = [
         modalDescription: 'EDSA CUBAO LED BILLBOARD - SB',
         modalDetails: {
           'Ad Size': '11m(w) x 4m(h)',
+          'Pixel Size': '',
           'Location': 'EDSA Araneta Cubao, Quezon City (Farmer\'s Footbridge) *Southbound',
           'Landmarks': 'near Araneta Coliseum, Farmer\'s Plaza, Philtranco, MRT Araneta-Cubao Station',
         },
@@ -1291,6 +1386,7 @@ export const serviceData = [
         modalDescription: 'LRT 2 TV MONITOR',
         modalDetails: {
           'Ad Size': '65 inches - 28 units, 55 inches - 7 units, 43 inches - 2 units',
+          'Pixel Size': '',
           'Location': 'LRT 2 Santolan, Katipunan, Legarda, Araneta, V. Mapa, Pureza, and Recto Stations. Quezon and Manila City',
         },
       },
@@ -1300,6 +1396,7 @@ export const serviceData = [
         modalDescription: 'BAGUIO LED BILLBOARD',
         modalDetails: {
           'Ad Size': '5m(w) x 6m(h) 308px(w) 368px(h)',
+          'Pixel Size': '',
           'Location': 'City Center Hotel, Session Road corner Mabini Street, Baguio City',
           'Landmarks': 'near Burnnham Park, Baguio Night Market, Maharlika Livelihood Center',
         },
@@ -1310,6 +1407,7 @@ export const serviceData = [
         modalDescription: 'EDSA BUENDIA LED GANTRY',
         modalDetails: {
           'Ad Size': '40.288ft(w) x 6.719ft(h)',
+          'Pixel Size': '',
           'Location': 'EDSA Buendia, Makati City *Southbound',
           'Landmarks': 'in between Kalayaan Avenue and Buendia Avenue',
         },
@@ -1320,6 +1418,7 @@ export const serviceData = [
         modalDescription: 'EDSA LED GANTRY',
         modalDetails: {
           'Ad Size': '40.288ft(w) x 6.71ft(h)',
+          'Pixel Size': '',
           'Location': 'EDSA Buendia, Makati City *Northbound',
           'Landmarks': 'near Kalayaan Avenue approaching Buendia Avenue',
         },
@@ -1330,6 +1429,7 @@ export const serviceData = [
         modalDescription: 'EDSA GUADIX LED GANTRY',
         modalDetails: {
           'Ad Size': '39.37ft(w) x 8.86ft(h)',
+          'Pixel Size': '',
           'Location': 'EDSA, Mandaluyong City *Northbound',
           'Landmarks': 'near Guadix Drive, Saint Pedro Poveda College',
         },
@@ -1340,6 +1440,7 @@ export const serviceData = [
         modalDescription: 'EDSA MAIN AVENUE LED GANDRY',
         modalDetails: {
           'Ad Size': '39.37ft(w) x 8.86ft(h)',
+          'Pixel Size': '',
           'Location': 'EDSA Main Avenue, Quezon City *Northbound',
           'Landmarks': 'in front of The Sentinel Residences, near Shell Gasoline Station',
         },
@@ -1350,6 +1451,7 @@ export const serviceData = [
         modalDescription: 'EDSA MAIN AVENUE LED GANTRY',
         modalDetails: {
           'Ad Size': '39.3ft(w) x 8.86ft(h)',
+          'Pixel Size': '',
           'Location': 'EDSA Main Avenue, Quezon City *Southbound',
           'Landmarks': 'near North Road, bus carousel, and across Amaia Skies Cubao',
         },
@@ -1360,6 +1462,7 @@ export const serviceData = [
         modalDescription: 'EDSA MEGAMALL LED GANTRY',
         modalDetails: {
           'Ad Size': '39.37ft(w) x 8.86ft(h)',
+          'Pixel Size': '',
           'Location': 'EDSA, Mandaluyong City *Southbound',
           'Landmarks': 'across Megamall Building A, infront f Highway 54 Building',
         },
@@ -1370,6 +1473,7 @@ export const serviceData = [
         modalDescription: 'EDSA MUÑOZ LED GANTRY',
         modalDetails: {
           'Ad Size': '39.37ft(w) x 8.86ft(h)',
+          'Pixel Size': '',
           'Location': 'EDSA Muñoz, Quezon City *Southbound',
           'Landmarks': 'near Panorama Technocenter, across Global Trade Center',
         },
@@ -1380,6 +1484,7 @@ export const serviceData = [
         modalDescription: 'EDSA QUEZON AVE LED GANTRY',
         modalDetails: {
           'Ad Size': '39.37ft(w) x 8.86ft(h)',
+          'Pixel Size': '',
           'Location': 'EDSA Quezon Avenue, Quezon City *Northbound',
           'Landmarks': 'across Megamall Building A, infront of Highway 54 Building',
         },
@@ -1390,6 +1495,7 @@ export const serviceData = [
         modalDescription: 'EDSA QUEZON AVE LED GANTRY',
         modalDetails: {
           'Ad Size': '39.37ft(w) x 8.86ft(h)',
+          'Pixel Size': '',
           'Location': 'EDSA Quezon Avenue, Quezon City *Southbound',
           'Landmarks': 'near Avida Towers Vita, The Philippine Women\'s University',
         },
@@ -1414,6 +1520,7 @@ export const serviceData = [
         modalDescription: 'BIG FACE TAXI AD (ILLUMINATED)',
         modalDetails: {
           'Ad Size': 'Top side ad: 36in(w) x 15in(h) 2 faces | Top rear ad: 26in(w) x 15in(h) 1 face | Top ad sticker: 28in(w) x 35(h) x 5n (l)',
+          'AD Material': '',
         },
       },
       {
@@ -1422,6 +1529,7 @@ export const serviceData = [
         modalDescription: 'HEAD-ON TAXI TOP AD',
         modalDetails: {
           'Ad Size': '35ft(w) x 12ft(h) front and back',
+          'AD Material': '',
           'Inclusions': 'Headrest ad and rear sticker ad (optional)',
         },
       },
@@ -1431,6 +1539,7 @@ export const serviceData = [
         modalDescription: 'JEEPNEY TOP AD',
         modalDetails: {
           'Ad Size': 'SIDE AD SPACE: 7ft-9ft(w) x 2ft(h)',
+          'AD Material': '',
           'Trapezoid Ad': 'TRAPEZOID AD: 8in(w) x 21.5in(h) x 32in (bottom w)',
           'Route': 'Metro Manila and Provincial',
         },
@@ -1441,6 +1550,7 @@ export const serviceData = [
         modalDescription: 'ROVING BILLBOARD',
         modalDetails: {
           'Ad Size': 'SIDE AD SPACE: 15ft(w) x 9ft(h)',
+          'AD Material': '',
           'Rear Ad Space': 'REAR AD SPACE: 40in(w) x 9ft(h) x 60n (bottom w)',
           'Front Ad Space': 'FRONT AD SPACE: 44in(w) x 56in(h) x 52in (bottom w)',
           'Route': "Client's requirement",
@@ -1464,6 +1574,7 @@ export const serviceData = [
         modalDescription: 'TRIKE ADS',
         modalDetails: {
           'Ad Size': 'SIDE AD SPACE: 19in(w) x 13in(h) 2 faces',
+          'AD Material': '',
           'Trapezoid Ad': 'TRAPEZOID AD: 4in(w) x 12.05in(h) x 14in (bottom w) 2 faces',
           'Back Tarp Ad': 'BACK TARP AD: 15n(w) x 30in(h)',
           'Sticker Ad': 'STICKER AD: 8in(w) x 4in(h) & 10in(w) x 4in(h)',
@@ -1490,6 +1601,7 @@ export const serviceData = [
         modalDescription: 'CLAMP DIRECTIONAL SIGN',
         modalDetails: {
           'Ad Size': '2ft(w) x 3ft(h)',
+          'AD Material': '',
           'Location': "Client's requirement",
         },
       },
@@ -1499,6 +1611,7 @@ export const serviceData = [
         modalDescription: 'DOUBLE POLE DIRECTIONAL SIGN',
         modalDetails: {
           'Ad Size': '4ft(w) x 3ft(h), 6ft(w) x 4ft(h)',
+          'AD Material': '',
           'Location': "Client's requirement",
         },
       },
@@ -1508,6 +1621,7 @@ export const serviceData = [
         modalDescription: 'SINGLE POLE DIRECTIONAL SIGN',
         modalDetails: {
           'Ad Size': '2ft(w) x 3ft(h), 3ft(w) x 4ft(h)',
+          'AD Material': '',
           'Location': "Client's requirement",
         },
       },
