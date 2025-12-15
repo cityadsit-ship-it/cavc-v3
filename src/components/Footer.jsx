@@ -132,14 +132,14 @@ const Footer = () => {
       {/* Main Footer Content */}
       <div className="section-padding relative z-10">
         <div className="container-custom">
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
+          <div className="grid md:grid-cols-2 lg:grid-cols-12 gap-10">
             {/* Company Info */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="lg:col-span-1"
+              className="lg:col-span-3"
             >
               <div className="flex items-center mb-6">
                 <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mr-3 p-1.5 shadow-lg">
@@ -200,6 +200,7 @@ const Footer = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
               viewport={{ once: true }}
+              className="lg:col-span-2"
             >
               <h4 className="text-lg font-semibold mb-6 text-yellow-highlight">
                 Quick Links
@@ -237,6 +238,7 @@ const Footer = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true }}
+              className="lg:col-span-3"
             >
               <h4 className="text-lg font-semibold mb-6 text-yellow-highlight">
                 Our Services
@@ -245,12 +247,12 @@ const Footer = () => {
                 {serviceData.map((service) => (
                   <li key={service.id}>
                     <button
-                      className="text-gray-200 hover:text-white transition-colors duration-300 cursor-pointer font-medium flex items-center group"
+                      className="text-gray-200 hover:text-white transition-colors duration-300 cursor-pointer font-medium flex items-start group text-left"
                       onClick={() => openGallery(service)}
                       type="button"
                     >
-                      {service.title}
-                      <ExternalLink className="w-3 h-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <span className="break-words">{service.title}</span>
+                      <ExternalLink className="w-3 h-3 ml-1 mt-1 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     </button>
                   </li>
                 ))}
@@ -263,6 +265,7 @@ const Footer = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
               viewport={{ once: true }}
+              className="lg:col-span-4"
             >
               <h4 className="text-lg font-semibold mb-6 text-yellow-highlight">
                 Contact Info
