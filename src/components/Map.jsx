@@ -117,7 +117,7 @@ function LocationLabel({ name, lat, lng, color, markerRef }) {
 
   return (
     <div
-      className="flex items-center text-white text-base font-medium cursor-pointer transition-all duration-200"
+      className="flex items-center text-white text-sm sm:text-base font-medium cursor-pointer transition-all duration-200"
       onClick={handleClick}
       onKeyPress={(e) => e.key === 'Enter' && handleClick()}
       style={{
@@ -148,20 +148,20 @@ function LocationLabel({ name, lat, lng, color, markerRef }) {
 function MapLegend() {
   return (
     <div
+      className="text-xs sm:text-sm"
       style={{
         position: 'absolute',
-        top: 16,
-        right: 16,
+        top: 10,
+        right: 10,
         background: 'rgba(255,255,255,0.98)',
         borderRadius: '0.5rem',
-        padding: '8px 16px',
+        padding: '6px 12px',
         boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
         zIndex: 2,
-        fontSize: '0.9rem',
         fontWeight: 500,
         display: 'flex',
         alignItems: 'center',
-        gap: '1.5rem',
+        gap: '1rem',
         color: '#333',
         border: '1px solid rgba(0,0,0,0.05)',
       }}
@@ -180,7 +180,8 @@ function MapLegend() {
 
 const Map = () => {
   const labelsRef = useRef(null);
-  const [mapHeight, setMapHeight] = useState('400px');
+  const [mapHeight, setMapHeight] = useState('500px');
+  const [isMobile, setIsMobile] = useState(false);
   const markerRefs = useRef({});
 
   useEffect(() => {
@@ -192,16 +193,24 @@ const Map = () => {
       link.setAttribute('data-leaflet-cdn', 'true');
       document.head.appendChild(link);
     }
-    // Sync map height to labels height after render
+    // Sync map height and check screen size
     function updateHeight() {
-      if (labelsRef.current) {
+      const windowWidth = window.innerWidth;
+      const isSmallScreen = windowWidth < 1024; // lg breakpoint
+      setIsMobile(isSmallScreen);
+      
+      if (isSmallScreen) {
+        // Fixed height for mobile/tablet
+        setMapHeight('400px');
+      } else if (labelsRef.current) {
+        // Match labels height on desktop
         const newHeight = labelsRef.current.offsetHeight + 'px';
         setMapHeight(newHeight);
-        // Trigger map resize after height change
-        setTimeout(() => {
-          window.dispatchEvent(new Event('resize'));
-        }, 50);
       }
+      // Trigger map resize after height change
+      setTimeout(() => {
+        window.dispatchEvent(new Event('resize'));
+      }, 50);
     }
     updateHeight();
     window.addEventListener('resize', updateHeight);
@@ -225,21 +234,11 @@ const Map = () => {
             We ensure your brand reaches the right audience at the right place.
           </p>
         </motion.div>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            flexWrap: 'nowrap',
-            gap: '2rem',
-            width: '100%',
-            alignItems: 'flex-start',
-          }}
-        >
+        <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 w-full items-start">
           {/* Map Column */}
           <div
+            className="w-full lg:w-3/5 lg:flex-shrink-0"
             style={{
-              flex: '0 1 60%',
-              minWidth: 0,
               position: 'relative',
               height: mapHeight,
               background: 'white',
@@ -353,10 +352,8 @@ const Map = () => {
           {/* Labels Column */}
           <div
             ref={labelsRef}
+            className="w-full lg:w-2/5 lg:flex-shrink-0"
             style={{
-              flex: '0 1 40%',
-              minWidth: 220,
-              maxWidth: 520,
               padding: '1.5rem 1rem',
               display: 'flex',
               flexDirection: 'column',
@@ -368,13 +365,9 @@ const Map = () => {
             }}
           >
             <div>
-              <h3 className="text-xl font-bold text-white mb-4">Metro Manila Cities</h3>
+              <h3 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">Metro Manila Cities</h3>
               <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: '1fr 1fr',
-                  gap: '0.5rem 1.5rem',
-                }}
+                className="grid grid-cols-2 gap-2 sm:gap-x-6 sm:gap-y-2"
               >
                 {metroManilaLocations.map((loc, idx) => (
                   <LocationLabel
@@ -389,13 +382,9 @@ const Map = () => {
               </div>
             </div>
             <div>
-              <h3 className="text-xl font-bold text-white mb-4">Provincial Locations</h3>
+              <h3 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">Provincial Locations</h3>
               <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: '1fr 1fr',
-                  gap: '0.5rem 1.5rem',
-                }}
+                className="grid grid-cols-2 gap-2 sm:gap-x-6 sm:gap-y-2"
               >
                 {provincialLocations.map((loc, idx) => (
                   <LocationLabel

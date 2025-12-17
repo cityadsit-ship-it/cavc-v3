@@ -552,7 +552,7 @@ const SearchFilter = ({ onFilterChange }) => {
 						</div>
 
 						{/* Search Button */}
-						<div className="hidden md:block">
+					<div>
 							<button
 								onClick={handleSearch}
 								disabled={isSearching}
@@ -620,7 +620,7 @@ const SearchFilter = ({ onFilterChange }) => {
 												{searchResults.exact.length} {searchResults.exact.length === 1 ? 'Result' : 'Results'} Found
 											</span>
 										</div>
-										<div className="grid gap-4 sm:gap-5 grid-cols-1 xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+										<div className="grid gap-4 sm:gap-5 grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
 											{searchResults.exact.map((result, index) => (
 												<motion.div
 													key={result.id}
@@ -714,7 +714,7 @@ const SearchFilter = ({ onFilterChange }) => {
 												{searchResults.various.length}
 											</span>
 										</div>
-										<div className="grid gap-4 sm:gap-5 grid-cols-1 xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+										<div className="grid gap-4 sm:gap-5 grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
 											{(showVariousLocations ? searchResults.various : searchResults.various.slice(0, 4)).map((result, index) => (
 												<motion.div
 													key={result.id}
@@ -816,7 +816,7 @@ const SearchFilter = ({ onFilterChange }) => {
 												{searchResults.client.length}
 											</span>
 										</div>
-										<div className="grid gap-4 sm:gap-5 grid-cols-1 xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+										<div className="grid gap-4 sm:gap-5 grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
 											{(showClientRequirement ? searchResults.client : searchResults.client.slice(0, 4)).map((result, index) => (
 												<motion.div
 													key={result.id}

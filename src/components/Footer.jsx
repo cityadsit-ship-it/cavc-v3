@@ -132,7 +132,7 @@ const Footer = () => {
       {/* Main Footer Content */}
       <div className="section-padding relative z-10">
         <div className="container-custom">
-          <div className="grid md:grid-cols-2 lg:grid-cols-12 gap-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10">
             {/* Company Info */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -141,8 +141,8 @@ const Footer = () => {
               viewport={{ once: true }}
               className="lg:col-span-3"
             >
-              <div className="flex items-center mb-6">
-                <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mr-3 p-1.5 shadow-lg">
+              <div className="flex items-center mb-4 sm:mb-6">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center mr-2 sm:mr-3 p-1.5 shadow-lg flex-shrink-0">
                   <img 
                     src="/images/cavclogo.png" 
                     alt="CAVC Logo" 
@@ -150,17 +150,17 @@ const Footer = () => {
                   />
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg">City Advertising <br /> Venture Corporation</h3>
+                  <h3 className="font-bold text-base sm:text-lg leading-tight">City Advertising <br /> Venture Corporation</h3>
 
                 </div>
               </div>
               
-              <p className="text-gray-200 mb-6 leading-relaxed">
+              <p className="text-gray-200 text-sm sm:text-base mb-4 sm:mb-6 leading-relaxed">
                 We impact customers through a variety of messages in many ways at any period of time and place.
               </p>
 
               {/* Social Media */}
-              <div className="flex space-x-4 mt-4">
+              <div className="flex space-x-3 sm:space-x-4 mt-3 sm:mt-4">
                 {/* Facebook Icon */}
                 <motion.a
                   href={socialLinks[0].href}
@@ -171,10 +171,10 @@ const Footer = () => {
                   transition={{ duration: 0.4 }}
                   viewport={{ once: true }}
                   whileHover={{ scale: 1.1, backgroundColor: "#fff" }}
-                  className="btn-social bg-white/10 hover:bg-white/20 p-2 rounded-full transition-all duration-300 flex items-center cursor-pointer"
+                  className="btn-social bg-white/10 hover:bg-white/20 p-1.5 sm:p-2 rounded-full transition-all duration-300 flex items-center cursor-pointer"
                   aria-label="Facebook"
                 >
-                  <Facebook className="w-5 h-5 text-white group-hover:text-accent-green transition-colors duration-300" />
+                  <Facebook className="w-4 h-4 sm:w-5 sm:h-5 text-white group-hover:text-accent-green transition-colors duration-300" />
                 </motion.a>
                 {/* Facebook Text */}
                 <motion.a
@@ -186,7 +186,7 @@ const Footer = () => {
                   transition={{ duration: 0.4, delay: 0.1 }}
                   viewport={{ once: true }}
                   whileHover={{ scale: 1.05, color: "#16a34a" }}
-                  className="font-semibold text-white hover:text-accent-green transition-colors duration-300 cursor-pointer flex items-center"
+                  className="font-semibold text-sm sm:text-base text-white hover:text-accent-green transition-colors duration-300 cursor-pointer flex items-center"
                   aria-label="Facebook"
                 >
                   Facebook
@@ -202,15 +202,15 @@ const Footer = () => {
               viewport={{ once: true }}
               className="lg:col-span-2"
             >
-              <h4 className="text-lg font-semibold mb-6 text-yellow-highlight">
+              <h4 className="text-base sm:text-lg font-semibold mb-4 sm:mb-6 text-yellow-highlight">
                 Quick Links
               </h4>
-              <ul className="space-y-3">
+              <ul className="space-y-2 sm:space-y-3">
                 {quickLinks.map((link, index) => (
                   <li key={index}>
                     <button
                       onClick={() => scrollToSection(link.href)}
-                      className="text-gray-200 hover:text-white transition-colors duration-300 flex items-center group font-medium"
+                      className="text-gray-200 text-sm sm:text-base hover:text-white transition-colors duration-300 flex items-center group font-medium"
                       type="button"
                     >
                       <span>{link.name}</span>
@@ -222,7 +222,7 @@ const Footer = () => {
                 <li>
                   <button
                     onClick={handleCallUsClick}
-                    className="text-gray-200 hover:text-white transition-colors duration-300 flex items-center group font-medium"
+                    className="text-gray-200 text-sm sm:text-base hover:text-white transition-colors duration-300 flex items-center group font-medium"
                     type="button"
                   >
                     <span>Call Us</span>
@@ -240,14 +240,14 @@ const Footer = () => {
               viewport={{ once: true }}
               className="lg:col-span-3"
             >
-              <h4 className="text-lg font-semibold mb-6 text-yellow-highlight">
+              <h4 className="text-base sm:text-lg font-semibold mb-4 sm:mb-6 text-yellow-highlight">
                 Our Services
               </h4>
-              <ul className="space-y-3">
+              <ul className="space-y-2 sm:space-y-3">
                 {serviceData.map((service) => (
                   <li key={service.id}>
                     <button
-                      className="text-gray-200 hover:text-white transition-colors duration-300 cursor-pointer font-medium flex items-start group text-left"
+                      className="text-gray-200 text-sm sm:text-base hover:text-white transition-colors duration-300 cursor-pointer font-medium flex items-start group text-left"
                       onClick={() => openGallery(service)}
                       type="button"
                     >
@@ -267,15 +267,15 @@ const Footer = () => {
               viewport={{ once: true }}
               className="lg:col-span-4"
             >
-              <h4 className="text-lg font-semibold mb-6 text-yellow-highlight">
+              <h4 className="text-base sm:text-lg font-semibold mb-4 sm:mb-6 text-yellow-highlight">
                 Contact Info
               </h4>
-              <div className="space-y-4">
-                <div className="flex items-start space-x-3">
-                  <MapPin className="w-5 h-5 text-yellow-highlight mt-1 flex-shrink-0" />
+              <div className="space-y-3 sm:space-y-4">
+                <div className="flex items-start space-x-2 sm:space-x-3">
+                  <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-highlight mt-1 flex-shrink-0" />
                   <div>
                     <button
-                      className="text-gray-200 text-sm text-left underline hover:text-yellow-highlight transition-colors duration-200"
+                      className="text-gray-200 text-xs sm:text-sm text-left underline hover:text-yellow-highlight transition-colors duration-200"
                       style={{ whiteSpace: 'normal' }}
                       onClick={handleLocationClick}
                       type="button"
@@ -288,15 +288,15 @@ const Footer = () => {
                   </div>
                 </div>
 
-                <div className="flex items-start space-x-3">
-                  <Phone className="w-5 h-5 text-yellow-highlight mt-1 flex-shrink-0" />
+                <div className="flex items-start space-x-2 sm:space-x-3">
+                  <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-highlight mt-1 flex-shrink-0" />
                   <div className="w-full">
                     {isMobile ? (
-                      <div className="flex flex-wrap gap-2">
+                      <div className="flex flex-wrap gap-1.5 sm:gap-2">
                         {phoneNumbers.map((num) => (
                           <button
                             key={num.intl}
-                            className="text-gray-200 text-sm px-3 py-1 rounded bg-accent-green/80 hover:bg-yellow-highlight font-medium transition-colors duration-200 mb-1"
+                            className="text-gray-200 text-xs sm:text-sm px-2 sm:px-3 py-1 rounded bg-accent-green/80 hover:bg-yellow-highlight font-medium transition-colors duration-200"
                             onClick={() => openCallModal(num.intl)}
                             type="button"
                           >
@@ -305,11 +305,11 @@ const Footer = () => {
                         ))}
                       </div>
                     ) : (
-                      <div className="flex flex-wrap gap-2">
+                      <div className="flex flex-wrap gap-1.5 sm:gap-2">
                         {phoneNumbers.map((num) => (
                           <button
                             key={num.intl}
-                            className="text-gray-200 text-sm px-3 py-1 rounded bg-white/10 hover:bg-accent-green hover:text-white font-medium transition-colors duration-200 mb-1"
+                            className="text-gray-200 text-xs sm:text-sm px-2 sm:px-3 py-1 rounded bg-white/10 hover:bg-accent-green hover:text-white font-medium transition-colors duration-200"
                             onClick={() => openQrModal(num.intl)}
                             type="button"
                           >
@@ -321,11 +321,11 @@ const Footer = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center space-x-3">
-                  <Mail className="w-5 h-5 text-yellow-highlight flex-shrink-0" />
+                <div className="flex items-center space-x-2 sm:space-x-3">
+                  <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-highlight flex-shrink-0" />
                   <div>
                     <button
-                      className="text-gray-200 text-sm underline hover:text-yellow-highlight transition-colors duration-200"
+                      className="text-gray-200 text-xs sm:text-sm underline hover:text-yellow-highlight transition-colors duration-200 break-all"
                       type="button"
                       onClick={() => window.location.href = "mailto:sales.cityads@gmail.com"}
                       aria-label="Send email to sales.cityads@gmail.com"
@@ -342,16 +342,19 @@ const Footer = () => {
 
       {/* Centered Copyright */}
       <div className="border-t border-white border-opacity-10">
-        <div className="container-custom py-6">
+        <div className="container-custom py-4 sm:py-6">
           <div className="flex justify-center items-center">
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="text-gray-300 text-sm text-center"
+              className="text-gray-300 text-xs sm:text-sm text-center"
             >
-              © {currentYear} City Advertising Ventures Corporation. All rights reserved.
+              <div className="flex flex-col sm:flex-row sm:gap-1">
+                <span>© {currentYear} City Advertising Ventures Corporation.</span>
+                <span>All rights reserved.</span>
+              </div>
             </motion.div>
           </div>
         </div>

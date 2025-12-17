@@ -47,20 +47,20 @@ const iconBgColors = [
 
 const About = () => {
   return (
-    <section id="about" className="py-20 bg-gradient-to-b from-white to-gray-50">
+    <section id="about" className="py-12 sm:py-16 lg:py-20 bg-gradient-to-b from-white to-gray-50">
       <div className="container mx-auto px-4">
         {/* Main About Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center max-w-4xl mx-auto mb-16"
+          className="text-center max-w-4xl mx-auto mb-12 sm:mb-16"
         >
-          <h2 className="text-4xl font-bold text-primary-dark mb-6">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary-dark mb-4 sm:mb-6">
             Leading the Future of{' '}
             <span className="text-accent-green">Outdoor Advertising</span>
           </h2>
-          <p className="text-gray-700 text-lg leading-relaxed mb-8">
+          <p className="text-gray-700 text-sm sm:text-base lg:text-lg leading-relaxed mb-6 sm:mb-8">
             City Advertising Venture Corporation started its journey on June 1, 2003, 
             at a time when advertisers were searching for cost effective alternatives 
             to traditional advertising. They discovered these solutions in City Ads. 
@@ -85,13 +85,13 @@ const About = () => {
             <img
               src="/images/cavclogo.png"
               alt="CAVC Logo"
-              className="w-20 h-20 object-contain rounded-full shadow-md"
+              className="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 object-contain rounded-full shadow-md"
             />
             <div className="text-left z-10">
-              <h3 className="font-bold text-primary-dark text-xl tracking-wide">
+              <h3 className="font-bold text-primary-dark text-sm sm:text-base lg:text-xl tracking-wide">
                 City Advertising Ventures Corporation
               </h3>
-              <p className="text-sm text-accent-green font-semibold">
+              <p className="text-xs sm:text-sm text-accent-green font-semibold">
                 Trusted by leading brands since 2003
               </p>
             </div>
@@ -113,23 +113,23 @@ const About = () => {
         </motion.div>
 
         {/* Why Choose Us Section */}
-        <div className="mt-20">
+        <div className="mt-12 sm:mt-16 lg:mt-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-12"
+            className="text-center mb-8 sm:mb-10 lg:mb-12"
           >
-            <h3 className="text-3xl font-bold text-primary-dark mb-4">
+            <h3 className="text-2xl sm:text-3xl font-bold text-primary-dark mb-3 sm:mb-4">
               Why Choose Us
             </h3>
-            <p className="text-gray-700 text-lg">
+            <p className="text-gray-700 text-sm sm:text-base lg:text-lg">
               We are a full service out-of-home advertising company<br />
               offering a wide range of products and services.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-20 lg:gap-22 max-w-5xl mx-auto">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 md:gap-12 lg:gap-20 max-w-5xl mx-auto">
             {whyChooseUsData.map((item, index) => (
               <motion.div
                 key={index}
@@ -139,13 +139,13 @@ const About = () => {
                 viewport={{ once: true }}
                 className="flex flex-col items-center text-center"
               >
-                <div className={`w-20 h-20 flex items-center justify-center rounded-full shadow-lg mb-4 border-4 border-white ${iconBgColors[index % iconBgColors.length]} transition-transform duration-300 hover:scale-110`}>
-                  <item.icon className="w-10 h-10 text-white" />
+                <div className={`w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 flex items-center justify-center rounded-full shadow-lg mb-3 sm:mb-4 border-2 sm:border-4 border-white ${iconBgColors[index % iconBgColors.length]} transition-transform duration-300 hover:scale-110`}>
+                  <item.icon className="w-7 h-7 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-white" />
                 </div>
-                <h4 className="text-lg font-bold text-primary-dark mb-2">
+                <h4 className="text-xs sm:text-sm lg:text-lg font-bold text-primary-dark mb-1 sm:mb-2">
                   {item.title}
                 </h4>
-                <p className="text-gray-600 text-sm">
+                <p className="text-gray-600 text-[10px] sm:text-xs lg:text-sm">
                   {item.description}
                 </p>
               </motion.div>

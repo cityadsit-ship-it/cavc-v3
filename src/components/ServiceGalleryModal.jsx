@@ -123,7 +123,7 @@ const ServiceGalleryModal = ({ service, isOpen, onClose }) => {
 	const detailColsClass =
 		modalDetails.length === 1 ? 'grid-cols-1'
 		: modalDetails.length === 2 ? 'grid-cols-2'
-		: 'grid-cols-3';
+		: 'grid-cols-2 lg:grid-cols-3';
 
 	return (
 		<motion.div
@@ -138,55 +138,55 @@ const ServiceGalleryModal = ({ service, isOpen, onClose }) => {
 				initial={{ scale: 0.98, opacity: 0 }}
 				animate={{ scale: 1, opacity: 1 }}
 				exit={{ scale: 0.98, opacity: 0 }}
-				className="relative w-full h-full sm:h-auto sm:max-h-[95vh] max-w-7xl mx-auto bg-white/90 rounded-lg sm:rounded-2xl shadow-2xl border border-gray-200 flex flex-col md:flex-row overflow-hidden"
+				className="relative w-full h-full sm:h-auto sm:max-h-[95vh] max-w-7xl mx-auto bg-white/90 rounded-lg sm:rounded-2xl shadow-2xl border border-gray-200 flex flex-col md:flex-row overflow-hidden overflow-x-hidden"
 				onClick={(e) => e.stopPropagation()}
 			>
 				{/* Main content */}
 				<div className="flex-1 flex flex-col min-h-0 overflow-hidden">
 					{/* Gradient header: title + description + details */}
 					<div className="flex items-start justify-between flex-shrink-0">
-						<div className="w-full bg-gradient-to-r from-primary-dark via-accent-green to-primary-dark p-3 sm:p-4 rounded-t-lg sm:rounded-t-2xl relative">
-							<h3 className="text-sm sm:text-base md:text-lg font-bold text-white mb-1 drop-shadow-sm pr-8">
-								{currentModalDescription}
-							</h3>
-							{/* Dynamic details grid - wraps at 3 columns, 4th item goes to new row */}
-							<div className={`mt-2 sm:mt-3 grid ${detailColsClass} gap-2 sm:gap-3 text-[10px] sm:text-[11px] md:text-xs text-white/90`}>
+					<div className="w-full bg-gradient-to-r from-primary-dark via-accent-green to-primary-dark p-2 sm:p-4 md:p-5 rounded-t-lg sm:rounded-t-2xl relative">
+						<h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-white mb-1 sm:mb-2 drop-shadow-sm pr-8 sm:pr-10">
+							{currentModalDescription}
+						</h3>
+						{/* Dynamic details grid - wraps at 3 columns, 4th item goes to new row */}
+						<div className={`mt-2 sm:mt-3 md:mt-4 grid ${detailColsClass} gap-1.5 sm:gap-3 md:gap-4 text-[10px] sm:text-xs md:text-sm text-white/90`}>
 								{modalDetails.map(d => (
-									<div key={d.label} className="flex flex-col min-w-0">
-										<span className="font-semibold tracking-wide uppercase">{d.label}:</span>
-										<span className="mt-0.5 leading-snug break-words whitespace-pre-wrap">{d.value}</span>
+							<div key={d.label} className="flex flex-col min-w-0 p-1 sm:p-0">
+									<span className="font-semibold tracking-wide uppercase text-white">{d.label}:</span>
+									<span className="mt-0.5 leading-snug break-words whitespace-pre-wrap">{d.value}</span>
 									</div>
 								))}
 							</div>
 							{/* Action buttons */}
-							<div className="mt-3 sm:mt-5 flex flex-row gap-2 flex-wrap">
-								<button
-									onClick={() => {
-										onClose();
-										const footer = document.getElementById('footer');
-										if (footer) {
-											footer.scrollIntoView({ behavior: 'smooth' });
-										} else {
-											window.location.hash = '#footer';
-										}
-									}}
-									className="bg-orange-accent hover:bg-orange-600 text-white font-semibold py-1.5 px-3 sm:px-4 rounded-md transition-all duration-300 flex items-center justify-center text-xs sm:text-sm"
-								>
-									<Mail className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+						<div className="mt-2 sm:mt-4 md:mt-5 flex flex-col sm:flex-row gap-1.5 sm:gap-3">
+							<button
+								onClick={() => {
+									onClose();
+									const footer = document.getElementById('footer');
+									if (footer) {
+										footer.scrollIntoView({ behavior: 'smooth' });
+									} else {
+										window.location.hash = '#footer';
+									}
+								}}
+								className="bg-orange-accent hover:bg-orange-600 text-white font-semibold py-2 sm:py-1.5 px-4 sm:px-4 md:px-5 rounded-md transition-all duration-300 flex items-center justify-center text-sm sm:text-sm md:text-base w-full sm:w-auto"
+							>
+								<Mail className="w-4 h-4 sm:w-4 sm:h-4 mr-2" />
 									Contact Us
 								</button>
 								<button
 									onClick={handleDownload}
 									disabled={downloading || downloaded}
-									className={`bg-white/10 hover:bg-white/20 text-white font-semibold py-1.5 px-3 sm:px-4 rounded-md transition-all duration-300 backdrop-blur-sm flex items-center justify-center text-xs sm:text-sm relative ${
+								className={`bg-white/10 hover:bg-white/20 text-white font-semibold py-2 sm:py-1.5 px-4 sm:px-4 md:px-5 rounded-md transition-all duration-300 backdrop-blur-sm flex items-center justify-center text-sm sm:text-sm md:text-base w-full sm:w-auto relative ${
 										downloading || downloaded ? 'cursor-not-allowed opacity-50' : ''
 									}`}
 								>
-									<Download className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-									{downloading ? (
-										<span className="flex items-center">
-											<span className="mr-2">Loading...</span>
-											<span className="inline-block w-3 h-3 sm:w-4 sm:h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+								<Download className="w-4 h-4 sm:w-4 sm:h-4 mr-2" />
+								{downloading ? (
+									<span className="flex items-center">
+										<span className="mr-2">Loading...</span>
+										<span className="inline-block w-4 h-4 sm:w-4 sm:h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
 										</span>
 									) : downloaded ? (
 										<span className="flex items-center">
@@ -202,10 +202,10 @@ const ServiceGalleryModal = ({ service, isOpen, onClose }) => {
 						{/* Close button - repositioned for desktop to avoid thumbnail overlap */}
 						<button
 							onClick={onClose}
-							className="absolute top-2 sm:top-4 right-2 sm:right-4 md:right-[120px] text-white bg-white/20 hover:bg-white/40 p-1.5 sm:p-2 rounded-full transition z-20"
+							className="absolute top-2 sm:top-3 md:top-4 right-2 sm:right-3 md:right-[120px] text-white bg-white/20 hover:bg-white/40 p-2 sm:p-2.5 md:p-3 rounded-full transition z-20 shadow-lg"
 							aria-label="Close"
 						>
-							<X className="w-4 h-4 sm:w-5 sm:h-5" />
+							<X className="w-5 h-5 sm:w-5 sm:h-5 md:w-6 md:h-6" />
 						</button>
 					</div>
 					{/* Image area */}
@@ -228,7 +228,7 @@ const ServiceGalleryModal = ({ service, isOpen, onClose }) => {
 							</div>
 						)}
 						{/* Image count - repositioned to avoid badge overlap */}
-						<div className="absolute top-2 sm:top-4 right-2 sm:right-4 bg-black/70 text-white px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs md:text-sm font-semibold shadow-lg z-10 backdrop-blur-sm">
+						<div className="absolute top-2 sm:top-3 md:top-4 right-2 sm:right-3 md:right-4 bg-black/70 text-white px-2.5 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 rounded-full text-xs sm:text-sm md:text-base font-semibold shadow-lg z-10 backdrop-blur-sm">
 							{currentImage + 1} / {gallery.length}
 						</div>
 						{/* Navigation arrows */}
@@ -274,13 +274,13 @@ const ServiceGalleryModal = ({ service, isOpen, onClose }) => {
 						)}
 					</div>
 					{/* Thumbnails for mobile (below image) */}
-					<div ref={mobileThumbContainerRef} className="flex md:hidden gap-2 px-3 sm:px-6 pb-3 sm:pb-4 overflow-x-auto flex-shrink-0">
-						{gallery.map((img, idx) => (
-							<button
-								key={img.url}
-								ref={el => thumbnailRefs.current[idx] = el}
-								onClick={() => setCurrentImage(idx)}
-								className={`border-2 rounded-lg overflow-hidden w-12 h-12 sm:w-14 sm:h-14 focus:outline-none transition flex-shrink-0 ${
+				<div ref={mobileThumbContainerRef} className="flex md:hidden gap-2 sm:gap-3 px-3 sm:px-4 pb-3 sm:pb-4 overflow-x-auto flex-shrink-0 scrollbar-thin scrollbar-thumb-gray-300">
+					{gallery.map((img, idx) => (
+						<button
+							key={img.url}
+							ref={el => thumbnailRefs.current[idx] = el}
+							onClick={() => setCurrentImage(idx)}
+							className={`border-2 rounded-lg overflow-hidden w-14 h-14 sm:w-16 sm:h-16 focus:outline-none transition flex-shrink-0 ${
 									currentImage === idx
 										? 'border-accent-green shadow-lg'
 										: 'border-transparent opacity-70 hover:opacity-100'
@@ -302,7 +302,7 @@ const ServiceGalleryModal = ({ service, isOpen, onClose }) => {
 					</div>
 				</div>
 				{/* Thumbnails grid on right side (desktop) */}
-				<div ref={desktopThumbContainerRef} className="hidden md:flex flex-col gap-2 p-4 bg-white/80 rounded-r-2xl border-l border-gray-100 overflow-y-auto flex-shrink-0" style={{ maxHeight: '95vh', width: '100px' }}>
+			<div ref={desktopThumbContainerRef} className="hidden md:flex flex-col gap-2 p-3 md:p-4 bg-white/80 rounded-r-2xl border-l border-gray-100 overflow-y-auto flex-shrink-0 scrollbar-thin scrollbar-thumb-gray-300" style={{ maxHeight: '95vh', width: '100px' }}>
 					{gallery.map((img, idx) => (
 						<button
 							key={img.url}
