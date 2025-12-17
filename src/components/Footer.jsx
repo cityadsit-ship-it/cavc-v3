@@ -139,9 +139,9 @@ const Footer = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="lg:col-span-3"
+              className="lg:col-span-3 text-center sm:text-left"
             >
-              <div className="flex items-center mb-4 sm:mb-6">
+              <div className="flex items-center mb-4 sm:mb-6 justify-center sm:justify-start">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center mr-2 sm:mr-3 p-1.5 shadow-lg flex-shrink-0">
                   <img 
                     src="/images/cavclogo.png" 
@@ -160,7 +160,7 @@ const Footer = () => {
               </p>
 
               {/* Social Media */}
-              <div className="flex space-x-3 sm:space-x-4 mt-3 sm:mt-4">
+              <div className="flex space-x-3 sm:space-x-4 mt-3 sm:mt-4 justify-center sm:justify-start">
                 {/* Facebook Icon */}
                 <motion.a
                   href={socialLinks[0].href}
@@ -200,12 +200,12 @@ const Footer = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
               viewport={{ once: true }}
-              className="lg:col-span-2"
+              className="lg:col-span-2 text-center sm:text-left"
             >
               <h4 className="text-base sm:text-lg font-semibold mb-4 sm:mb-6 text-yellow-highlight">
                 Quick Links
               </h4>
-              <ul className="space-y-2 sm:space-y-3">
+              <ul className="space-y-2 sm:space-y-3 flex flex-col items-center sm:items-start">
                 {quickLinks.map((link, index) => (
                   <li key={index}>
                     <button
@@ -238,12 +238,12 @@ const Footer = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true }}
-              className="lg:col-span-3"
+              className="lg:col-span-3 text-center sm:text-left"
             >
               <h4 className="text-base sm:text-lg font-semibold mb-4 sm:mb-6 text-yellow-highlight">
                 Our Services
               </h4>
-              <ul className="space-y-2 sm:space-y-3">
+              <ul className="space-y-2 sm:space-y-3 flex flex-col items-center sm:items-start">
                 {serviceData.map((service) => (
                   <li key={service.id}>
                     <button
@@ -265,13 +265,13 @@ const Footer = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
               viewport={{ once: true }}
-              className="lg:col-span-4"
+              className="lg:col-span-4 text-center sm:text-left"
             >
               <h4 className="text-base sm:text-lg font-semibold mb-4 sm:mb-6 text-yellow-highlight">
                 Contact Info
               </h4>
-              <div className="space-y-3 sm:space-y-4">
-                <div className="flex items-start space-x-2 sm:space-x-3">
+              <div className="space-y-3 sm:space-y-4 flex flex-col items-center sm:items-start">
+                <div className="flex items-start space-x-2 sm:space-x-3 justify-center sm:justify-start w-full">
                   <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-highlight mt-1 flex-shrink-0" />
                   <div>
                     <button
@@ -288,21 +288,32 @@ const Footer = () => {
                   </div>
                 </div>
 
-                <div className="flex items-start space-x-2 sm:space-x-3">
+                <div className="flex items-start space-x-2 sm:space-x-3 justify-center sm:justify-start w-full">
                   <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-highlight mt-1 flex-shrink-0" />
-                  <div className="w-full">
+                  <div className="w-full flex justify-center sm:justify-start">
                     {isMobile ? (
-                      <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                        {phoneNumbers.map((num) => (
-                          <button
-                            key={num.intl}
-                            className="text-gray-200 text-xs sm:text-sm px-2 sm:px-3 py-1 rounded bg-accent-green/80 hover:bg-yellow-highlight font-medium transition-colors duration-200"
-                            onClick={() => openCallModal(num.intl)}
-                            type="button"
-                          >
-                            {num.display}
-                          </button>
-                        ))}
+                      <div className="flex flex-col gap-1.5 items-center sm:items-start">
+                        {/* First phone number on its own row */}
+                        <button
+                          className="text-gray-200 text-xs sm:text-sm px-2 sm:px-3 py-1 rounded bg-accent-green/80 hover:bg-yellow-highlight font-medium transition-colors duration-200"
+                          onClick={() => openCallModal(phoneNumbers[0].intl)}
+                          type="button"
+                        >
+                          {phoneNumbers[0].display}
+                        </button>
+                        {/* Remaining three numbers centered on second row */}
+                        <div className="flex flex-wrap gap-1.5 justify-center">
+                          {phoneNumbers.slice(1).map((num) => (
+                            <button
+                              key={num.intl}
+                              className="text-gray-200 text-xs sm:text-sm px-2 sm:px-3 py-1 rounded bg-accent-green/80 hover:bg-yellow-highlight font-medium transition-colors duration-200"
+                              onClick={() => openCallModal(num.intl)}
+                              type="button"
+                            >
+                              {num.display}
+                            </button>
+                          ))}
+                        </div>
                       </div>
                     ) : (
                       <div className="flex flex-wrap gap-1.5 sm:gap-2">
@@ -321,9 +332,9 @@ const Footer = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center space-x-2 sm:space-x-3">
+                <div className="flex items-center space-x-2 sm:space-x-3 justify-center sm:justify-start w-full">
                   <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-highlight flex-shrink-0" />
-                  <div>
+                  <div className="text-center sm:text-left">
                     <button
                       className="text-gray-200 text-xs sm:text-sm underline hover:text-yellow-highlight transition-colors duration-200 break-all"
                       type="button"
