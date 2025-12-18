@@ -18,8 +18,9 @@ dist-ssr
 .env.production
 .env.development
 
-# Sensitive data - DO NOT COMMIT
-server/data/admin.json
+# Sensitive data - Commit with default password, change in production!
+# server/data/admin.json should be committed with default credentials
+# Change password immediately after first deployment
 
 # Editor directories and files
 .vscode/*

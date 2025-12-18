@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
+import { API_ENDPOINTS } from '../../lib/api-config';
 
 const LocationForm = ({ location, type, onClose }) => {
   const [formData, setFormData] = useState({

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
+import { API_ENDPOINTS } from '../../lib/api-config';
 
 const ServiceForm = ({ service, onClose }) => {
   const [formData, setFormData] = useState({
@@ -8,6 +9,8 @@ const ServiceForm = ({ service, onClose }) => {
     folder: '',
     pdfFileName: '',
   });
+  const [pdfFile, setPdfFile] = useState(null);
+  const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
 
@@ -22,8 +25,51 @@ const ServiceForm = ({ service, onClose }) => {
     }
   }, [service]);
 
+  const handlePdfUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (!file.name.toLowerCase().endsWith('.pdf')) {
+      setError('Only PDF files are allowed');
+      return;
+    }
+
+    setUploading(true);
+    setError('');
+
+    try {
+      const formData = new FormData();
+      formData.append('pdf', file);
+      formData.append('type', 'service');
+
+      const response = await fetch(API_ENDPOINTS.UPLOAD, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setPdfFile(file);
+        setFormData(prev => ({ ...prev, pdfFileName: data.filename }));
+      } else {
+        setError('Failed to upload PDF');
+      }
+    } catch (err) {
+      setError('Failed to upload PDF. Please ensure the backend is running.');
+    } finally {
+      setUploading(false);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Check if PDF is required for new services
+    if (!service && !formData.pdfFileName) {
+      setError('Please upload a PDF file before creating the service');
+      return;
+    }
+
     setSaving(true);
     setError('');
 
@@ -126,15 +172,38 @@ const ServiceForm = ({ service, onClose }) => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  PDF File Name
+                  Service PDF {!service && '*'}
                 </label>
-                <input
-                  type="text"
-                  value={formData.pdfFileName}
-                  onChange={(e) => setFormData({ ...formData, pdfFileName: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="e.g., billboard-cavc.pdf"
-                />
+                <div className="flex items-center gap-3">
+                  <label className="flex-1 cursor-pointer">
+                    <div className="w-full px-4 py-2 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 transition text-center">
+                      {uploading ? (
+                        <span className="text-gray-600">Uploading...</span>
+                      ) : formData.pdfFileName ? (
+                        <span className="text-green-600">✓ {formData.pdfFileName}</span>
+                      ) : (
+                        <span className="text-gray-600">Click to upload PDF</span>
+                      )}
+                    </div>
+                    <input
+                      type="file"
+                      accept=".pdf"
+                      onChange={handlePdfUpload}
+                      className="hidden"
+                      disabled={uploading}
+                    />
+                  </label>
+                </div>
+                {!service && (
+                  <p className="mt-1 text-sm text-red-600">
+                    * PDF file must be uploaded before creating the service
+                  </p>
+                )}
+                {formData.pdfFileName && (
+                  <p className="mt-1 text-sm text-gray-500">
+                    Current file: {formData.pdfFileName}
+                  </p>
+                )}
               </div>
 
               <div className="flex gap-3 pt-4">

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
 const ConfirmDialog = ({ 
@@ -8,9 +9,34 @@ const ConfirmDialog = ({
   message = 'Are you sure you want to proceed?',
   confirmText = 'Confirm',
   cancelText = 'Cancel',
-  type = 'danger' // 'danger' or 'primary'
+  type = 'danger', // 'danger' or 'primary'
+  requirePassword = false, // Set to true to require password confirmation
+  passwordPlaceholder = 'Enter your password to confirm'
 }) => {
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
   if (!isOpen) return null;
+
+  const handleConfirm = () => {
+    if (requirePassword) {
+      if (!password.trim()) {
+        setError('Password is required');
+        return;
+      }
+      onConfirm(password);
+      setPassword('');
+      setError('');
+    } else {
+      onConfirm();
+    }
+  };
+
+  const handleClose = () => {
+    setPassword('');
+    setError('');
+    onClose();
+  };
 
   const buttonColors = {
     danger: 'bg-red-600 hover:bg-red-700',
@@ -22,7 +48,7 @@ const ConfirmDialog = ({
       <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
         <div 
           className="fixed inset-0 transition-opacity bg-gray-900 bg-opacity-75"
-          onClick={onClose}
+          onClick={handleClose}
         />
 
         <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
@@ -48,9 +74,27 @@ const ConfirmDialog = ({
                     {message}
                   </p>
                 </div>
+                {requirePassword && (
+                  <div className="mt-4">
+                    <input
+                      type="password"
+                      value={password}
+                      onChange={(e) => {
+                        setPassword(e.target.value);
+                        setError('');
+                      }}
+                      placeholder={passwordPlaceholder}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      autoFocus
+                    />
+                    {error && (
+                      <p className="mt-2 text-sm text-red-600">{error}</p>
+                    )}
+                  </div>
+                )}
               </div>
               <button
-                onClick={onClose}
+                onClick={handleClose}
                 className="text-gray-400 hover:text-gray-500 transition ml-auto -mt-2"
               >
                 <XMarkIcon className="h-6 w-6" />
@@ -60,14 +104,14 @@ const ConfirmDialog = ({
           <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse gap-2">
             <button
               type="button"
-              onClick={onConfirm}
+              onClick={handleConfirm}
               className={`w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 ${buttonColors[type]} text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-${type === 'danger' ? 'red' : 'blue'}-500 sm:ml-3 sm:w-auto sm:text-sm`}
             >
               {confirmText}
             </button>
             <button
               type="button"
-              onClick={onClose}
+              onClick={handleClose}
               className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm"
             >
               {cancelText}

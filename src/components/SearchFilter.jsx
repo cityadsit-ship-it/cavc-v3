@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Search, MapPin, Grid3X3, ChevronDown, AlertCircle, Ruler, X, Loader2 } from 'lucide-react';
 import { serviceData } from './ServicesData';
 import { metroManilaLocations as fallbackMetroManila, provincialLocations as fallbackProvincial } from './Map';
+import { API_ENDPOINTS } from '../lib/api-config';
 
 const SearchFilter = ({ onFilterChange }) => {
 	const [selectedLocation, setSelectedLocation] = useState('all');
@@ -35,7 +36,7 @@ const SearchFilter = ({ onFilterChange }) => {
 	useEffect(() => {
 		const fetchLocations = async () => {
 			try {
-				const response = await fetch('http://localhost:3001/api/locations');
+				const response = await fetch(API_ENDPOINTS.LOCATIONS);
 				if (response.ok) {
 					const data = await response.json();
 					setMetroManilaLocations(data.metroManila);

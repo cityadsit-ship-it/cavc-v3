@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { KeyIcon, EnvelopeIcon, UserCircleIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
+import { API_ENDPOINTS } from '../../lib/api-config';
 
 const AdminSettings = () => {
   const [adminData, setAdminData] = useState({ username: '', email: '', lastPasswordChange: '' });

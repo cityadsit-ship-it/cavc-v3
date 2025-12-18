@@ -3,6 +3,7 @@ import { XMarkIcon, PlusIcon, PencilIcon, TrashIcon, CloudArrowUpIcon } from '@h
 import GalleryItemForm from './GalleryItemForm';
 import { useNotification, NotificationContainer } from '../../components/Notification';
 import ConfirmDialog from '../../components/ConfirmDialog';
+import { API_ENDPOINTS } from '../../lib/api-config';
 
 const GalleryManager = ({ service, onClose }) => {
   const [galleryItems, setGalleryItems] = useState([]);

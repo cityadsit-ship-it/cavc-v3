@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { XMarkIcon, PlusIcon, TrashIcon, CloudArrowUpIcon } from '@heroicons/react/24/outline';
+import { API_ENDPOINTS } from '../../lib/api-config';
 
 const GalleryItemForm = ({ serviceId, item, itemIndex, folder, onSave, onClose }) => {
   const [formData, setFormData] = useState({
@@ -127,8 +128,8 @@ const GalleryItemForm = ({ serviceId, item, itemIndex, folder, onSave, onClose }
       };
 
       const url = itemIndex !== null
-        ? `http://localhost:3001/api/services/${serviceId}/gallery/${itemIndex}`
-        : `http://localhost:3001/api/services/${serviceId}/gallery`;
+        ? API_ENDPOINTS.SERVICE_GALLERY_ITEM(serviceId, itemIndex)
+        : API_ENDPOINTS.SERVICE_GALLERY(serviceId);
 
       const method = itemIndex !== null ? 'PUT' : 'POST';
 

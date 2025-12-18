@@ -4,6 +4,7 @@ import ServiceForm from './ServiceForm';
 import GalleryManager from './GalleryManager';
 import { useNotification, NotificationContainer } from '../../components/Notification';
 import ConfirmDialog from '../../components/ConfirmDialog';
+import { API_ENDPOINTS } from '../../lib/api-config';
 
 const ServicesManager = () => {
   const [services, setServices] = useState([]);
@@ -35,11 +36,30 @@ const ServicesManager = () => {
     setDeleteConfirm({ show: true, service });
   };
 
-  const handleDeleteConfirm = async () => {
+  const handleDeleteConfirm = async (password) => {
     const { service } = deleteConfirm;
-    setDeleteConfirm({ show: false, service: null });
 
+    // Verify password first
     try {
+      const verifyResponse = await fetch(API_ENDPOINTS.LOGIN, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: localStorage.getItem('adminUser'),
+          password: password
+        }),
+      });
+
+      const verifyData = await verifyResponse.json();
+
+      if (!verifyData.success) {
+        showError('Invalid password. Service was not deleted.');
+        return;
+      }
+
+      // Password is correct, proceed with deletion
+      setDeleteConfirm({ show: false, service: null });
+
       const response = await fetch(API_ENDPOINTS.SERVICE(service.id), {
         method: 'DELETE',
       });
@@ -53,6 +73,7 @@ const ServicesManager = () => {
     } catch (error) {
       console.error('Failed to delete service:', error);
       showError('Failed to delete service. Please check your connection.');
+      setDeleteConfirm({ show: false, service: null });
     }
   };
 
@@ -195,10 +216,12 @@ const ServicesManager = () => {
         onClose={() => setDeleteConfirm({ show: false, service: null })}
         onConfirm={handleDeleteConfirm}
         title="Delete Service"
-        message={`Are you sure you want to delete "${deleteConfirm.service?.title}"? This action cannot be undone.`}
+        message={`Are you sure you want to delete "${deleteConfirm.service?.title}"? This action cannot be undone and requires password confirmation.`}
         confirmText="Delete"
         cancelText="Cancel"
         type="danger"
+        requirePassword={true}
+        passwordPlaceholder="Enter your admin password"
       />
     </div>
   );

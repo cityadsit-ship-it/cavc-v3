@@ -1,0 +1,20 @@
+# Render Blueprint for CAVC Backend
+# This file enables "Infrastructure as Code" deployment
+# Render will automatically detect and use this configuration
+
+services:
+  - type: web
+    name: cavc-backend
+    env: node
+    region: oregon
+    plan: free
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: CORS_ORIGIN
+        sync: false  # You must set this manually in Render dashboard to your Netlify URL

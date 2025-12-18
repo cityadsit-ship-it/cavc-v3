@@ -9,10 +9,13 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: process.env.CORS_ORIGIN || '*',
+  credentials: true
+}));
 app.use(express.json());
 
 // Serve static files from public directory
@@ -649,8 +652,14 @@ app.get('/api/activity-logs', async (req, res) => {
 // START SERVER
 // ============================================
 
-app.listen(PORT, () => {
-  console.log(`🚀 CMS Server running on http://localhost:${PORT}`);
-  console.log(`📁 Serving images from: ${path.join(__dirname, '../public/images')}`);
-  console.log(`📄 Serving PDFs from: ${path.join(__dirname, '../public/pdfs')}`);
-});
+// Only start server if this file is run directly (not imported as a module)
+if (import.meta.url === `file://${process.argv[1]}`) {
+  app.listen(PORT, () => {
+    console.log(`🚀 CMS Server running on http://localhost:${PORT}`);
+    console.log(`📁 Serving images from: ${path.join(__dirname, '../public/images')}`);
+    console.log(`📄 Serving PDFs from: ${path.join(__dirname, '../public/pdfs')}`);
+  });
+}
+
+// Export for use as Vercel serverless function
+export default app;

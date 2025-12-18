@@ -2,6 +2,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap, LayersControl } from 'r
 import L from 'leaflet';
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import { API_ENDPOINTS } from '../lib/api-config';
 
 // Blue marker icon for Metro Manila
 const blueIcon = new L.Icon({
@@ -193,7 +194,7 @@ const Map = () => {
   useEffect(() => {
     const fetchLocations = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/locations');
+        const response = await fetch(API_ENDPOINTS.LOCATIONS);
         if (response.ok) {
           const data = await response.json();
           console.log('✅ Using live location data from admin panel');

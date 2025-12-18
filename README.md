@@ -4,9 +4,25 @@ A modern, responsive landing page for City Advertising Ventures Corporation (CAV
 
 ## 🚀 PRODUCTION READY
 
-This project is fully configured and ready for production deployment. See [PRODUCTION_TRANSITION_GUIDE.md](./PRODUCTION_TRANSITION_GUIDE.md) for complete deployment instructions.
+This project is fully configured and ready for production deployment.
 
-**Quick Start for Deployment:** See [QUICK_DEPLOYMENT_REFERENCE.md](./QUICK_DEPLOYMENT_REFERENCE.md)
+### 📚 Documentation
+
+**→ [DOCUMENTATION_INDEX.md](./DOCUMENTATION_INDEX.md) - Complete documentation directory** ⭐
+
+**For Deployment & Setup:**
+- [PRODUCTION_TRANSITION_GUIDE.md](./PRODUCTION_TRANSITION_GUIDE.md) - Complete deployment guide
+- [QUICK_DEPLOYMENT_REFERENCE.md](./QUICK_DEPLOYMENT_REFERENCE.md) - Quick reference card
+- [DEPLOYMENT_COMMANDS.md](./DEPLOYMENT_COMMANDS.md) - Technical commands
+
+**For Content Management (Non-Technical):**
+- [CLIENT_CONTENT_MANAGEMENT_GUIDE.md](./CLIENT_CONTENT_MANAGEMENT_GUIDE.md) - Complete CMS guide for clients
+- [QUICK_CMS_REFERENCE.md](./QUICK_CMS_REFERENCE.md) - Quick reference card for daily use
+- [STEP_BY_STEP_TASKS.md](./STEP_BY_STEP_TASKS.md) - Step-by-step task instructions
+
+**For Developers:**
+- [PRODUCTION_READINESS.md](./PRODUCTION_READINESS.md) - Production status and checklist
+- [PRE_TRANSFER_CHECKLIST.md](./PRE_TRANSFER_CHECKLIST.md) - Developer handoff checklist
 
 ## ✨ Key Features
 

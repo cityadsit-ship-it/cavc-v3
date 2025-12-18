@@ -1,6 +1,78 @@
 {
   "logs": [
     {
+      "action": "deleted",
+      "entity": "Gallery Item",
+      "description": "Deleted \"test\" from Pillar Ads",
+      "timestamp": "2025-12-18T03:42:43.427Z"
+    },
+    {
+      "action": "created",
+      "entity": "Gallery Item",
+      "description": "Added \"test\" to Pillar Ads",
+      "timestamp": "2025-12-18T03:42:38.898Z"
+    },
+    {
+      "action": "deleted",
+      "entity": "Service",
+      "description": "Deleted service \"TEST\"",
+      "timestamp": "2025-12-18T03:36:06.339Z"
+    },
+    {
+      "action": "created",
+      "entity": "Service",
+      "description": "Created service \"TEST\"",
+      "timestamp": "2025-12-18T03:35:43.476Z"
+    },
+    {
+      "action": "deleted",
+      "entity": "Service",
+      "description": "Deleted service \"Tarpaulin\"",
+      "timestamp": "2025-12-18T03:31:23.794Z"
+    },
+    {
+      "action": "created",
+      "entity": "Service",
+      "description": "Created service \"Tarpaulin\"",
+      "timestamp": "2025-12-18T03:31:16.266Z"
+    },
+    {
+      "action": "deleted",
+      "entity": "Location",
+      "description": "Deleted \"Rizal\" from Provincial",
+      "timestamp": "2025-12-18T03:20:50.232Z"
+    },
+    {
+      "action": "created",
+      "entity": "Location",
+      "description": "Added \"Rizal\" to Provincial",
+      "timestamp": "2025-12-18T03:19:47.495Z"
+    },
+    {
+      "action": "deleted",
+      "entity": "Gallery Item",
+      "description": "Deleted \"TEST\" from Pillar Ads",
+      "timestamp": "2025-12-18T03:17:58.199Z"
+    },
+    {
+      "action": "created",
+      "entity": "Gallery Item",
+      "description": "Added \"TEST\" to Pillar Ads",
+      "timestamp": "2025-12-18T03:16:40.586Z"
+    },
+    {
+      "action": "deleted",
+      "entity": "Gallery Item",
+      "description": "Deleted \"tewst\" from Pillar Ads",
+      "timestamp": "2025-12-18T03:14:05.504Z"
+    },
+    {
+      "action": "created",
+      "entity": "Gallery Item",
+      "description": "Added \"tewst\" to Pillar Ads",
+      "timestamp": "2025-12-18T03:13:40.932Z"
+    },
+    {
       "action": "created",
       "entity": "Gallery Item",
       "description": "Added \"TEST\" to Pillar Ads",

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { DocumentIcon, ArrowUpTrayIcon, ClockIcon } from '@heroicons/react/24/outline';
 import { useNotification, NotificationContainer } from '../../components/Notification';
+import { API_ENDPOINTS } from '../../lib/api-config';
 
 const PDFManager = () => {
   const [pdfs, setPdfs] = useState({ companyProfile: {}, services: {} });

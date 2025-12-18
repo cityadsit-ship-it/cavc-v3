@@ -1,7 +1,12 @@
 // API Configuration
 // This file centralizes all API endpoint configuration
 
+// Use environment variable for production, fallback to localhost for development
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+
+// Note: For production deployment on Netlify, you must:
+// 1. Deploy the backend separately (Render, Railway, Heroku, etc.)
+// 2. Set VITE_API_URL environment variable in Netlify to your backend URL
 
 export const API_ENDPOINTS = {
   // Auth

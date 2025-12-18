@@ -3,6 +3,7 @@ import { PlusIcon, PencilIcon, TrashIcon, MapPinIcon, MagnifyingGlassIcon } from
 import LocationForm from './LocationForm';
 import { useNotification, NotificationContainer } from '../../components/Notification';
 import ConfirmDialog from '../../components/ConfirmDialog';
+import { API_ENDPOINTS } from '../../lib/api-config';
 
 const LocationsManager = () => {
   const [locations, setLocations] = useState({ metroManila: [], provincial: [] });

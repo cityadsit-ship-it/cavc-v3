@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { MapPinIcon, ClockIcon } from '@heroicons/react/24/outline';
+import { API_ENDPOINTS } from '../../lib/api-config';
 
 const Dashboard = () => {
   const [locationCount, setLocationCount] = useState(0);
