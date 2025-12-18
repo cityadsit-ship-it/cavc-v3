@@ -12,6 +12,15 @@ dist
 dist-ssr
 *.local
 
+# Environment variables
+.env
+.env.local
+.env.production
+.env.development
+
+# Sensitive data - DO NOT COMMIT
+server/data/admin.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

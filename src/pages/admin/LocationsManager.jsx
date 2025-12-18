@@ -20,7 +20,7 @@ const LocationsManager = () => {
 
   const fetchLocations = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/locations');
+      const response = await fetch(API_ENDPOINTS.LOCATIONS);
       const data = await response.json();
       setLocations(data);
     } catch (error) {
@@ -40,7 +40,7 @@ const LocationsManager = () => {
     setDeleteConfirm({ show: false, location: null, type: null });
 
     try {
-      const response = await fetch(`http://localhost:3001/api/locations/${type}/${location.id}`, {
+      const response = await fetch(API_ENDPOINTS.LOCATION(type, location.id), {
         method: 'DELETE',
       });
 

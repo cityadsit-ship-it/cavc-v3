@@ -13,7 +13,7 @@ const Dashboard = () => {
 
   const fetchLocations = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/locations');
+      const response = await fetch(API_ENDPOINTS.LOCATIONS);
       if (response.ok) {
         const data = await response.json();
         const total = data.metroManila.length + data.provincial.length;
@@ -26,7 +26,7 @@ const Dashboard = () => {
 
   const fetchActivityLogs = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/activity-logs');
+      const response = await fetch(API_ENDPOINTS.ACTIVITY_LOGS);
       if (response.ok) {
         const data = await response.json();
         setActivityLogs(data.logs || []);

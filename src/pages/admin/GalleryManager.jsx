@@ -40,7 +40,7 @@ const GalleryManager = ({ service, onClose }) => {
     setDeleteConfirm({ show: false, index: null });
 
     try {
-      const response = await fetch(`http://localhost:3001/api/services/${service.id}/gallery/${index}`, {
+      const response = await fetch(API_ENDPOINTS.SERVICE_GALLERY_ITEM(service.id, index), {
         method: 'DELETE',
       });
       
@@ -85,7 +85,7 @@ const GalleryManager = ({ service, onClose }) => {
       formData.append('image', file);
       formData.append('folder', service.folder);
 
-      const response = await fetch('http://localhost:3001/api/upload', {
+      const response = await fetch(API_ENDPOINTS.UPLOAD, {
         method: 'POST',
         body: formData,
       });
@@ -101,7 +101,7 @@ const GalleryManager = ({ service, onClose }) => {
           modalDetails: {},
         };
 
-        const saveResponse = await fetch(`http://localhost:3001/api/services/${service.id}/gallery`, {
+        const saveResponse = await fetch(API_ENDPOINTS.SERVICE_GALLERY(service.id), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(newItem),

@@ -49,8 +49,8 @@ const LocationForm = ({ location, type, onClose }) => {
       };
 
       const url = location
-        ? `http://localhost:3001/api/locations/${type}/${location.id}`
-        : `http://localhost:3001/api/locations/${type}`;
+        ? API_ENDPOINTS.LOCATION(type, location.id)
+        : API_ENDPOINTS.LOCATION(type, '');
 
       const method = location ? 'PUT' : 'POST';
 

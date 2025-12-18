@@ -16,7 +16,7 @@ const AdminSettings = () => {
 
   const fetchAdminData = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/admin');
+      const response = await fetch(API_ENDPOINTS.ADMIN);
       if (response.ok) {
         const data = await response.json();
         console.log('Admin data fetched:', data);
@@ -47,7 +47,7 @@ const AdminSettings = () => {
 
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:3001/api/admin/password', {
+      const response = await fetch(API_ENDPOINTS.ADMIN_PASSWORD, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ currentPassword, newPassword })
@@ -88,7 +88,7 @@ const AdminSettings = () => {
 
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:3001/api/admin/email', {
+      const response = await fetch(API_ENDPOINTS.ADMIN_EMAIL, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })

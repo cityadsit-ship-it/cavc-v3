@@ -20,7 +20,7 @@ const ServicesManager = () => {
 
   const fetchServices = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/services');
+      const response = await fetch(API_ENDPOINTS.SERVICES);
       const data = await response.json();
       setServices(data);
     } catch (error) {
@@ -40,7 +40,7 @@ const ServicesManager = () => {
     setDeleteConfirm({ show: false, service: null });
 
     try {
-      const response = await fetch(`http://localhost:3001/api/services/${service.id}`, {
+      const response = await fetch(API_ENDPOINTS.SERVICE(service.id), {
         method: 'DELETE',
       });
 

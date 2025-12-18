@@ -2,6 +2,12 @@
 
 A modern, responsive landing page for City Advertising Ventures Corporation (CAVC), showcasing their outdoor advertising services across Metro Manila. Built with React + Vite + Tailwind CSS with a focus on professional branding, mobile-first design, and user experience.
 
+## 🚀 PRODUCTION READY
+
+This project is fully configured and ready for production deployment. See [PRODUCTION_TRANSITION_GUIDE.md](./PRODUCTION_TRANSITION_GUIDE.md) for complete deployment instructions.
+
+**Quick Start for Deployment:** See [QUICK_DEPLOYMENT_REFERENCE.md](./QUICK_DEPLOYMENT_REFERENCE.md)
+
 ## ✨ Key Features
 
 - **Image-Centric Services Gallery** - Interactive cards with hover effects and detailed gallery modals

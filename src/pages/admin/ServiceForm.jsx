@@ -29,8 +29,8 @@ const ServiceForm = ({ service, onClose }) => {
 
     try {
       const url = service
-        ? `http://localhost:3001/api/services/${service.id}`
-        : 'http://localhost:3001/api/services';
+        ? API_ENDPOINTS.SERVICE(service.id)
+        : API_ENDPOINTS.SERVICES;
 
       const method = service ? 'PUT' : 'POST';
 

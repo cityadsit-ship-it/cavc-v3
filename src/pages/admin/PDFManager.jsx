@@ -14,7 +14,7 @@ const PDFManager = () => {
 
   const fetchPDFs = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/pdfs');
+      const response = await fetch(API_ENDPOINTS.PDFS);
       if (response.ok) {
         const data = await response.json();
         setPdfs(data);
@@ -42,7 +42,7 @@ const PDFManager = () => {
       const formData = new FormData();
       formData.append('pdf', file);
 
-      const response = await fetch('http://localhost:3001/api/pdfs/company-profile', {
+      const response = await fetch(API_ENDPOINTS.PDF_COMPANY_PROFILE, {
         method: 'POST',
         body: formData,
       });
@@ -77,7 +77,7 @@ const PDFManager = () => {
       const formData = new FormData();
       formData.append('pdf', file);
 
-      const response = await fetch(`http://localhost:3001/api/pdfs/service/${serviceId}`, {
+      const response = await fetch(API_ENDPOINTS.PDF_SERVICE(serviceId), {
         method: 'POST',
         body: formData,
       });
