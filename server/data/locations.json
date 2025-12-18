@@ -1,0 +1,222 @@
+{
+  "metroManila": [
+    {
+      "id": 1,
+      "name": "Manila",
+      "lat": 14.5995,
+      "lng": 120.9842
+    },
+    {
+      "id": 2,
+      "name": "Caloocan",
+      "lat": 14.6507,
+      "lng": 120.9661
+    },
+    {
+      "id": 3,
+      "name": "Malabon",
+      "lat": 14.6686,
+      "lng": 120.9656
+    },
+    {
+      "id": 4,
+      "name": "Marikina",
+      "lat": 14.6507,
+      "lng": 121.1029
+    },
+    {
+      "id": 5,
+      "name": "Makati",
+      "lat": 14.5547,
+      "lng": 121.0244
+    },
+    {
+      "id": 6,
+      "name": "Mandaluyong",
+      "lat": 14.5794,
+      "lng": 121.0359
+    },
+    {
+      "id": 7,
+      "name": "Pasig",
+      "lat": 14.5764,
+      "lng": 121.0851
+    },
+    {
+      "id": 8,
+      "name": "Taguig",
+      "lat": 14.5247,
+      "lng": 121.0794
+    },
+    {
+      "id": 9,
+      "name": "Parañaque",
+      "lat": 14.4793,
+      "lng": 121.0198
+    },
+    {
+      "id": 10,
+      "name": "Pasay",
+      "lat": 14.5377,
+      "lng": 121.0014
+    },
+    {
+      "id": 11,
+      "name": "Quezon City",
+      "lat": 14.676,
+      "lng": 121.0437
+    },
+    {
+      "id": 12,
+      "name": "Muntinlupa",
+      "lat": 14.4081,
+      "lng": 121.0415
+    }
+  ],
+  "provincial": [
+    {
+      "id": 13,
+      "name": "Laoag",
+      "lat": 18.1978,
+      "lng": 120.5952
+    },
+    {
+      "id": 14,
+      "name": "Ilocos",
+      "lat": 17.5747,
+      "lng": 120.3869
+    },
+    {
+      "id": 15,
+      "name": "La Union",
+      "lat": 16.6156,
+      "lng": 120.3186
+    },
+    {
+      "id": 16,
+      "name": "Pampanga",
+      "lat": 15.0794,
+      "lng": 120.619
+    },
+    {
+      "id": 17,
+      "name": "Pangasinan",
+      "lat": 15.8949,
+      "lng": 120.2863
+    },
+    {
+      "id": 18,
+      "name": "Subic",
+      "lat": 14.7956,
+      "lng": 120.2863
+    },
+    {
+      "id": 19,
+      "name": "Tuguegarao",
+      "lat": 17.6131,
+      "lng": 121.7269
+    },
+    {
+      "id": 20,
+      "name": "Baguio",
+      "lat": 16.4023,
+      "lng": 120.596
+    },
+    {
+      "id": 21,
+      "name": "Tuba Benguet",
+      "lat": 16.3167,
+      "lng": 120.55
+    },
+    {
+      "id": 22,
+      "name": "Bulacan",
+      "lat": 14.7928,
+      "lng": 120.9783
+    },
+    {
+      "id": 23,
+      "name": "Bacoor",
+      "lat": 14.4594,
+      "lng": 120.9617
+    },
+    {
+      "id": 24,
+      "name": "Cavite",
+      "lat": 14.4297,
+      "lng": 120.9406
+    },
+    {
+      "id": 25,
+      "name": "Laguna",
+      "lat": 14.17,
+      "lng": 121.33
+    },
+    {
+      "id": 26,
+      "name": "Batangas",
+      "lat": 14.1075,
+      "lng": 121.1647
+    },
+    {
+      "id": 27,
+      "name": "Naga",
+      "lat": 13.6218,
+      "lng": 123.1947
+    },
+    {
+      "id": 28,
+      "name": "Legazpi City",
+      "lat": 13.1391,
+      "lng": 123.7438
+    },
+    {
+      "id": 29,
+      "name": "Tacloban",
+      "lat": 11.2433,
+      "lng": 124.9847
+    },
+    {
+      "id": 30,
+      "name": "Iloilo City",
+      "lat": 10.7202,
+      "lng": 122.5621
+    },
+    {
+      "id": 31,
+      "name": "Bacolod",
+      "lat": 10.6765,
+      "lng": 122.9509
+    },
+    {
+      "id": 32,
+      "name": "Cebu City",
+      "lat": 10.3157,
+      "lng": 123.8854
+    },
+    {
+      "id": 33,
+      "name": "Mandaue City",
+      "lat": 10.3236,
+      "lng": 123.9222
+    },
+    {
+      "id": 34,
+      "name": "Lapu-Lapu",
+      "lat": 10.307,
+      "lng": 123.958
+    },
+    {
+      "id": 35,
+      "name": "CDO",
+      "lat": 8.4542,
+      "lng": 124.6319
+    },
+    {
+      "id": 36,
+      "name": "Davao",
+      "lat": 7.1907,
+      "lng": 125.4553
+    }
+  ]
+}

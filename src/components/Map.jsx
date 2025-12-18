@@ -25,8 +25,8 @@ const redIcon = new L.Icon({
   shadowSize: [41, 41],
 });
 
-// Metro Manila cities
-export const metroManilaLocations = [
+// Fallback locations (used if API fails)
+const fallbackMetroManila = [
   { name: 'Manila', lat: 14.5995, lng: 120.9842 },
   { name: 'Caloocan', lat: 14.6507, lng: 120.9661 },
   { name: 'Malabon', lat: 14.6686, lng: 120.9656 },
@@ -41,8 +41,7 @@ export const metroManilaLocations = [
   { name: 'Muntinlupa', lat: 14.4081, lng: 121.0415 },
 ];
 
-// Provincial locations
-export const provincialLocations = [
+const fallbackProvincial = [
   { name: 'Laoag', lat: 18.1978, lng: 120.5952 },
   { name: 'Ilocos', lat: 17.5747, lng: 120.3869 },
   { name: 'La Union', lat: 16.6156, lng: 120.3186 },
@@ -68,6 +67,10 @@ export const provincialLocations = [
   { name: 'CDO', lat: 8.4542, lng: 124.6319 },
   { name: 'Davao', lat: 7.1907, lng: 125.4553 },
 ];
+
+// Export location arrays for use in other components
+export const metroManilaLocations = fallbackMetroManila;
+export const provincialLocations = fallbackProvincial;
 
 // Slightly randomize marker positions to avoid overlap (use seed for consistency)
 function jitter(lat, lng, seed) {
@@ -183,6 +186,29 @@ const Map = () => {
   const [mapHeight, setMapHeight] = useState('500px');
   const [isMobile, setIsMobile] = useState(false);
   const markerRefs = useRef({});
+  const [metroManilaLocations, setMetroManilaLocations] = useState(fallbackMetroManila);
+  const [provincialLocations, setProvincialLocations] = useState(fallbackProvincial);
+
+  // Fetch locations from API
+  useEffect(() => {
+    const fetchLocations = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/api/locations');
+        if (response.ok) {
+          const data = await response.json();
+          console.log('✅ Using live location data from admin panel');
+          setMetroManilaLocations(data.metroManila);
+          setProvincialLocations(data.provincial);
+        } else {
+          console.warn('⚠️ API unavailable, using fallback location data');
+        }
+      } catch (error) {
+        console.warn('⚠️ Failed to fetch locations, using fallback data');
+      }
+    };
+
+    fetchLocations();
+  }, []);
 
   useEffect(() => {
     // Inject Leaflet CSS if not present

@@ -1,0 +1,46 @@
+{
+  "companyProfile": {
+    "name": "Company Profile",
+    "fileName": "company-profile.pdf",
+    "filePath": "/company-profile.pdf",
+    "lastUpdated": "2025-12-18T08:00:00.000Z"
+  },
+  "services": {
+    "1": {
+      "name": "Banner Advertising",
+      "fileName": "banner-cavc.pdf",
+      "filePath": "/pdfs/services/banner-cavc.pdf",
+      "lastUpdated": "2025-12-17T10:30:00.000Z"
+    },
+    "2": {
+      "name": "Pillar Ads",
+      "fileName": "pillar-ads-cavc.pdf",
+      "filePath": "/pdfs/services/pillar-ads-cavc.pdf",
+      "lastUpdated": "2025-12-16T14:15:00.000Z"
+    },
+    "3": {
+      "name": "Billboards",
+      "fileName": "billboards-cavc.pdf",
+      "filePath": "/pdfs/services/billboards-cavc.pdf",
+      "lastUpdated": "2025-12-15T09:45:00.000Z"
+    },
+    "4": {
+      "name": "LED Display Boards",
+      "fileName": "led-displays-cavc.pdf",
+      "filePath": "/pdfs/services/led-displays-cavc.pdf",
+      "lastUpdated": "2025-12-14T16:20:00.000Z"
+    },
+    "5": {
+      "name": "Transit Ads",
+      "fileName": "transit-ads.pdf",
+      "filePath": "/pdfs/services/transit-ads.pdf",
+      "lastUpdated": "2025-12-13T11:00:00.000Z"
+    },
+    "6": {
+      "name": "Directional Signage",
+      "fileName": "signages-cavc.pdf",
+      "filePath": "/pdfs/services/signages-cavc.pdf",
+      "lastUpdated": "2025-12-12T13:30:00.000Z"
+    }
+  }
+}

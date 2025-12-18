@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, MapPin, Grid3X3, ChevronDown, AlertCircle, Ruler, X, Loader2 } from 'lucide-react';
 import { serviceData } from './ServicesData';
-import { metroManilaLocations, provincialLocations } from './Map';
+import { metroManilaLocations as fallbackMetroManila, provincialLocations as fallbackProvincial } from './Map';
 
 const SearchFilter = ({ onFilterChange }) => {
 	const [selectedLocation, setSelectedLocation] = useState('all');
@@ -20,6 +20,8 @@ const SearchFilter = ({ onFilterChange }) => {
 	const [serviceSearchTerm, setServiceSearchTerm] = useState('');
 	const [showVariousLocations, setShowVariousLocations] = useState(false);
 	const [showClientRequirement, setShowClientRequirement] = useState(false);
+	const [metroManilaLocations, setMetroManilaLocations] = useState(fallbackMetroManila);
+	const [provincialLocations, setProvincialLocations] = useState(fallbackProvincial);
 	const searchTimeoutRef = useRef(null);
 	const isInitialMount = useRef(true);
 	const locationInputRef = useRef(null);
@@ -28,6 +30,24 @@ const SearchFilter = ({ onFilterChange }) => {
 	const fullImageCache = useRef({});
 	const variousLocationsSectionRef = useRef(null);
 	const clientRequirementSectionRef = useRef(null);
+
+	// Fetch locations from API
+	useEffect(() => {
+		const fetchLocations = async () => {
+			try {
+				const response = await fetch('http://localhost:3001/api/locations');
+				if (response.ok) {
+					const data = await response.json();
+					setMetroManilaLocations(data.metroManila);
+					setProvincialLocations(data.provincial);
+				}
+			} catch (error) {
+				console.warn('Failed to fetch locations for SearchFilter, using fallback');
+			}
+		};
+
+		fetchLocations();
+	}, []);
 
 	// Memoize locationData to prevent recalculation on every render
 	const locationData = useMemo(() => [
@@ -48,7 +68,7 @@ const SearchFilter = ({ onFilterChange }) => {
 				name: loc.name,
 				type: 'provincial'
 			}))
-	], []);
+	], [metroManilaLocations, provincialLocations]);
 
 	// Filter locations based on search term
 	const filteredLocationData = useMemo(() => {

@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Download } from 'lucide-react';
-import { serviceData } from './ServicesData';
+import { serviceData as fallbackServiceData } from './ServicesData';
+import useFetchTransformedServices from '../hooks/useFetchServices';
 import ServiceGalleryModal from './ServiceGalleryModal';
 import SearchFilter from './SearchFilter';
 
@@ -70,6 +71,22 @@ const Services = () => {
 	const [downloading, setDownloading] = useState(false);
 	const [downloaded, setDownloaded] = useState(false);
 	const [filters, setFilters] = useState({ location: 'all', service: 'all' });
+	const [companyProfilePDF, setCompanyProfilePDF] = useState('/company-profile.pdf');
+	
+	// Fetch services from API with fallback to static data
+	const { services: apiServices, loading: apiLoading, error: apiError } = useFetchTransformedServices();
+	const [serviceData, setServiceData] = useState(fallbackServiceData);
+
+	useEffect(() => {
+		// Use API data if available, otherwise use fallback
+		if (apiServices && apiServices.length > 0) {
+			console.log('✅ Using live API data from admin panel');
+			setServiceData(apiServices);
+		} else if (apiError) {
+			console.warn('⚠️ API unavailable, using static fallback data');
+			setServiceData(fallbackServiceData);
+		}
+	}, [apiServices, apiError]);
 
 	const openGallery = (service) => setSelectedService(service);
 	const closeGallery = () => setSelectedService(null);
@@ -80,7 +97,7 @@ const Services = () => {
 			setDownloading(false);
 			setDownloaded(true);
 			const link = document.createElement('a');
-			link.href = '/company-profile.pdf';
+			link.href = companyProfilePDF;
 			link.download = 'company-profile.pdf';
 			document.body.appendChild(link);
 			link.click();
