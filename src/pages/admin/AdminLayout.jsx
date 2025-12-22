@@ -9,6 +9,7 @@ import {
   ArrowLeftOnRectangleIcon,
   Bars3Icon,
   XMarkIcon,
+  SparklesIcon,
 } from '@heroicons/react/24/outline';
 
 const AdminLayout = () => {
@@ -25,6 +26,7 @@ const AdminLayout = () => {
 
   const navigation = [
     { name: 'Dashboard', href: '/admin/dashboard', icon: HomeIcon },
+    { name: 'Hero Images', href: '/admin/hero-images', icon: SparklesIcon },
     { name: 'Services Manager', href: '/admin/services', icon: PhotoIcon },
     { name: 'Locations Manager', href: '/admin/locations', icon: MapPinIcon },
     { name: 'PDF Manager', href: '/admin/pdfs', icon: DocumentIcon },

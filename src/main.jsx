@@ -6,6 +6,7 @@ import App from './App.jsx'
 import AdminLogin from './pages/admin/AdminLogin'
 import AdminLayout from './pages/admin/AdminLayout'
 import Dashboard from './pages/admin/Dashboard'
+import HeroImagesManager from './pages/admin/HeroImagesManager'
 import ServicesManager from './pages/admin/ServicesManager'
 import LocationsManager from './pages/admin/LocationsManager'
 import PDFManager from './pages/admin/PDFManager'
@@ -30,6 +31,7 @@ createRoot(document.getElementById('root')).render(
           }
         >
           <Route path="dashboard" element={<Dashboard />} />
+          <Route path="hero-images" element={<HeroImagesManager />} />
           <Route path="services" element={<ServicesManager />} />
           <Route path="locations" element={<LocationsManager />} />
           <Route path="pdfs" element={<PDFManager />} />

@@ -4,11 +4,15 @@ import { API_ENDPOINTS } from '../../lib/api-config';
 
 const Dashboard = () => {
   const [locationCount, setLocationCount] = useState(0);
+  const [heroImagesCount, setHeroImagesCount] = useState(0);
+  const [pdfCount, setPdfCount] = useState(0);
   const [activityLogs, setActivityLogs] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchLocations();
+    fetchHeroImages();
+    fetchPDFs();
     fetchActivityLogs();
   }, []);
 
@@ -22,6 +26,37 @@ const Dashboard = () => {
       }
     } catch (error) {
       console.error('Failed to fetch locations:', error);
+    }
+  };
+
+  const fetchHeroImages = async () => {
+    try {
+      const response = await fetch(API_ENDPOINTS.HERO_IMAGES);
+      if (response.ok) {
+        const data = await response.json();
+        setHeroImagesCount(data.images?.length || 0);
+      }
+    } catch (error) {
+      console.error('Failed to fetch hero images:', error);
+    }
+  };
+
+  const fetchPDFs = async () => {
+    try {
+      const response = await fetch(API_ENDPOINTS.PDFS);
+      if (response.ok) {
+        const data = await response.json();
+        let count = 0;
+        // Check company profile
+        if (data.companyProfile?.filePath) count++;
+        // Count service PDFs
+        if (data.services) {
+          count += Object.keys(data.services).filter(key => data.services[key]?.filePath).length;
+        }
+        setPdfCount(count);
+      }
+    } catch (error) {
+      console.error('Failed to fetch PDFs:', error);
     }
   };
 
@@ -108,16 +143,16 @@ const Dashboard = () => {
           <div className="p-5">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <svg className="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <svg className="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                 </svg>
               </div>
               <div className="ml-5 w-0 flex-1">
                 <dl>
                   <dt className="text-sm font-medium text-gray-500 truncate">
-                    Active Items
+                    Hero Images
                   </dt>
-                  <dd className="text-3xl font-semibold text-gray-900">6</dd>
+                  <dd className="text-3xl font-semibold text-gray-900">{heroImagesCount}</dd>
                 </dl>
               </div>
             </div>
@@ -128,16 +163,16 @@ const Dashboard = () => {
           <div className="p-5">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <svg className="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                <svg className="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                 </svg>
               </div>
               <div className="ml-5 w-0 flex-1">
                 <dl>
                   <dt className="text-sm font-medium text-gray-500 truncate">
-                    Last Modified
+                    Total PDFs
                   </dt>
-                  <dd className="text-lg font-semibold text-gray-900">Today</dd>
+                  <dd className="text-3xl font-semibold text-gray-900">{pdfCount}</dd>
                 </dl>
               </div>
             </div>
@@ -148,6 +183,21 @@ const Dashboard = () => {
       <div className="mt-8 bg-white shadow rounded-lg p-6">
         <h2 className="text-xl font-semibold text-gray-900 mb-4">Quick Actions</h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <a
+            href="/admin/hero-images"
+            className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition"
+          >
+            <div className="flex-shrink-0">
+              <svg className="h-8 w-8 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+              </svg>
+            </div>
+            <div className="ml-4">
+              <h3 className="text-lg font-medium text-gray-900">Hero Images</h3>
+              <p className="text-sm text-gray-500">Manage hero backgrounds</p>
+            </div>
+          </a>
+
           <a
             href="/admin/services"
             className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition"
@@ -201,8 +251,8 @@ const Dashboard = () => {
               </svg>
             </div>
             <div className="ml-4">
-              <h3 className="text-lg font-medium text-gray-900">Upload Images</h3>
-              <p className="text-sm text-gray-500">Add new images to gallery</p>
+              <h3 className="text-lg font-medium text-gray-900">Service Images</h3>
+              <p className="text-sm text-gray-500">Add images to services gallery</p>
             </div>
           </a>
         </div>

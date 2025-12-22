@@ -2,6 +2,18 @@
   "logs": [
     {
       "action": "deleted",
+      "entity": "Hero Image",
+      "description": "Deleted 12.webp",
+      "timestamp": "2025-12-22T03:07:31.653Z"
+    },
+    {
+      "action": "created",
+      "entity": "Hero Image",
+      "description": "Uploaded 12.webp",
+      "timestamp": "2025-12-22T03:03:04.072Z"
+    },
+    {
+      "action": "deleted",
       "entity": "Gallery Item",
       "description": "Deleted \"test\" from Pillar Ads",
       "timestamp": "2025-12-18T03:42:43.427Z"

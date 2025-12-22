@@ -12,9 +12,12 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Middleware - CORS with multiple origins support
-const allowedOrigins = process.env.CORS_ORIGIN 
+// Always include localhost origins for development, plus any production origins from env
+const localhostOrigins = ['http://localhost:5173', 'http://localhost:3000'];
+const productionOrigins = process.env.CORS_ORIGIN 
   ? process.env.CORS_ORIGIN.split(',').map(origin => origin.trim())
-  : ['http://localhost:5173', 'http://localhost:3000'];
+  : [];
+const allowedOrigins = [...localhostOrigins, ...productionOrigins];
 
 app.use(cors({
   origin: function (origin, callback) {
@@ -665,17 +668,216 @@ app.get('/api/activity-logs', async (req, res) => {
 });
 
 // ============================================
+// HERO IMAGES CRUD ENDPOINTS
+// ============================================
+
+// Get all hero images
+app.get('/api/hero-images', async (req, res) => {
+  try {
+    const heroDir = path.join(__dirname, '../public/images/hero');
+    
+    // Ensure directory exists
+    try {
+      await fs.access(heroDir);
+    } catch {
+      await fs.mkdir(heroDir, { recursive: true });
+      return res.json({ images: [] });
+    }
+
+    const files = await fs.readdir(heroDir);
+    const webpFiles = files.filter(file => file.toLowerCase().endsWith('.webp'));
+    
+    // Sort files numerically (1.webp, 2.webp, etc.)
+    webpFiles.sort((a, b) => {
+      const numA = parseInt(a.match(/\d+/)?.[0] || '0');
+      const numB = parseInt(b.match(/\d+/)?.[0] || '0');
+      return numA - numB;
+    });
+
+    const images = await Promise.all(
+      webpFiles.map(async (file) => {
+        const filePath = path.join(heroDir, file);
+        const stats = await fs.stat(filePath);
+        return {
+          filename: file,
+          url: `/images/hero/${file}`,
+          size: `${(stats.size / 1024).toFixed(2)} KB`,
+          uploadDate: stats.mtime
+        };
+      })
+    );
+
+    res.json({ images });
+  } catch (error) {
+    console.error('Failed to fetch hero images:', error);
+    res.status(500).json({ error: 'Failed to fetch hero images', message: error.message });
+  }
+});
+
+// Upload new hero image
+app.post('/api/hero-images', upload.single('image'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: 'No image file provided' });
+    }
+
+    const heroDir = path.join(__dirname, '../public/images/hero');
+    
+    // Ensure directory exists
+    await fs.mkdir(heroDir, { recursive: true });
+
+    // Get existing files to determine next number
+    const files = await fs.readdir(heroDir);
+    const webpFiles = files.filter(file => file.toLowerCase().endsWith('.webp'));
+    
+    // Extract numbers and find the highest
+    const numbers = webpFiles.map(file => {
+      const match = file.match(/(\d+)\.webp$/i);
+      return match ? parseInt(match[1]) : 0;
+    });
+    
+    const nextNumber = numbers.length > 0 ? Math.max(...numbers) + 1 : 1;
+    const filename = `${nextNumber}.webp`;
+    const filepath = path.join(heroDir, filename);
+
+    // Write file to disk
+    await fs.writeFile(filepath, req.file.buffer);
+
+    await logActivity('created', 'Hero Image', `Uploaded ${filename}`);
+
+    res.json({
+      success: true,
+      message: 'Hero image uploaded successfully',
+      filename,
+      url: `/images/hero/${filename}`
+    });
+  } catch (error) {
+    console.error('Failed to upload hero image:', error);
+    res.status(500).json({ error: 'Failed to upload hero image', message: error.message });
+  }
+});
+
+// Delete hero image (with password verification)
+app.delete('/api/hero-images/:filename', async (req, res) => {
+  try {
+    const { filename } = req.params;
+    const { password } = req.body;
+
+    // Verify admin password
+    const adminData = await readAdminData();
+    if (!password || password !== adminData.password) {
+      return res.status(401).json({ error: 'Invalid password', message: 'Incorrect admin password' });
+    }
+
+    // Validate filename (security check)
+    if (!filename.match(/^\d+\.webp$/i)) {
+      return res.status(400).json({ error: 'Invalid filename format' });
+    }
+
+    const heroDir = path.join(__dirname, '../public/images/hero');
+    const filepath = path.join(heroDir, filename);
+
+    // Check if file exists
+    try {
+      await fs.access(filepath);
+    } catch {
+      return res.status(404).json({ error: 'Image not found' });
+    }
+
+    // Delete the file
+    await fs.unlink(filepath);
+
+    await logActivity('deleted', 'Hero Image', `Deleted ${filename}`);
+
+    res.json({
+      success: true,
+      message: 'Hero image deleted successfully'
+    });
+  } catch (error) {
+    console.error('Failed to delete hero image:', error);
+    res.status(500).json({ error: 'Failed to delete hero image', message: error.message });
+  }
+});
+
+// Reorder hero images
+app.put('/api/hero-images/reorder', async (req, res) => {
+  try {
+    const { order } = req.body;
+
+    if (!order || !Array.isArray(order)) {
+      return res.status(400).json({ error: 'Invalid order data' });
+    }
+
+    const heroDir = path.join(__dirname, '../public/images/hero');
+    const tempDir = path.join(heroDir, 'temp_reorder');
+
+    // Create temp directory
+    await fs.mkdir(tempDir, { recursive: true });
+
+    try {
+      // Step 1: Move all files to temp directory with new names
+      for (const item of order) {
+        const oldPath = path.join(heroDir, item.oldFilename);
+        const tempPath = path.join(tempDir, `${item.newNumber}.webp`);
+        
+        try {
+          await fs.access(oldPath);
+          await fs.rename(oldPath, tempPath);
+        } catch (error) {
+          console.error(`Failed to move ${item.oldFilename}:`, error);
+        }
+      }
+
+      // Step 2: Move all files back from temp to hero directory
+      const tempFiles = await fs.readdir(tempDir);
+      for (const file of tempFiles) {
+        const tempPath = path.join(tempDir, file);
+        const finalPath = path.join(heroDir, file);
+        await fs.rename(tempPath, finalPath);
+      }
+
+      // Step 3: Clean up temp directory
+      await fs.rmdir(tempDir);
+
+      await logActivity('updated', 'Hero Images', `Reordered ${order.length} hero images`);
+
+      res.json({
+        success: true,
+        message: 'Images reordered successfully'
+      });
+    } catch (error) {
+      // Cleanup on error
+      try {
+        const tempFiles = await fs.readdir(tempDir);
+        for (const file of tempFiles) {
+          const tempPath = path.join(tempDir, file);
+          const originalPath = path.join(heroDir, file);
+          await fs.rename(tempPath, originalPath);
+        }
+        await fs.rmdir(tempDir);
+      } catch (cleanupError) {
+        console.error('Cleanup error:', cleanupError);
+      }
+      throw error;
+    }
+  } catch (error) {
+    console.error('Failed to reorder hero images:', error);
+    res.status(500).json({ error: 'Failed to reorder images', message: error.message });
+  }
+});
+
+// ============================================
 // START SERVER
 // ============================================
 
-// Only start server if this file is run directly (not imported as a module)
-if (import.meta.url === `file://${process.argv[1]}`) {
-  app.listen(PORT, () => {
-    console.log(`🚀 CMS Server running on http://localhost:${PORT}`);
-    console.log(`📁 Serving images from: ${path.join(__dirname, '../public/images')}`);
-    console.log(`📄 Serving PDFs from: ${path.join(__dirname, '../public/pdfs')}`);
-  });
-}
+// Start the server (works for both development and production)
+app.listen(PORT, () => {
+  console.log(`🚀 CMS Server running on http://localhost:${PORT}`);
+  console.log(`📁 Serving images from: ${path.join(__dirname, '../public/images')}`);
+  console.log(`📄 Serving PDFs from: ${path.join(__dirname, '../public/pdfs')}`);
+  console.log(`✅ Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`✅ CORS Origins: ${allowedOrigins.join(', ')}`);
+});
 
-// Export for use as Vercel serverless function
+// Export app for testing purposes
 export default app;

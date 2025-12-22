@@ -5,11 +5,8 @@ import BackToTop from './BackToTop';
 import MessageMe from './MessageMe';
 import { useState, useEffect, useRef } from 'react';
 
-// Use local images from public/images/hero/1.jpg to X.jpg
-// Update the length parameter to match your actual number of images
-const bgImages = Array.from({ length: 11 }, (_, i) => `/images/hero/${i + 1}.jpg`);
-
 const Hero = () => {
+  const [bgImages, setBgImages] = useState([]);
   const [bgIndex, setBgIndex] = useState(0);
   const [prevBgIndex, setPrevBgIndex] = useState(0);
   const [imagesLoaded, setImagesLoaded] = useState({});
@@ -17,8 +14,43 @@ const Hero = () => {
   const [canTransition, setCanTransition] = useState(false);
   const imageCache = useRef({});
 
+  // Fetch hero images dynamically from the API
+  useEffect(() => {
+    const loadHeroImages = async () => {
+      try {
+        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+        const response = await fetch(`${API_URL}/hero-images`);
+        
+        if (response.ok) {
+          const data = await response.json();
+          const imageUrls = data.images.map(img => img.url);
+          setBgImages(imageUrls);
+        } else {
+          // Fallback: Try to load images 1-20 and use what's available
+          const fallbackImages = [];
+          for (let i = 1; i <= 20; i++) {
+            fallbackImages.push(`/images/hero/${i}.webp`);
+          }
+          setBgImages(fallbackImages);
+        }
+      } catch (error) {
+        console.error('Failed to fetch hero images:', error);
+        // Fallback: Try to load images 1-20 and use what's available
+        const fallbackImages = [];
+        for (let i = 1; i <= 20; i++) {
+          fallbackImages.push(`/images/hero/${i}.webp`);
+        }
+        setBgImages(fallbackImages);
+      }
+    };
+
+    loadHeroImages();
+  }, []);
+
   // Preload and cache all images on mount
   useEffect(() => {
+    if (bgImages.length === 0) return;
+
     const loadedStatus = {};
 
     bgImages.forEach((src, index) => {
@@ -49,10 +81,12 @@ const Hero = () => {
         }
       };
     });
-  }, [firstImageLoaded]);
+  }, [bgImages, firstImageLoaded]);
 
   // Auto-transition with image readiness check
   useEffect(() => {
+    if (bgImages.length === 0) return;
+
     const interval = setInterval(() => {
       const nextIndex = (bgIndex + 1) % bgImages.length;
       // Only transition if next image is loaded

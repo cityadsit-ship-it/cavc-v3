@@ -37,6 +37,9 @@ export const API_ENDPOINTS = {
   
   // Activity Logs
   ACTIVITY_LOGS: `${API_BASE_URL}/activity-logs`,
+  
+  // Hero Images
+  HERO_IMAGES: `${API_BASE_URL}/hero-images`,
 };
 
 export default API_BASE_URL;
