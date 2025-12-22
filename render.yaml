@@ -9,8 +9,8 @@ services:
     region: oregon
     plan: free
     rootDir: server
-    buildCommand: npm install
-    startCommand: npm start
+    buildCommand: npm ci  # Use npm ci for production builds
+    startCommand: node server.js  # More explicit start command
     envVars:
       - key: NODE_ENV
         value: production
