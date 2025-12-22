@@ -11,9 +11,25 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Middleware
+// Middleware - CORS with multiple origins support
+const allowedOrigins = process.env.CORS_ORIGIN 
+  ? process.env.CORS_ORIGIN.split(',').map(origin => origin.trim())
+  : ['http://localhost:5173', 'http://localhost:3000'];
+
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || '*',
+  origin: function (origin, callback) {
+    // Allow requests with no origin (mobile apps, Postman, curl, etc.)
+    if (!origin) return callback(null, true);
+    
+    // Check if origin is in allowed list
+    if (allowedOrigins.indexOf(origin) !== -1 || allowedOrigins.includes('*')) {
+      callback(null, true);
+    } else {
+      console.log('❌ Blocked by CORS:', origin);
+      console.log('✅ Allowed origins:', allowedOrigins);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
 app.use(express.json());
