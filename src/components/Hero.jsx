@@ -137,7 +137,7 @@ const Hero = () => {
 
   return (
     <>
-      <div id="hero" className="relative w-full h-[75vh] sm:h-[85vh] lg:h-[80vh] overflow-hidden" style={{ backgroundColor: '#1a4d2e' }}>
+      <div id="hero" className="relative w-full h-[75vh] sm:h-[85vh] lg:h-[80vh] overflow-hidden">
         {/* Sliding Background Images */}
         <div className="absolute inset-0 w-full h-full">
           {/* Previous image - stays underneath */}
