@@ -3,8 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/images/cavclogo.png" />
-    <!-- Preload first hero image for faster LCP -->
+    
+    <!-- DNS Prefetch and Preconnect for API (update with your actual production API domain) -->
+    <link rel="dns-prefetch" href="//localhost:3001" />
+    <link rel="preconnect" href="//localhost:3001" crossorigin />
+    
+    <!-- Preload first hero image with highest priority for faster LCP -->
     <link rel="preload" as="image" href="/images/hero/1.webp" fetchpriority="high" />
+    
+    <!-- Preload next 2-3 images with lower priority for smoother transitions -->
+    <link rel="preload" as="image" href="/images/hero/2.webp" fetchpriority="low" />
+    <link rel="preload" as="image" href="/images/hero/3.webp" fetchpriority="low" />
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="City Advertising Ventures Corporation - Leading outdoor advertising solutions across Metro Manila. Premium billboards, digital displays, and strategic advertising locations." />
     <meta name="keywords" content="outdoor advertising, billboards, Metro Manila, digital advertising, CAVC, City Advertising Ventures" />
