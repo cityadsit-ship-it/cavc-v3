@@ -288,12 +288,12 @@ const Footer = () => {
                   </div>
                 </div>
 
-                <div className="flex items-start space-x-2 sm:space-x-3 justify-center sm:justify-start w-full">
-                  <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-highlight mt-1 flex-shrink-0" />
-                  <div className="w-full flex justify-center sm:justify-start">
-                    {isMobile ? (
-                      <div className="flex flex-col gap-1.5 items-center sm:items-start">
-                        {/* First phone number on its own row */}
+                <div className="flex flex-col items-center sm:items-start w-full">
+                  {isMobile ? (
+                    <>
+                      {/* First row: Phone icon + first phone number centered */}
+                      <div className="flex items-center gap-2 justify-center sm:justify-start mb-1.5">
+                        <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-highlight flex-shrink-0" />
                         <button
                           className="text-gray-200 text-xs sm:text-sm px-2 sm:px-3 py-1 rounded bg-accent-green/80 hover:bg-yellow-highlight font-medium transition-colors duration-200"
                           onClick={() => openCallModal(phoneNumbers[0].intl)}
@@ -301,21 +301,24 @@ const Footer = () => {
                         >
                           {phoneNumbers[0].display}
                         </button>
-                        {/* Remaining three numbers centered on second row */}
-                        <div className="flex flex-wrap gap-1.5 justify-center">
-                          {phoneNumbers.slice(1).map((num) => (
-                            <button
-                              key={num.intl}
-                              className="text-gray-200 text-xs sm:text-sm px-2 sm:px-3 py-1 rounded bg-accent-green/80 hover:bg-yellow-highlight font-medium transition-colors duration-200"
-                              onClick={() => openCallModal(num.intl)}
-                              type="button"
-                            >
-                              {num.display}
-                            </button>
-                          ))}
-                        </div>
                       </div>
-                    ) : (
+                      {/* Second row: Remaining three numbers centered */}
+                      <div className="flex flex-wrap gap-1.5 justify-center">
+                        {phoneNumbers.slice(1).map((num) => (
+                          <button
+                            key={num.intl}
+                            className="text-gray-200 text-xs sm:text-sm px-2 sm:px-3 py-1 rounded bg-accent-green/80 hover:bg-yellow-highlight font-medium transition-colors duration-200"
+                            onClick={() => openCallModal(num.intl)}
+                            type="button"
+                          >
+                            {num.display}
+                          </button>
+                        ))}
+                      </div>
+                    </>
+                  ) : (
+                    <div className="flex items-start space-x-2 sm:space-x-3">
+                      <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-highlight mt-1 flex-shrink-0" />
                       <div className="flex flex-wrap gap-1.5 sm:gap-2">
                         {phoneNumbers.map((num) => (
                           <button
@@ -328,8 +331,8 @@ const Footer = () => {
                           </button>
                         ))}
                       </div>
-                    )}
-                  </div>
+                    </div>
+                  )}
                 </div>
 
                 <div className="flex items-center space-x-2 sm:space-x-3 justify-center sm:justify-start w-full">
