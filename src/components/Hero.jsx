@@ -137,7 +137,7 @@ const Hero = () => {
 
   return (
     <>
-      <div id="hero" className="relative w-full h-[75vh] sm:h-[85vh] lg:h-[80vh] overflow-hidden">
+      <div id="hero" className="relative w-full h-[75vh] sm:h-[85vh] lg:h-[80vh] overflow-hidden" style={{ backgroundColor: '#1a4d2e' }}>
         {/* Sliding Background Images */}
         <div className="absolute inset-0 w-full h-full">
           {/* Previous image - stays underneath */}
@@ -155,11 +155,12 @@ const Hero = () => {
           <AnimatePresence mode="wait">
             <motion.div
               key={bgIndex}
-              initial={{ opacity: firstImageLoaded ? 0 : 0, filter: !firstImageLoaded ? 'blur(10px)' : 'blur(0px)' }}
-              animate={{ opacity: 1, filter: 'blur(0px)' }}
+              initial={{ opacity: 0, filter: firstImageLoaded ? 'blur(0px)' : 'blur(20px)', scale: firstImageLoaded ? 1 : 1.05 }}
+              animate={{ opacity: 1, filter: 'blur(0px)', scale: 1 }}
               transition={{ 
-                opacity: { duration: firstImageLoaded ? 0.8 : 1, ease: 'easeInOut' },
-                filter: { duration: 0.8, ease: 'easeInOut' }
+                opacity: { duration: firstImageLoaded ? 0.8 : 1.2, ease: 'easeInOut' },
+                filter: { duration: firstImageLoaded ? 0.8 : 1.2, ease: 'easeInOut' },
+                scale: { duration: firstImageLoaded ? 0.8 : 1.2, ease: 'easeOut' }
               }}
               className="absolute inset-0 w-full h-full"
               style={{ 
