@@ -2,11 +2,51 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/images/cavclogo.png" />
     
-    <!-- DNS Prefetch and Preconnect for API (update with your actual production API domain) -->
-    <link rel="dns-prefetch" href="//localhost:3001" />
-    <link rel="preconnect" href="//localhost:3001" crossorigin />
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
+    <link rel="apple-touch-icon" href="/images/cavclogo.png" />
+    
+    <!-- Primary Meta Tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>City Advertising Ventures Corporation | Leading Outdoor Advertising in Metro Manila</title>
+    <meta name="title" content="City Advertising Ventures Corporation | Leading Outdoor Advertising in Metro Manila" />
+    <meta name="description" content="City Advertising Ventures Corporation (CAVC) - Leading outdoor advertising solutions across Metro Manila. Premium billboards, digital LED displays, transit advertising, and strategic advertising locations. Contact us for your advertising needs." />
+    <meta name="keywords" content="outdoor advertising, billboards, Metro Manila, digital advertising, CAVC, City Advertising Ventures, LED displays, transit advertising, billboard advertising Philippines, outdoor media, advertising agency Manila, digital billboards, static billboards, advertising solutions" />
+    <meta name="author" content="City Advertising Ventures Corporation" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="theme-color" content="#1e3a8a" />
+    
+    <!-- Canonical URL (update with your production domain) -->
+    <link rel="canonical" href="https://www.cityadvertisingventures.com" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.cityadvertisingventures.com" />
+    <meta property="og:title" content="City Advertising Ventures Corporation | Leading Outdoor Advertising in Metro Manila" />
+    <meta property="og:description" content="Leading outdoor advertising solutions across Metro Manila. Premium billboards, digital LED displays, and strategic advertising locations." />
+    <meta property="og:image" content="https://www.cityadvertisingventures.com/images/cavclogo.png" />
+    <meta property="og:site_name" content="City Advertising Ventures Corporation" />
+    <meta property="og:locale" content="en_PH" />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://www.cityadvertisingventures.com" />
+    <meta name="twitter:title" content="City Advertising Ventures Corporation | Leading Outdoor Advertising in Metro Manila" />
+    <meta name="twitter:description" content="Leading outdoor advertising solutions across Metro Manila. Premium billboards, digital LED displays, and strategic advertising locations." />
+    <meta name="twitter:image" content="https://www.cityadvertisingventures.com/images/cavclogo.png" />
+    
+    <!-- Geo Tags for Local SEO -->
+    <meta name="geo.region" content="PH-NCR" />
+    <meta name="geo.placename" content="Metro Manila" />
+    <meta name="geo.position" content="14.5995;120.9842" />
+    <meta name="ICBM" content="14.5995, 120.9842" />
+    
+    <!-- DNS Prefetch and Preconnect for API -->
+    <link rel="dns-prefetch" href="//cavc-backend.onrender.com" />
+    <link rel="preconnect" href="https://cavc-backend.onrender.com" crossorigin />
     
     <!-- Preload first hero image with highest priority for faster LCP -->
     <link rel="preload" as="image" href="/images/hero/1.webp" fetchpriority="high" />
@@ -15,10 +55,36 @@
     <link rel="preload" as="image" href="/images/hero/2.webp" fetchpriority="low" />
     <link rel="preload" as="image" href="/images/hero/3.webp" fetchpriority="low" />
     
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="City Advertising Ventures Corporation - Leading outdoor advertising solutions across Metro Manila. Premium billboards, digital displays, and strategic advertising locations." />
-    <meta name="keywords" content="outdoor advertising, billboards, Metro Manila, digital advertising, CAVC, City Advertising Ventures" />
-    <title>City Advertising Ventures Corporation</title>
+    <!-- Structured Data for Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "City Advertising Ventures Corporation",
+      "alternateName": "CAVC",
+      "url": "https://www.cityadvertisingventures.com",
+      "logo": "https://www.cityadvertisingventures.com/images/cavclogo.png",
+      "description": "Leading outdoor advertising solutions across Metro Manila. Premium billboards, digital LED displays, and strategic advertising locations.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Metro Manila",
+        "addressRegion": "NCR",
+        "addressCountry": "PH"
+      },
+      "sameAs": [],
+      "areaServed": {
+        "@type": "GeoCircle",
+        "geoMidpoint": {
+          "@type": "GeoCoordinates",
+          "latitude": "14.5995",
+          "longitude": "120.9842"
+        },
+        "geoRadius": "50000"
+      },
+      "serviceType": ["Outdoor Advertising", "Billboard Advertising", "Digital LED Displays", "Transit Advertising"],
+      "priceRange": "$$"
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>

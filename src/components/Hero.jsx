@@ -6,7 +6,14 @@ import MessageMe from './MessageMe';
 import { useState, useEffect, useRef } from 'react';
 
 const Hero = () => {
-  const [bgImages, setBgImages] = useState([]);
+  // Start with immediate fallback images to avoid API delay
+  const [bgImages, setBgImages] = useState(() => {
+    const initialImages = [];
+    for (let i = 1; i <= 20; i++) {
+      initialImages.push(`/images/hero/${i}.webp`);
+    }
+    return initialImages;
+  });
   const [bgIndex, setBgIndex] = useState(0);
   const [prevBgIndex, setPrevBgIndex] = useState(0);
   const [imagesLoaded, setImagesLoaded] = useState({});
@@ -14,7 +21,7 @@ const Hero = () => {
   const [canTransition, setCanTransition] = useState(false);
   const imageCache = useRef({});
 
-  // Fetch hero images dynamically from the API
+  // Fetch hero images dynamically from the API (but don't block initial render)
   useEffect(() => {
     const loadHeroImages = async () => {
       try {
@@ -24,64 +31,66 @@ const Hero = () => {
         if (response.ok) {
           const data = await response.json();
           const imageUrls = data.images.map(img => img.url);
-          setBgImages(imageUrls);
-        } else {
-          // Fallback: Try to load images 1-20 and use what's available
-          const fallbackImages = [];
-          for (let i = 1; i <= 20; i++) {
-            fallbackImages.push(`/images/hero/${i}.webp`);
+          // Only update if we got valid data from API
+          if (imageUrls.length > 0) {
+            setBgImages(imageUrls);
           }
-          setBgImages(fallbackImages);
         }
       } catch (error) {
-        console.error('Failed to fetch hero images:', error);
-        // Fallback: Try to load images 1-20 and use what's available
-        const fallbackImages = [];
-        for (let i = 1; i <= 20; i++) {
-          fallbackImages.push(`/images/hero/${i}.webp`);
-        }
-        setBgImages(fallbackImages);
+        console.error('Failed to fetch hero images, using fallback:', error);
+        // Keep using the fallback images already set
       }
     };
 
     loadHeroImages();
   }, []);
 
-  // Preload and cache all images on mount
+  // Preload and cache all images on mount with priority on first image
   useEffect(() => {
     if (bgImages.length === 0) return;
 
     const loadedStatus = {};
 
+    // Load first image with highest priority
+    const firstImg = new window.Image();
+    firstImg.src = bgImages[0];
+    firstImg.fetchpriority = 'high';
+    imageCache.current[0] = firstImg;
+    
+    firstImg.onload = () => {
+      loadedStatus[0] = true;
+      setImagesLoaded(prev => ({ ...prev, 0: true }));
+      setFirstImageLoaded(true);
+      setCanTransition(true);
+    };
+    
+    firstImg.onerror = () => {
+      loadedStatus[0] = true;
+      setImagesLoaded(prev => ({ ...prev, 0: true }));
+      setFirstImageLoaded(true);
+      setCanTransition(true);
+    };
+
+    // Load remaining images with lower priority
     bgImages.forEach((src, index) => {
+      if (index === 0) return; // Already loaded above
+      
       const img = new window.Image();
       img.src = src;
+      img.fetchpriority = 'low';
       imageCache.current[index] = img;
       
       img.onload = () => {
         loadedStatus[index] = true;
-        
-        // Update loaded status
         setImagesLoaded(prev => ({ ...prev, [index]: true }));
-        
-        // Once first image is loaded, allow transitions
-        if (index === 0 && !firstImageLoaded) {
-          setFirstImageLoaded(true);
-          setCanTransition(true);
-        }
       };
       
       img.onerror = () => {
         loadedStatus[index] = true;
         setImagesLoaded(prev => ({ ...prev, [index]: true }));
-        
-        if (index === 0 && !firstImageLoaded) {
-          setFirstImageLoaded(true);
-          setCanTransition(true);
-        }
       };
     });
-  }, [bgImages, firstImageLoaded]);
+  }, [bgImages]);
 
   // Auto-transition with image readiness check
   useEffect(() => {
@@ -138,6 +147,11 @@ const Hero = () => {
   return (
     <>
       <div id="hero" className="relative w-full h-[75vh] sm:h-[85vh] lg:h-[80vh] overflow-hidden">
+        {/* Loading placeholder - shown while first image loads */}
+        {!firstImageLoaded && (
+          <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 animate-pulse" />
+        )}
+        
         {/* Sliding Background Images */}
         <div className="absolute inset-0 w-full h-full">
           {/* Previous image - stays underneath */}
@@ -155,12 +169,10 @@ const Hero = () => {
           <AnimatePresence mode="wait">
             <motion.div
               key={bgIndex}
-              initial={{ opacity: 0, filter: firstImageLoaded ? 'blur(0px)' : 'blur(20px)', scale: firstImageLoaded ? 1 : 1.05 }}
-              animate={{ opacity: 1, filter: 'blur(0px)', scale: 1 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               transition={{ 
-                opacity: { duration: firstImageLoaded ? 0.8 : 1.2, ease: 'easeInOut' },
-                filter: { duration: firstImageLoaded ? 0.8 : 1.2, ease: 'easeInOut' },
-                scale: { duration: firstImageLoaded ? 0.8 : 1.2, ease: 'easeOut' }
+                opacity: { duration: 0.8, ease: 'easeInOut' }
               }}
               className="absolute inset-0 w-full h-full"
               style={{ 
