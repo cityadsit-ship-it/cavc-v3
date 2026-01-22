@@ -1,0 +1,5 @@
+# Redirect incorrect index.xml to sitemap.xml
+/index.xml /sitemap.xml 301
+
+# SPA fallback - must be last
+/* /index.html 200
