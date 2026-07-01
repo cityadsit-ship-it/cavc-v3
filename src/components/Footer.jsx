@@ -50,9 +50,6 @@ const Footer = () => {
   // Phone numbers in display and international format
   const phoneNumbers = [
     { display: '(02) 8535-5555', intl: '+63285355555' },
-    { display: '(02) 8532-5400', intl: '+63285325400' },
-    { display: '(02) 8531-0152', intl: '+63285310152' },
-    { display: '(02) 8532-5216', intl: '+63285325216' },
   ];
 
   const mainIntlNumber = '+63285355555';
