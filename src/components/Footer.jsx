@@ -338,10 +338,10 @@ const Footer = () => {
                     <button
                       className="text-gray-200 text-xs sm:text-sm underline hover:text-yellow-highlight transition-colors duration-200 break-all"
                       type="button"
-                      onClick={() => window.location.href = "mailto:sales.cityads@gmail.com"}
-                      aria-label="Send email to sales.cityads@gmail.com"
+                      onClick={() => window.location.href = "mailto:inquiry@cityadvertising.com.ph"}
+                      aria-label="Send email to inquiry@cityadvertising.com.ph"
                     >
-                      sales.cityads@gmail.com
+                      inquiry@cityadvertising.com.ph
                     </button>
                   </div>
                 </div>
